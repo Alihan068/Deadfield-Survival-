@@ -439,6 +439,63 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 519420031}
+--- !u!114 &959825013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959825006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb428fb2818d4c44a830ff3575e0bfbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsManager
+  playerIndex: 0
+  dashCooldown: 1
+  jumpCooldown: 0
+  strength: 5
+  intelligence: 2
+  moveSpeed: 5
+  vitality: 5
+  armor: 1
+  playerSize: 0
+  haste: 0
+  armorPen: 0
+  dodgeChance: 0
+  explosionSize: 0
+  explosionDamage: 0
+  damageReduction: 0
+  stunResistance: 0
+  debufResistance: 0
+  meleeDamage: 0
+  meleeSpeed: 0
+  parryCooldown: 0
+  weaponSize: 0
+  weaponRange: 0
+  rangedSpeed: 0
+  rangedDamage: 0
+  projectileAmount: 0
+  weaponBurst: 0
+  projectileBounce: 0
+  projectileSize: 0
+  spread: 0
+  burnDamage: 0
+  poisonDamage: 0
+  diseaseDamage: 0
+--- !u!114 &959825014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959825006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb99c44e6dcfa747a547ced708b26fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  playerHp: 100
 --- !u!1001 &1341912074475978107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -493,7 +550,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6404845291246215501, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: dashPower
-      value: 10000
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404845291246215501, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      propertyPath: dashSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404845291246215501, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      propertyPath: startDashTime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9149687605474574355, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: m_PlayerPrefab
@@ -504,6 +569,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 959825014}
+    - targetCorrespondingSourceObject: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 959825013}
     - targetCorrespondingSourceObject: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       insertIndex: -1
       addedObject: {fileID: 959825009}

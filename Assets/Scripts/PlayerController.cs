@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,12 +8,18 @@ public class PlayerController : MonoBehaviour
     PlayerStatsManager playerStatsManager;
     Rigidbody2D rb2d;
     Animator animator;
+    Coroutine coroutine;
 
-    [SerializeField] float moveSpeed = 5.0f;
-    [SerializeField] float dashPower = 10f;
+    [SerializeField] float startDashTime = 1f;
+    [SerializeField] float dashSpeed = 10f;
+    float currentDashTime;
+
+    bool canDash = true;
+    bool playerCollision = true;
 
     Vector3 moveInput;
     bool isAlive = true;
+
     void Start()
     {
         playerStatsManager = GetComponent<PlayerStatsManager>();
@@ -21,10 +28,12 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value) {
         if (!isAlive) return;
         moveInput = value.Get<Vector2>();
-        Debug.Log(moveInput);
     }
     void OnDash(InputValue value) {
-        Dash();
+        Debug.Log("ShiftInput");
+        if (canDash && isAlive) {
+            StartCoroutine(Dash());
+        }
     }
 
     // Update is called once per frame
@@ -37,8 +46,8 @@ public class PlayerController : MonoBehaviour
         //if (!canMove) return;       
 
         Vector2 vector = rb2d.linearVelocity;
-        vector.x = moveInput.x * moveSpeed;
-        vector.y = moveInput.y * moveSpeed;
+        vector.x = moveInput.x * playerStatsManager.moveSpeed;
+        vector.y = moveInput.y * playerStatsManager.moveSpeed;
         rb2d.linearVelocity = vector;
 
         if (animator) {
@@ -46,7 +55,25 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", hasHorizontal);
         }
     }
-    void Dash() {
-        rb2d.AddForce(moveInput * dashPower, ForceMode2D.Impulse);
+    IEnumerator Dash() {
+        Debug.Log("DashCoroutine");
+        canDash = false;
+        playerCollision = false;
+        currentDashTime = startDashTime; // Reset the dash timer.
+
+        while (currentDashTime > 0f) {
+            currentDashTime -= Time.deltaTime; // Lower the dash timer each frame.
+
+            rb2d.linearVelocity = moveInput * dashSpeed; // Dash in the direction that was held down.
+            // No need to multiply by Time.DeltaTime here, physics are already consistent across different FPS.
+
+            yield return null; // Returns out of the coroutine this frame so we don't hit an infinite loop.
+        }
+
+        rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
+
+        yield return new WaitForSeconds(playerStatsManager.dashCooldown);
+        canDash = true;
+
     }
 }

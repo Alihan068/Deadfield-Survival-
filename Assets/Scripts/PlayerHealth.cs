@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    PlayerStatsManager playerStatsManager;
+    PlayerController playerController;
+    public float playerHp = 100;
+
     void Start()
     {
-        
+        playerController = GetComponent<PlayerController>();
+        playerStatsManager = GetComponent<PlayerStatsManager>();
     }
 
     // Update is called once per frame

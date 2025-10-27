@@ -390,7 +390,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959825006}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -490,6 +490,10 @@ PrefabInstance:
     - target: {fileID: 2409049884484485672, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404845291246215501, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      propertyPath: dashPower
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 9149687605474574355, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: m_PlayerPrefab

@@ -34,6 +34,7 @@ public class PlayerStatsManager : MonoBehaviour {
     public float debufResistance;
 
     [Header("Melee Attributes")]
+    public float meleeSwipeAngle;
     public float meleeDamage;
     public float meleeSpeed;
     public float parryCooldown;

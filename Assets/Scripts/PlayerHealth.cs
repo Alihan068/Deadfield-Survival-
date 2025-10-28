@@ -17,4 +17,25 @@ public class PlayerHealth : MonoBehaviour
     {
         
     }
+    public void CalculateIncomingDamage(float rawDamage) {
+        float calculatedDamage;
+        calculatedDamage = rawDamage;
+        TakeFinalDamage(calculatedDamage);
+    }
+    void TakeFinalDamage(float damage) {
+        if (damage > playerHp) {
+            DeathSequence();
+        }
+
+        else {
+            playerHp -= damage;
+            Debug.Log("Player took " + damage + "damage! \nRemaining hp: " + playerHp);
+        }
+    }
+
+    void DeathSequence() {
+        playerController.canMove = false;
+    }
+
+    
 }

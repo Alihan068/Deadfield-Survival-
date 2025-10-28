@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour {
     PlayerController playerController;
 
     public WeaponType weaponType;
+    public LayerMask weaponTargetLayer;
 
     [SerializeField] float weaponDamage = 0f;
     [SerializeField] float weaponRange = 0f;
@@ -22,6 +23,7 @@ public class Weapon : MonoBehaviour {
     [SerializeField] float baseStrenght = 0f;
 
     [SerializeField] float baseIntelligence = 0f;
+
 
     private void Awake() {
         playerController = GetComponentInParent<PlayerController>();

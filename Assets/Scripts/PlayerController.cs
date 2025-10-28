@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,9 +12,10 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] float startDashTime = 1f;
     [SerializeField] float dashSpeed = 10f;
-    [SerializeField] GameObject weaponManager;
+    WeaponSwitcher weaponSwitcher;
     float currentDashTime;
 
+    public bool canMove = true;
     bool canDash = true;
     bool playerCollision = true;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     bool isAlive = true;
 
     void Start() {
+        weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
         weapon = GetComponentInChildren<Weapon>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -75,12 +78,25 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("isWalking", hasHorizontal);
         }
     }
+    void FlipSprite() {
+
+        bool playerHasHorizntalSpeed = Mathf.Abs(rb2d.linearVelocity.x) > Mathf.Epsilon;
+        if (playerHasHorizntalSpeed) {
+            transform.localScale =
+                new Vector2(Mathf.Sign(rb2d.linearVelocity.x) * Mathf.Abs(transform.localScale.x), transform.localScale.y);
+        }
+    }
 
     void AimForMouse () {
-        Vector2 mouseDir = Input.mousePosition.normalized;
-        Vector2 dirToMouse = transform.rotation * mouseDir;
-        //weaponManager.transform.position = weaponManager.transform.rotation * dirToMouse;
-        weaponManager.transform.up = Input.mousePosition - transform.position;
+        var camera = Camera.main;
+        Vector3 mouseDir = Mouse.current.position.ReadValue();
+        mouseDir.z = Mathf.Abs(camera.transform.position.z - weaponSwitcher.transform.position.z);
+        Vector3 mouseWorldPos = camera.ScreenToWorldPoint(mouseDir);
+        Vector2 direction = mouseWorldPos - weaponSwitcher.transform.position;
+        if (direction.sqrMagnitude > Mathf.Epsilon) {
+            weaponSwitcher.transform.up = direction;
+        }
+
     }
     IEnumerator Dash() {
         Debug.Log("DashCoroutine");

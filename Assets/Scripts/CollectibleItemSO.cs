@@ -1,22 +1,70 @@
+using System;
 using UnityEngine;
+
+public enum ItemRarity {
+    common,
+    //uncommon,
+    rare,
+    //epic,
+    legendary,
+    //mythic,
+    unique,
+}
+
+public enum TargetStat {
+
+    dashCooldown,
+    jumpCooldown,
+    strength,
+    intelligence,
+    moveSpeed,
+    vitality,
+    armor,
+    playerSize,
+    haste,
+    armorPen,
+    dodgeChance,
+    explosionSize,
+    explosionDamage,
+    weaponDamage,
+    damageReduction,
+    stunResistance,
+    debufResistance,
+    meleeDamage,
+    meleeSpeed,
+    parryCooldown,
+    weaponSize,
+    weaponRange,
+    rangedSpeed,
+    rangedDamage,
+    projectileAmount,
+    weaponBurst,
+    projectileBounce,
+    projectileSize,
+    spread,
+    burnDamage,
+    poisonDamage,
+    diseaseDamage,
+}
+
 
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]
-public class CollectibleItemSO : MonoBehaviour
+public class CollectibleItemSO : ScriptableObject
 {
-   public enum ItemRarity {
-        common,
-        //uncommon,
-        rare,
-        //epic,
-        legendary,
-        //mythic,
-        unique,
+    [Serializable]
+    public class ItemEffect {
+        public TargetStat targetStat;
+        public ItemRarity itemRarity;
+        public float effectValue;
+        public bool ifIncrease = true;
+        public bool isPercentage = false;
     }
 
+    
     PlayerStatsManager playerStatsManager;
 
-    private void Start() {
-        playerStatsManager = GetComponent<PlayerStatsManager>();
-    }
+
+    
 }
+

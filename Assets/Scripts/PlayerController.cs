@@ -2,8 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
     PlayerStatsManager playerStatsManager;
     Rigidbody2D rb2d;
@@ -17,11 +16,13 @@ public class PlayerController : MonoBehaviour
     bool canDash = true;
     bool playerCollision = true;
 
+    Weapon weapon;
+
     Vector3 moveInput;
     bool isAlive = true;
 
-    void Start()
-    {
+    void Start() {
+        weapon = GetComponent<Weapon>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -36,9 +37,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnAttack(InputValue value) {
+
+        if (weapon == null) { Debug.Log("No weapon Found!"); return; }
+
+        if (weapon.weaponType == WeaponType.Melee) {
+            //MELEE WEAPON BEHAVIOR
+        }
+        else if (weapon.weaponType == WeaponType.Ranged) {
+            //RANGED WEAPON BEHAVIOR
+        }
+        else {
+            //MIXED WEAPONBEHAVIOR
+        }
+
+
+    }
+
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         Walk();
     }
 

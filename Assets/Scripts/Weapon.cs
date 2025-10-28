@@ -1,15 +1,17 @@
 using Unity.VisualScripting;
 using UnityEngine;
-
+public enum WeaponType {
+    Melee,
+    Ranged,
+    Mixed,
+}
 public class Weapon : MonoBehaviour
 {
-    public enum WeaponType {
-        Melee,
-        Ranged,
-        Mixed,
-    }
 
-   PlayerStatsManager playerStatsManager;
+
+    PlayerStatsManager playerStatsManager;
+
+    public WeaponType weaponType;
 
     [SerializeField] float baseDamage = 0f;
     [SerializeField] float baseRange = 0f;
@@ -27,10 +29,35 @@ public class Weapon : MonoBehaviour
     }
 
     void GiveBaseStats() {
+        Debug.Log(this.name + " give base stats");
+        playerStatsManager.weaponDamage += baseDamage;
+        playerStatsManager.weaponRange += baseRange;
+        playerStatsManager.meleeSpeed += baseAttackSpeed;
+        playerStatsManager.rangedSpeed += baseAttackSpeed;
+        playerStatsManager.projectileBounce += baseBounce;
+        playerStatsManager.armor += baseArmor;
+        playerStatsManager.strength += baseStrenght;
+        playerStatsManager.intelligence += baseIntelligence;
+    }
+
+    void TakeBaseStats() {
+        Debug.Log(this.name + " take base stats");
+        playerStatsManager.weaponDamage -= baseDamage;
+        playerStatsManager.weaponRange -= baseRange;
+        playerStatsManager.meleeSpeed -= baseAttackSpeed;
+        playerStatsManager.rangedSpeed -= baseAttackSpeed;
+        playerStatsManager.projectileBounce -= baseBounce;
+        playerStatsManager.armor -= baseArmor;
+        playerStatsManager.strength -= baseStrenght;
+        playerStatsManager.intelligence -= baseIntelligence;
 
     }
 
-    void TaheBaseStats() { 
-    
+    private void OnEnable() {
+        GiveBaseStats();
+    }
+
+    private void OnDisable() {
+        TakeBaseStats();
     }
 }

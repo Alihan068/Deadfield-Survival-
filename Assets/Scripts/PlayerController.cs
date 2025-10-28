@@ -11,18 +11,19 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] float startDashTime = 1f;
     [SerializeField] float dashSpeed = 10f;
+    [SerializeField] GameObject weaponManager;
     float currentDashTime;
 
     bool canDash = true;
     bool playerCollision = true;
 
-    Weapon weapon;
+    public Weapon weapon;
 
     Vector3 moveInput;
     bool isAlive = true;
 
     void Start() {
-        weapon = GetComponent<Weapon>();
+        weapon = GetComponentInChildren<Weapon>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
     }
@@ -46,9 +47,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (weapon.weaponType == WeaponType.Ranged) {
             //RANGED WEAPON BEHAVIOR
-            Vector2 mouseDir = Input.mousePosition.normalized;
-            Vector2 dirToMouse = transform.rotation * mouseDir;
-
+            
         }
         else {
             //MIXED WEAPONBEHAVIOR
@@ -59,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        AimForMouse();
         Walk();
     }
 
@@ -74,6 +74,13 @@ public class PlayerController : MonoBehaviour {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
             animator.SetBool("isWalking", hasHorizontal);
         }
+    }
+
+    void AimForMouse () {
+        Vector2 mouseDir = Input.mousePosition.normalized;
+        Vector2 dirToMouse = transform.rotation * mouseDir;
+        //weaponManager.transform.position = weaponManager.transform.rotation * dirToMouse;
+        weaponManager.transform.up = Input.mousePosition - transform.position;
     }
     IEnumerator Dash() {
         Debug.Log("DashCoroutine");
@@ -97,8 +104,10 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, playerStatsManager.weaponRange);
+        if (playerStatsManager != null) {
+            Gizmos.DrawWireSphere(transform.position, playerStatsManager.playerBaseRange);
+        }
     }
 }

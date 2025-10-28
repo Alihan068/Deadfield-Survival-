@@ -5,16 +5,16 @@ public enum WeaponType {
     Ranged,
     Mixed,
 }
-public class Weapon : MonoBehaviour
-{
+public class Weapon : MonoBehaviour {
 
 
     PlayerStatsManager playerStatsManager;
+    PlayerController playerController;
 
     public WeaponType weaponType;
 
-    [SerializeField] float baseDamage = 0f;
-    [SerializeField] float baseRange = 0f;
+    [SerializeField] float weaponDamage = 0f;
+    [SerializeField] float weaponRange = 0f;
     [SerializeField] float baseAttackSpeed = 0f;
     [SerializeField] float baseBounce = 0f;
 
@@ -23,15 +23,16 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] float baseIntelligence = 0f;
 
-    private void Start() {
+    private void Awake() {
+        playerController = GetComponentInParent<PlayerController>();
         playerStatsManager = GetComponentInParent<PlayerStatsManager>();
 
     }
 
     void GiveBaseStats() {
         Debug.Log(this.name + " give base stats");
-        playerStatsManager.weaponDamage += baseDamage;
-        playerStatsManager.weaponRange += baseRange;
+        playerStatsManager.playerBaseDamage += weaponDamage;
+        playerStatsManager.playerBaseRange += weaponRange;
         playerStatsManager.meleeSpeed += baseAttackSpeed;
         playerStatsManager.rangedSpeed += baseAttackSpeed;
         playerStatsManager.projectileBounce += baseBounce;
@@ -42,8 +43,8 @@ public class Weapon : MonoBehaviour
 
     void TakeBaseStats() {
         Debug.Log(this.name + " take base stats");
-        playerStatsManager.weaponDamage -= baseDamage;
-        playerStatsManager.weaponRange -= baseRange;
+        playerStatsManager.playerBaseDamage -= weaponDamage;
+        playerStatsManager.playerBaseRange -= weaponRange;
         playerStatsManager.meleeSpeed -= baseAttackSpeed;
         playerStatsManager.rangedSpeed -= baseAttackSpeed;
         playerStatsManager.projectileBounce -= baseBounce;
@@ -54,6 +55,7 @@ public class Weapon : MonoBehaviour
     }
 
     private void OnEnable() {
+        playerController.weapon = this;
         GiveBaseStats();
     }
 

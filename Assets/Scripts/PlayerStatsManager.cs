@@ -27,7 +27,7 @@ public class PlayerStatsManager : MonoBehaviour {
     public float dodgeChance;
     public float explosionSize;
     public float explosionDamage;
-    public float weaponDamage;
+    public float playerBaseDamage;
     [Header("General Defensive")]
     public float damageReduction;
     public float stunResistance;
@@ -40,7 +40,7 @@ public class PlayerStatsManager : MonoBehaviour {
     public float weaponSize;
 
     [Header("Ranged Attributes")]
-    public float weaponRange;
+    public float playerBaseRange;
     public float rangedSpeed;
     public float rangedDamage;
     public float projectileAmount;
@@ -109,7 +109,7 @@ public class PlayerStatsManager : MonoBehaviour {
                 explosionDamage = ModifyStatBasedOnvariables(explosionDamage, effect.effectValue, effect.ifIncrease, effect.isPercentage);
                 break;
             case TargetStat.weaponDamage:
-                weaponDamage = ModifyStatBasedOnvariables(weaponDamage, effect.effectValue, effect.ifIncrease, effect.isPercentage);
+                playerBaseDamage = ModifyStatBasedOnvariables(playerBaseDamage, effect.effectValue, effect.ifIncrease, effect.isPercentage);
                 break;
             case TargetStat.damageReduction:
                 damageReduction = ModifyStatBasedOnvariables(damageReduction, effect.effectValue, effect.ifIncrease, effect.isPercentage);
@@ -133,7 +133,7 @@ public class PlayerStatsManager : MonoBehaviour {
                 weaponSize = ModifyStatBasedOnvariables(weaponSize, effect.effectValue, effect.ifIncrease, effect.isPercentage);
                 break;
             case TargetStat.weaponRange:
-                weaponRange = ModifyStatBasedOnvariables(weaponRange, effect.effectValue, effect.ifIncrease, effect.isPercentage);
+                playerBaseRange = ModifyStatBasedOnvariables(playerBaseRange, effect.effectValue, effect.ifIncrease, effect.isPercentage);
                 break;
             case TargetStat.rangedSpeed:
                 rangedSpeed = ModifyStatBasedOnvariables(rangedSpeed, effect.effectValue, effect.ifIncrease, effect.isPercentage);

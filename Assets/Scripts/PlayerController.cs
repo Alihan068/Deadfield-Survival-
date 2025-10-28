@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour {
         }
         else if (weapon.weaponType == WeaponType.Ranged) {
             //RANGED WEAPON BEHAVIOR
+            Vector2 mouseDir = Input.mousePosition.normalized;
+            Vector2 dirToMouse = transform.rotation * mouseDir;
+
         }
         else {
             //MIXED WEAPONBEHAVIOR
@@ -92,5 +95,10 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(playerStatsManager.dashCooldown);
         canDash = true;
 
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerStatsManager.weaponRange);
     }
 }

@@ -13,7 +13,7 @@ public class HealthManager : MonoBehaviour
     EnemyController enemyController;
 
     public float maxHealthPoint = 100;
-    public float knockbackAmount = 10f;
+    public float knockbackMultiplier = 10f;
     [SerializeField] float knockbackStagger = 0.15f;
     bool isKnocked;
 
@@ -35,7 +35,7 @@ public class HealthManager : MonoBehaviour
         calculatedDamage = rawDamage;
         TakeFinalDamage(calculatedDamage);
     }
-
+    
     public void GetKnockback(Transform source, float amount) {
         if (rb2d == null) {
             Debug.LogError("Rigidbody2D is null!");
@@ -45,7 +45,7 @@ public class HealthManager : MonoBehaviour
         rb2d.linearVelocity = Vector2.zero;
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-        rb2d.AddForce(knockbackDirection * amount * knockbackAmount, ForceMode2D.Impulse);
+        rb2d.AddForce(knockbackDirection * (amount - statsManager.strength) * knockbackMultiplier, ForceMode2D.Impulse);
 
         if (!isKnocked) StartCoroutine(KnockbackPause());
     }

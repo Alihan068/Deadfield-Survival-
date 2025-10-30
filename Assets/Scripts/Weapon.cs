@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour {
     public WeaponType weaponType;
     public LayerMask weaponTargetLayer;
 
+    [SerializeField] GameObject ammoPrefab;
+
     [SerializeField] float weaponDamage = 0f;
     [SerializeField] float weaponRange = 0f;
     [SerializeField] float baseAttackSpeed = 0f;
@@ -33,8 +35,15 @@ public class Weapon : MonoBehaviour {
 
     }
 
-    public void AttackWithWeapon() {
+    public void AttackAnimation() {
         animator.SetTrigger("isAttacking");
+    }
+
+    public void RangedAttack() {
+        while (true) {
+            Instantiate(ammoPrefab, transform.position, Quaternion.identity);
+        break;
+        }
     }
 
     void GiveBaseStats() {
@@ -75,6 +84,6 @@ public class Weapon : MonoBehaviour {
         if (enemyHealthManager == null) return;
 
         enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        enemyHealthManager.GetKnockback(transform, baseStrenght);
+        enemyHealthManager.GetKnockback(transform, statsManager.strength);
     }
 }

@@ -19,6 +19,7 @@ public class StatsManager : MonoBehaviour {
     [Header("Base Stats")]
     public float extraHealth = 0f;
     public float baseRange;
+    [Tooltip("Effects Knockback-KnockbackResistance")]
     public float strength = 5f;
     public float intelligence = 2f; 
     public float vitality = 5f;

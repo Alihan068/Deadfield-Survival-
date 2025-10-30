@@ -13,13 +13,14 @@ public class EnemyController : MonoBehaviour {
 
     [SerializeField] float attackZoneValue;
     float minRange;
+    [SerializeField] float chargeSpeed = 2f;
     [SerializeField] float chargeCooldown = 2f;
     [SerializeField] float chargeTime = 2f;
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
     Animator animator;
-    Coroutine coroutine;
+    Coroutine chargeCoroutine;
     PlayerController playerController;
 
     public bool canMove = true;
@@ -37,10 +38,6 @@ public class EnemyController : MonoBehaviour {
         EnemyBaseStatImplementation(enemyType);
     }
 
-    private void Update() {
-
-        
-    }
     void FixedUpdate() {
         if(!canMove) return;
 
@@ -97,26 +94,30 @@ public class EnemyController : MonoBehaviour {
     }
 
     void ChargerMovement() {
-        if (distanceToPlayer <= statsManager.baseRange && coroutine == null) {
-            StartCoroutine(ChargeTarget(playerController.transform));
+        if (distanceToPlayer <= statsManager.baseRange) {
+            if (chargeCoroutine == null) {
+                chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
+            }
+            return;
         }
         else if (distanceToPlayer > statsManager.baseRange) {
-            if (coroutine == null) {
+            if (chargeCoroutine == null) {
                 ChaseTarget(playerController.transform);
                 return; 
             }
         }
-        rb2d.linearVelocity = Vector2.zero;
     }
     IEnumerator ChargeTarget(Transform target) {
-        canMove = false;
+        rb2d.linearVelocity = Vector2.zero;
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return new WaitForSeconds(1);
         Debug.Log("Charge!");
-        transform.Translate(direction * statsManager.moveSpeed * Time.deltaTime * chargeTime);
+        rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
+        yield return new WaitForSeconds(chargeTime);
+        rb2d.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(chargeCooldown);
-        canMove = true;
+        chargeCoroutine = null;
     }
 
     void ChaseTarget(Transform target) {
@@ -143,6 +144,7 @@ public class EnemyController : MonoBehaviour {
                 statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
+                statsManager.strength += 5;
                 break;
         }
     }

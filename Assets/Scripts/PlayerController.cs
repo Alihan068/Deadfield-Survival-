@@ -48,11 +48,12 @@ public class PlayerController : MonoBehaviour {
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
         if (weapon.weaponType == WeaponType.Melee) {
-            weapon.AttackWithWeapon();
+            weapon.AttackAnimation();
             //MELEE WEAPON BEHAVIOR
         }
         else if (weapon.weaponType == WeaponType.Ranged) {
             //RANGED WEAPON BEHAVIOR
+            weapon.RangedAttack();
             
         }
         else {

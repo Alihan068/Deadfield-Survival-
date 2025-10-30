@@ -1,17 +1,20 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyType {
     Melee,
     Ranged,
-    Dasher,
+    Charger,
 }
 public class EnemyController : MonoBehaviour {
 
     //[SerializeField] CollectibleItemSO baseStats;
     [SerializeField] EnemyType enemyType;
 
-    [SerializeField] float kiteRange;
+    [SerializeField] float attackZoneValue;
     float minRange;
+    [SerializeField] float chargeCooldown = 2f;
+    [SerializeField] float chargeTime = 2f;
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
@@ -35,12 +38,15 @@ public class EnemyController : MonoBehaviour {
     }
 
     private void Update() {
-        if (!canMove) return;
-        CalculateDistanceToPlayer();
+
+        
     }
     void FixedUpdate() {
-        if (!canMove) return;
+        if(!canMove) return;
+
+        CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
+
     }
     void CalculateDistanceToPlayer() {
         rotationToPlayer = (transform.position - playerController.transform.position).normalized;
@@ -56,10 +62,11 @@ public class EnemyController : MonoBehaviour {
             case EnemyType.Ranged:
                 RangedEnemyMovement();
                 break;
-            case EnemyType.Dasher:
+            case EnemyType.Charger:
+                ChargerMovement();
                 break;
         }
-
+        
     }
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
@@ -68,30 +75,62 @@ public class EnemyController : MonoBehaviour {
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+            rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);  
+            return;
         }
+        rb2d.linearVelocity = Vector2.zero;
     }
 
     void RangedEnemyMovement() {
         if (distanceToPlayer <= minRange) {
             RunFromTarget(playerController.transform);
+            return;
+            
         } else if ( distanceToPlayer >= statsManager.baseRange) {
             ChaseTarget(playerController.transform);
+            return;
         } else {     
             Debug.Log("RangedAttack!");
         }
+
+        rb2d.linearVelocity = Vector2.zero;
+    }
+
+    void ChargerMovement() {
+        if (distanceToPlayer <= statsManager.baseRange && coroutine == null) {
+            StartCoroutine(ChargeTarget(playerController.transform));
+        }
+        else if (distanceToPlayer > statsManager.baseRange) {
+            if (coroutine == null) {
+                ChaseTarget(playerController.transform);
+                return; 
+            }
+        }
+        rb2d.linearVelocity = Vector2.zero;
+    }
+    IEnumerator ChargeTarget(Transform target) {
+        canMove = false;
+        Debug.Log("Wait");
+        Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
+        yield return new WaitForSeconds(1);
+        Debug.Log("Charge!");
+        transform.Translate(direction * statsManager.moveSpeed * Time.deltaTime * chargeTime);
+        yield return new WaitForSeconds(chargeCooldown);
+        canMove = true;
     }
 
     void ChaseTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+        //rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+        rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
     }
 
     void RunFromTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        rb2d.MovePosition(rb2d.position - directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+        //rb2d.MovePosition(rb2d.position + -directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+        rb2d.linearVelocity = -directionNormalized * statsManager.moveSpeed;
     }
 
     void EnemyBaseStatImplementation(EnemyType enemyType) {
@@ -99,10 +138,11 @@ public class EnemyController : MonoBehaviour {
             case EnemyType.Melee:
 
                 break;
-            case EnemyType.Ranged:
-                minRange = statsManager.baseRange - kiteRange;
+            case EnemyType.Ranged:          
+                minRange = statsManager.baseRange;
+                statsManager.baseRange += attackZoneValue;
                 break;
-            case EnemyType.Dasher:
+            case EnemyType.Charger:
                 break;
         }
     }

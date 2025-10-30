@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     StatsManager playerStatsManager;
     Rigidbody2D rb2d;
     Animator animator;
+
     Coroutine coroutine;
 
     [SerializeField] float startDashTime = 1f;
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour {
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
         if (weapon.weaponType == WeaponType.Melee) {
+            weapon.AttackWithWeapon();
             //MELEE WEAPON BEHAVIOR
         }
         else if (weapon.weaponType == WeaponType.Ranged) {

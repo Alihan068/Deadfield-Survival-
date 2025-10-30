@@ -9,6 +9,7 @@ public class StatsManager : MonoBehaviour {
 
     public bool isPlayer;
     public int playerIndex = 0;
+    public bool canCollectItems = false;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -31,6 +32,7 @@ public class StatsManager : MonoBehaviour {
     public float explosionSize;
     public float explosionDamage;
     public float baseDamage;
+
     [Header("General Defensive")]
     public float damageReduction;
     public float stunResistance;
@@ -44,7 +46,6 @@ public class StatsManager : MonoBehaviour {
     public float weaponSize;
 
     [Header("Ranged Attributes")]
-
     public float rangedSpeed;
     public float rangedDamage;
     public float projectileAmount;

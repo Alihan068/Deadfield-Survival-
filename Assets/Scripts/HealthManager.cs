@@ -1,12 +1,16 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class HealthManager : MonoBehaviour
 {
     StatsManager statsManager;
     PlayerController controller;
+    Rigidbody2D rb2d;
     public float maxHealthPoint = 100;
+    public float knockbackAmount = 10f;
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
     void Start()
     {
@@ -27,6 +31,12 @@ public class HealthManager : MonoBehaviour
         calculatedDamage = rawDamage;
         TakeFinalDamage(calculatedDamage);
     }
+
+    public void GetKnockback(Transform resource, float amount) {
+        Vector2 toTarget = (Vector2)resource.position - rb2d.position;
+        Vector2 directionNormalized = toTarget.normalized;
+        rb2d.AddForce(-directionNormalized * amount * knockbackAmount, ForceMode2D.Impulse);
+    }
     void TakeFinalDamage(float damage) {
         if (damage > maxHealthPoint) {
             DeathSequence();
@@ -34,12 +44,13 @@ public class HealthManager : MonoBehaviour
 
         else {
             maxHealthPoint -= damage;
-            Debug.Log("Player took " + damage + "damage! \nRemaining hp: " + maxHealthPoint);
+            Debug.Log(this.name +" took " + damage + "damage! \nRemaining hp: " + maxHealthPoint);
         }
     }
 
     void DeathSequence() {
         controller.canMove = false;
+        Destroy(gameObject, 3);
     }
 
     

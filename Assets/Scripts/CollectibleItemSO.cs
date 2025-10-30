@@ -1,5 +1,7 @@
+using System.Collections;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum ItemRarity {
     common,
@@ -52,15 +54,18 @@ public enum TargetStat {
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]
 public class CollectibleItemSO : ScriptableObject
 {
-    [Serializable]
+    [SerializeField] SpriteRenderer spriteRenderer;
+
+    public ItemRarity itemRarity;
+    [Serializable]   
     public class ItemEffect {
-        public TargetStat targetStat;
-        public ItemRarity itemRarity;
+        public TargetStat targetStat;   
         public float effectValue;
         public bool ifIncrease = true;
         public bool ifPercentage = false;
     }
   
+    public List<ItemEffect> itemEffects = new List<ItemEffect>();
     StatsManager playerStatsManager;
     
 }

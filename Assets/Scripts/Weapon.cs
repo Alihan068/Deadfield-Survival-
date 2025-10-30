@@ -8,8 +8,9 @@ public enum WeaponType {
 public class Weapon : MonoBehaviour {
 
 
-    StatsManager playerStatsManager;
-    PlayerController playerController;
+    StatsManager statsManager;
+    PlayerController controller;
+    Animator animator;
 
     public WeaponType weaponType;
     public LayerMask weaponTargetLayer;
@@ -26,41 +27,54 @@ public class Weapon : MonoBehaviour {
 
 
     private void Awake() {
-        playerController = GetComponentInParent<PlayerController>();
-        playerStatsManager = GetComponentInParent<StatsManager>();
+        controller = GetComponentInParent<PlayerController>();
+        statsManager = GetComponentInParent<StatsManager>();
+        animator = GetComponent<Animator>();
 
+    }
+
+    public void AttackWithWeapon() {
+        animator.SetTrigger("isAttacking");
     }
 
     void GiveBaseStats() {
         Debug.Log(this.name + " active");
-        playerStatsManager.baseDamage += weaponDamage;
-        playerStatsManager.baseRange += weaponRange;
-        playerStatsManager.meleeSpeed += baseAttackSpeed;
-        playerStatsManager.rangedSpeed += baseAttackSpeed;
-        playerStatsManager.projectileBounce += baseBounce;
-        playerStatsManager.armor += baseArmor;
-        playerStatsManager.strength += baseStrenght;
-        playerStatsManager.intelligence += baseIntelligence;
+        statsManager.baseDamage += weaponDamage;
+        statsManager.baseRange += weaponRange;
+        statsManager.meleeSpeed += baseAttackSpeed;
+        statsManager.rangedSpeed += baseAttackSpeed;
+        statsManager.projectileBounce += baseBounce;
+        statsManager.armor += baseArmor;
+        statsManager.strength += baseStrenght;
+        statsManager.intelligence += baseIntelligence;
     }
 
     void TakeBaseStats() {
-        playerStatsManager.baseDamage -= weaponDamage;
-        playerStatsManager.baseRange -= weaponRange;
-        playerStatsManager.meleeSpeed -= baseAttackSpeed;
-        playerStatsManager.rangedSpeed -= baseAttackSpeed;
-        playerStatsManager.projectileBounce -= baseBounce;
-        playerStatsManager.armor -= baseArmor;
-        playerStatsManager.strength -= baseStrenght;
-        playerStatsManager.intelligence -= baseIntelligence;
+        statsManager.baseDamage -= weaponDamage;
+        statsManager.baseRange -= weaponRange;
+        statsManager.meleeSpeed -= baseAttackSpeed;
+        statsManager.rangedSpeed -= baseAttackSpeed;
+        statsManager.projectileBounce -= baseBounce;
+        statsManager.armor -= baseArmor;
+        statsManager.strength -= baseStrenght;
+        statsManager.intelligence -= baseIntelligence;
 
     }
 
     private void OnEnable() {
-        playerController.weapon = this;
+        controller.weapon = this;
         GiveBaseStats();
     }
 
     private void OnDisable() {
         TakeBaseStats();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
+        if (enemyHealthManager == null) return;
+
+        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+        enemyHealthManager.GetKnockback(transform, baseStrenght);
     }
 }

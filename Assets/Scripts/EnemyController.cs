@@ -1,20 +1,25 @@
 using UnityEngine;
 
 public enum EnemyType {
-
-    Regular,
+    Melee,
     Ranged,
     Dasher,
 }
 public class EnemyController : MonoBehaviour {
 
-    [SerializeField] EnemySO enemySO;
+    //[SerializeField] CollectibleItemSO baseStats;
+    [SerializeField] EnemyType enemyType;
+
+    [SerializeField] float kiteRange;
+    float minRange;
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
     Animator animator;
     Coroutine coroutine;
     PlayerController playerController;
+
+    public bool canMove = true;
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
@@ -26,13 +31,16 @@ public class EnemyController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerController = FindAnyObjectByType<PlayerController>();
+        EnemyBaseStatImplementation(enemyType);
     }
 
     private void Update() {
+        if (!canMove) return;
         CalculateDistanceToPlayer();
     }
     void FixedUpdate() {
-        EnemyMoveBehavior(enemySO.enemyType);
+        if (!canMove) return;
+        EnemyMoveBehavior(enemyType);
     }
     void CalculateDistanceToPlayer() {
         rotationToPlayer = (transform.position - playerController.transform.position).normalized;
@@ -40,8 +48,9 @@ public class EnemyController : MonoBehaviour {
     }
 
     void EnemyMoveBehavior(EnemyType enemyType) {
+        
         switch (enemyType) {
-            case EnemyType.Regular:
+            case EnemyType.Melee:
                 MeleeEnemyMovement();
                 break;
             case EnemyType.Ranged:
@@ -49,23 +58,8 @@ public class EnemyController : MonoBehaviour {
                 break;
             case EnemyType.Dasher:
                 break;
-
         }
 
-    }
-
-    void ApplyStatsBasedOnType(EnemyType enemyType) {
-        switch (enemyType) {
-            case EnemyType.Regular:
-
-                break;
-            case EnemyType.Ranged:
-
-                break;
-            case EnemyType.Dasher:
-                break;
-
-        }
     }
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
@@ -79,10 +73,37 @@ public class EnemyController : MonoBehaviour {
     }
 
     void RangedEnemyMovement() {
-        if (distanceToPlayer <= statsManager.baseRange) {
-            Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
-            Vector2 directionNormalized = toTarget.normalized;
-            rb2d.MovePosition(rb2d.position - directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+        if (distanceToPlayer <= minRange) {
+            RunFromTarget(playerController.transform);
+        } else if ( distanceToPlayer >= statsManager.baseRange) {
+            ChaseTarget(playerController.transform);
+        } else {     
+            Debug.Log("RangedAttack!");
+        }
+    }
+
+    void ChaseTarget(Transform target) {
+        Vector2 toTarget = (Vector2)target.position - rb2d.position;
+        Vector2 directionNormalized = toTarget.normalized;
+        rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+    }
+
+    void RunFromTarget(Transform target) {
+        Vector2 toTarget = (Vector2)target.position - rb2d.position;
+        Vector2 directionNormalized = toTarget.normalized;
+        rb2d.MovePosition(rb2d.position - directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
+    }
+
+    void EnemyBaseStatImplementation(EnemyType enemyType) {
+        switch (enemyType) {
+            case EnemyType.Melee:
+
+                break;
+            case EnemyType.Ranged:
+                minRange = statsManager.baseRange - kiteRange;
+                break;
+            case EnemyType.Dasher:
+                break;
         }
     }
 

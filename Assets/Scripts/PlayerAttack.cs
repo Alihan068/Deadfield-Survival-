@@ -3,13 +3,13 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     WeaponSwitcher weaponSwitcher;
-    PlayerStatsManager playerStatsManager;
+    StatsManager playerStatsManager;
     Weapon weapon;
     
     void Start()
     {
         weapon = GetComponentInChildren<Weapon>();
-        playerStatsManager = GetComponent<PlayerStatsManager>();
+        playerStatsManager = GetComponent<StatsManager>();
         weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
     }
 
@@ -30,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
         if (playerStatsManager != null) {
-            Gizmos.DrawWireSphere(weapon.transform.position, playerStatsManager.playerBaseRange);
+            Gizmos.DrawWireSphere(weapon.transform.position, playerStatsManager.baseRange);
         }
     }
 }

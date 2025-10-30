@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
 
-    PlayerStatsManager playerStatsManager;
+    StatsManager playerStatsManager;
     Rigidbody2D rb2d;
     Animator animator;
     Coroutine coroutine;
@@ -27,8 +27,9 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
         weapon = GetComponentInChildren<Weapon>();
-        playerStatsManager = GetComponent<PlayerStatsManager>();
+        playerStatsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
     void OnMove(InputValue value) {
         if (!isAlive) return;
@@ -123,7 +124,11 @@ public class PlayerController : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         if (playerStatsManager != null) {
-            Gizmos.DrawWireSphere(transform.position, playerStatsManager.playerBaseRange);
+            Gizmos.DrawWireSphere(transform.position, playerStatsManager.baseRange);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        
     }
 }

@@ -8,7 +8,7 @@ public enum WeaponType {
 public class Weapon : MonoBehaviour {
 
 
-    PlayerStatsManager playerStatsManager;
+    StatsManager playerStatsManager;
     PlayerController playerController;
 
     public WeaponType weaponType;
@@ -27,14 +27,14 @@ public class Weapon : MonoBehaviour {
 
     private void Awake() {
         playerController = GetComponentInParent<PlayerController>();
-        playerStatsManager = GetComponentInParent<PlayerStatsManager>();
+        playerStatsManager = GetComponentInParent<StatsManager>();
 
     }
 
     void GiveBaseStats() {
-        Debug.Log(this.name + " give base stats");
-        playerStatsManager.playerBaseDamage += weaponDamage;
-        playerStatsManager.playerBaseRange += weaponRange;
+        Debug.Log(this.name + " active");
+        playerStatsManager.baseDamage += weaponDamage;
+        playerStatsManager.baseRange += weaponRange;
         playerStatsManager.meleeSpeed += baseAttackSpeed;
         playerStatsManager.rangedSpeed += baseAttackSpeed;
         playerStatsManager.projectileBounce += baseBounce;
@@ -44,9 +44,8 @@ public class Weapon : MonoBehaviour {
     }
 
     void TakeBaseStats() {
-        Debug.Log(this.name + " take base stats");
-        playerStatsManager.playerBaseDamage -= weaponDamage;
-        playerStatsManager.playerBaseRange -= weaponRange;
+        playerStatsManager.baseDamage -= weaponDamage;
+        playerStatsManager.baseRange -= weaponRange;
         playerStatsManager.meleeSpeed -= baseAttackSpeed;
         playerStatsManager.rangedSpeed -= baseAttackSpeed;
         playerStatsManager.projectileBounce -= baseBounce;

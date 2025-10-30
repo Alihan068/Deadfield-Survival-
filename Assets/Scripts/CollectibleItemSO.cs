@@ -12,7 +12,7 @@ public enum ItemRarity {
 }
 
 public enum TargetStat {
-
+    extraHealth,
     dashCooldown,
     jumpCooldown,
     strength,
@@ -58,13 +58,10 @@ public class CollectibleItemSO : ScriptableObject
         public ItemRarity itemRarity;
         public float effectValue;
         public bool ifIncrease = true;
-        public bool isPercentage = false;
+        public bool ifPercentage = false;
     }
-
-    
-    PlayerStatsManager playerStatsManager;
-
-
+  
+    StatsManager playerStatsManager;
     
 }
 

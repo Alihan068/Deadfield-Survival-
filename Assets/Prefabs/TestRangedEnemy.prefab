@@ -50,7 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConroller
   enemyType: 1
-  kiteRange: 1
+  attackZoneValue: 1
+  chargeSpeed: 2
+  chargeCooldown: 1
+  chargeTime: 2
   canMove: 1
 --- !u!114 &4859991307130562853
 MonoBehaviour:
@@ -65,7 +68,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
   maxHealthPoint: 100
-  knockbackAmount: 1000
+  knockbackMultiplier: 1
+  knockbackStagger: 0.15
+  isUnstoppable: 0
+  deathSpin: 10
+  deathKick: 10
 --- !u!114 &6745140344639540113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,13 +86,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsManager
   isPlayer: 0
-  playerIndex: 0
   canCollectItems: 0
-  moveSpeed: 0
+  moveSpeed: 4
   dashCooldown: 1
   jumpCooldown: 0
   extraHealth: 0
-  baseRange: 4
+  baseRange: 3
   strength: 5
   intelligence: 2
   vitality: 5
@@ -109,7 +115,7 @@ MonoBehaviour:
   rangedDamage: 0
   projectileAmount: 0
   weaponBurst: 0
-  projectileBounce: 0
+  projectileSpeed: 1
   projectileSize: 0
   spread: 0
   burnDamage: 0

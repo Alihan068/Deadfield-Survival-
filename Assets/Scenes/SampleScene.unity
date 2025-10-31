@@ -171,38 +171,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2236397394434506279, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285426468653309137, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: enemyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285426468653309137, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: chargeTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285426468653309137, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: chargeCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285426468653309137, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: attackZoneValue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4859991307130562853, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: knockbackAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4859991307130562853, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: knockbackMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6745140344639540113, guid: 37e7c5b89b37fb442be467e52bf4929c, type: 3}
-      propertyPath: moveSpeed
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

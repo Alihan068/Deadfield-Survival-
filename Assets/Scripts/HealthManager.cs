@@ -1,4 +1,6 @@
 using System.Collections;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.Cinemachine.CinemachineTargetGroup;
 using static UnityEngine.GraphicsBuffer;
@@ -8,13 +10,14 @@ public class HealthManager : MonoBehaviour
 
     Coroutine knockbackCoroutine;
     StatsManager statsManager;
-    PlayerController controller;
+    PlayerController playerController;
     Rigidbody2D rb2d;
     EnemyController enemyController;
 
     public float maxHealthPoint = 100;
     public float knockbackMultiplier = 10f;
     [SerializeField] float knockbackStagger = 0.15f;
+    public bool isUnstoppable = false;
     bool isKnocked;
 
     private void OnEnable() {
@@ -25,7 +28,9 @@ public class HealthManager : MonoBehaviour
     {
         statsManager = GetComponent<StatsManager>();
         if (statsManager.isPlayer) { 
-            controller = GetComponent<PlayerController>(); 
+            playerController = GetComponent<PlayerController>(); 
+        } else {
+            enemyController = GetComponent<EnemyController>();
         }
 
     }
@@ -41,7 +46,17 @@ public class HealthManager : MonoBehaviour
             Debug.LogError("Rigidbody2D is null!");
             return;
         }
-
+        if (isUnstoppable) {
+            Debug.Log(this.name + ("isUnstopabble!"));
+            return;
+        }
+        //TODO: convert to interrupt method in the controller scripts if any additions will be added.
+        if (statsManager.isPlayer) {
+            playerController.StopAllCoroutines();
+        }
+        else {
+            enemyController.StopAllCoroutines();
+        }
         rb2d.linearVelocity = Vector2.zero;
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
@@ -65,11 +80,12 @@ public class HealthManager : MonoBehaviour
         Destroy(gameObject, 3);
     }
     IEnumerator KnockbackPause() {
+        
         isKnocked = true;
         var enemy = GetComponent<EnemyController>();
         if (enemy != null) enemy.canMove = false;
-
-        yield return new WaitForSeconds(knockbackStagger);
+        float knockStun = knockbackStagger - (statsManager.strength / 100);
+        yield return new WaitForSeconds(Mathf.Clamp(knockStun,0,float.MaxValue));
 
         if (enemy != null) enemy.canMove = true;
         isKnocked = false;

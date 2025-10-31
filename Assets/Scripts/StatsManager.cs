@@ -8,57 +8,56 @@ using static UnityEngine.ParticleSystem;
 public class StatsManager : MonoBehaviour {
 
     public bool isPlayer;
-    public int playerIndex = 0;
+    //public int playerIndex = 0;
     public bool canCollectItems = false;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float dashCooldown = 1f;
-    public float jumpCooldown;
+    public float jumpCooldown = 1f;
 
     [Header("Base Stats")]
-    public float extraHealth = 0f;
-    public float baseRange;
+    public float extraHealth = 1f;
+    public float baseRange = 1f;
     [Tooltip("Effects Knockback-KnockbackResistance")]
     public float strength = 5f;
     public float intelligence = 2f; 
     public float vitality = 5f;
     public float armor = 1f;
-    public float playerSize;
-    public float haste;
-
+    public float playerSize = 1f;
+    public float haste = 1f;
     [Header("General Offensive")]
-    public float armorPen;
-    public float dodgeChance;
-    public float explosionSize;
-    public float explosionDamage;
-    public float baseDamage;
+    public float armorPen = 1f;
+    public float dodgeChance = 1f;
+    public float explosionSize = 1f;
+    public float explosionDamage = 1f;
+    public float baseDamage = 1f;
 
     [Header("General Defensive")]
-    public float damageReduction;
-    public float stunResistance;
-    public float debufResistance;
+    public float damageReduction = 1f;
+    public float stunResistance = 1f;
+    public float debufResistance = 1f;
 
     [Header("Melee Attributes")]
-    public float meleeSwipeAngle;
-    public float meleeDamage;
-    public float meleeSpeed;
-    public float parryCooldown;
-    public float weaponSize;
+    public float meleeSwipeAngle = 1f;
+    public float meleeDamage = 1f;
+    public float meleeSpeed = 1f;
+    public float parryCooldown = 1f;
+    public float weaponSize = 1f;
 
     [Header("Ranged Attributes")]
-    public float rangedSpeed;
-    public float rangedDamage;
-    public float projectileAmount;
-    public float weaponBurst;
-    public float projectileBounce;
-    public float projectileSize;
-    public float spread;
+    public float rangedSpeed = 1f;
+    public float rangedDamage = 1f;
+    public float projectileAmount = 1f;
+    public float weaponBurst = 1f;
+    public float projectileSpeed = 1f;
+    public float projectileSize = 1f;
+    public float spread = 1f;
 
     [Header("DOT Attributes")]
-    public float burnDamage;
-    public float poisonDamage;
-    public float diseaseDamage;
+    public float burnDamage = 1f;
+    public float poisonDamage = 1f;
+    public float diseaseDamage = 1f;
 
      float ModifyStatBasedOnvariables(float stat, float value, bool ifIncrease, bool ifPercentage) {
         float calculation;
@@ -158,7 +157,7 @@ public class StatsManager : MonoBehaviour {
                 weaponBurst = ModifyStatBasedOnvariables(weaponBurst, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
                 break;
             case TargetStat.projectileBounce:
-                projectileBounce = ModifyStatBasedOnvariables(projectileBounce, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                projectileSpeed = ModifyStatBasedOnvariables(projectileSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
                 break;
             case TargetStat.projectileSize:
                 projectileSize = ModifyStatBasedOnvariables(projectileSize, effect.effectValue, effect.ifIncrease, effect.ifPercentage);

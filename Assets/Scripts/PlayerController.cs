@@ -53,11 +53,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (weapon.weaponType == WeaponType.Ranged) {
             //RANGED WEAPON BEHAVIOR
-            weapon.RangedAttack();
-            
         }
         else {
-            //MIXED WEAPONBEHAVIOR
         }
 
 

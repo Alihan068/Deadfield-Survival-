@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour {
     Animator animator;
     Coroutine chargeCoroutine;
     PlayerController playerController;
+    HealthManager healthManager;
 
     public bool canMove = true;
 
@@ -31,6 +32,7 @@ public class EnemyController : MonoBehaviour {
         statsManager = GetComponent<StatsManager>();
     }
     void OnEnable() {
+        healthManager = GetComponent<HealthManager>();
         statsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -112,9 +114,11 @@ public class EnemyController : MonoBehaviour {
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return new WaitForSeconds(1);
+        healthManager.isUnstoppable = true;
         Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
+        healthManager.isUnstoppable = false;
         rb2d.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(chargeCooldown);
         chargeCoroutine = null;
@@ -144,6 +148,8 @@ public class EnemyController : MonoBehaviour {
                 statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
+                healthManager.knockbackMultiplier = 50;
+                rb2d.mass += 50;
                 statsManager.strength += 5;
                 break;
         }

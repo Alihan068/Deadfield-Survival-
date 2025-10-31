@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 public enum WeaponType {
     Melee,
     Ranged,
     Mixed,
 }
+
 public class Weapon : MonoBehaviour {
-
-
     StatsManager statsManager;
     PlayerController controller;
     Animator animator;
@@ -21,7 +19,6 @@ public class Weapon : MonoBehaviour {
     public LayerMask weaponTargetLayer;
 
     [SerializeField] GameObject ammoPrefab;
-    [SerializeField] InputActionReference fireAction;
 
     [SerializeField] float weaponDamage = 1f;
     [SerializeField] float weaponRange = 1f;
@@ -33,9 +30,7 @@ public class Weapon : MonoBehaviour {
     [SerializeField] float intelligence = 1f;
     [SerializeField] float haste = 1f;
 
-    Coroutine firingLoop;
-
-    private void Awake() {
+    void Awake() {
         controller = GetComponentInParent<PlayerController>();
         statsManager = GetComponentInParent<StatsManager>();
         animator = GetComponent<Animator>();
@@ -69,26 +64,38 @@ public class Weapon : MonoBehaviour {
         statsManager.armor -= armor;
         statsManager.strength -= strength;
         statsManager.intelligence -= intelligence;
-
     }
 
-    private void OnEnable() {
+    void OnEnable() {
         controller.weapon = this;
         GiveBaseStats();
 
-        var action = fireAction.action;
-        action.Enable();
-        action.started += OnFireStarted;   // press down
-        action.canceled += OnFireCanceled; // release
+        if (projectilesParticleSystem != null) {
+            var main = projectilesParticleSystem.main;
+            main.loop = true;
+            main.startDelay = 0f;
+
+            var em = projectilesParticleSystem.emission;
+            em.enabled = false;
+
+            if (!projectilesParticleSystem.isPlaying)
+                projectilesParticleSystem.Play();
+        }
+    }
+
+    public void SetFiring(bool pressed) {
+        if (projectilesParticleSystem == null) return;
+        if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
+
+        if (pressed && particleAttack != null)
+            particleAttack.ParticleSystemPlay();
+
+        var em = projectilesParticleSystem.emission;
+        em.enabled = pressed;
     }
 
     private void OnDisable() {
         TakeBaseStats();
-
-        var a = fireAction.action;
-        a.started -= OnFireStarted;
-        a.canceled -= OnFireCanceled;
-        a.Disable();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -98,22 +105,4 @@ public class Weapon : MonoBehaviour {
         enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
         enemyHealthManager.GetKnockback(transform, statsManager.strength);
     }
-    void OnFireStarted(InputAction.CallbackContext ctx) {
-        if (firingLoop == null)
-            firingLoop = StartCoroutine(FireCoroutine());
-    }
-
-    void OnFireCanceled(InputAction.CallbackContext ctx) {
-        if (firingLoop != null) {
-            StopCoroutine(firingLoop);
-            firingLoop = null;
-        }
-    }
-    IEnumerator FireCoroutine() {
-        while (true) {
-            particleAttack.ParticleSystemPlay();
-            yield return new WaitForSeconds(0.001f);
-        }
-    }
-
 }

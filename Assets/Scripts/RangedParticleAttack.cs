@@ -8,6 +8,7 @@ public class RangedParticleAttack : MonoBehaviour {
 
     StatsManager statsManager;
     void Start() {
+        statsManager = GetComponentInParent<StatsManager>();
         particleSys = GetComponent<ParticleSystem>();
         emissionModule = particleSys.emission;
         mainModule = particleSys.main;
@@ -26,7 +27,7 @@ public class RangedParticleAttack : MonoBehaviour {
         shapeModule.randomDirectionAmount = statsManager.spread / 100;
 
     }
-   
+
 
     private void OnParticleCollision(GameObject other) {
         if (other == null || other.layer == this.gameObject.layer) {

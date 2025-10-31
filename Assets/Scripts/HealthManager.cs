@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class HealthManager : MonoBehaviour
 {
 
     Coroutine knockbackCoroutine;
+    Coroutine coroutine;
     StatsManager statsManager;
     PlayerController playerController;
     Rigidbody2D rb2d;
@@ -19,6 +21,9 @@ public class HealthManager : MonoBehaviour
     [SerializeField] float knockbackStagger = 0.15f;
     public bool isUnstoppable = false;
     bool isKnocked;
+
+    [SerializeField] float deathSpin = 10f;
+    [SerializeField] float deathKick = 10f;
 
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
@@ -76,9 +81,6 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-    void DeathSequence() {
-        Destroy(gameObject, 3);
-    }
     IEnumerator KnockbackPause() {
         
         isKnocked = true;
@@ -91,4 +93,43 @@ public class HealthManager : MonoBehaviour
         isKnocked = false;
     }
 
+    void DeathSequence() {
+
+        DeathEffects();
+        Destroy(gameObject, 3f);
+    }
+
+    void DeathEffects() {
+        if (statsManager.isPlayer) {
+            //Stop Camera on death area
+            FindAnyObjectByType<CinemachineCamera>().enabled = false;
+        }
+
+        //RedColorBlink
+        GetComponent<SpriteRenderer>().color = Color.red;
+        Invoke(nameof(ResetSpriteColor), 0.2f);
+        //Disable Colliders
+        Collider2D[] collider2Ds = GetComponents<Collider2D>();
+        foreach (Collider2D col in collider2Ds) {
+            col.enabled = false;
+        }
+        //DeathSpin
+        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+        rb2d.linearVelocity = Vector2.up * deathKick;
+        rb2d.freezeRotation = false;
+        rb2d.AddTorque(deathSpin, ForceMode2D.Impulse);
+
+        Invoke(nameof(StopSpin), 2f);
+
+        Invoke(nameof(DestroyPlayer), 5f);
+    }
+    void ResetSpriteColor() {
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    void StopSpin() {
+        rb2d.angularVelocity = 0f;
+    }
+    void DestroyPlayer() {
+        Destroy(gameObject);
+    }
 }

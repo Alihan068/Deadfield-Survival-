@@ -42,22 +42,21 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(Dash());
         }
     }
-
     void OnAttack(InputValue value) {
-
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
-        if (weapon.weaponType == WeaponType.Melee) {
-            weapon.AttackAnimation();
-            //MELEE WEAPON BEHAVIOR
-        }
-        else if (weapon.weaponType == WeaponType.Ranged) {
-            //RANGED WEAPON BEHAVIOR
-        }
-        else {
-        }
+        bool pressed = value.Get<float>() >= 1f;
+        Debug.Log($"OnAttack called - pressed: {pressed}");
 
+        switch (weapon.weaponType) {
+            case WeaponType.Melee:
+                if (pressed) weapon.AttackAnimation();
+                break;
 
+            case WeaponType.Ranged:
+                weapon.SetFiring(pressed);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -88,7 +87,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void AimForMouse () {
+    void AimForMouse() {
         var camera = Camera.main;
         Vector3 mouseDir = Mouse.current.position.ReadValue();
         mouseDir.z = Mathf.Abs(camera.transform.position.z - weaponSwitcher.transform.position.z);

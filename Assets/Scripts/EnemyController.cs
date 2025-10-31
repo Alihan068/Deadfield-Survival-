@@ -89,7 +89,7 @@ public class EnemyController : MonoBehaviour {
             ChaseTarget(playerController.transform);
             return;
         } else {     
-            Debug.Log("RangedAttack!");
+            //Debug.Log("RangedAttack!");
         }
 
         rb2d.linearVelocity = Vector2.zero;

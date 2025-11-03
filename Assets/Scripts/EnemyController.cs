@@ -159,7 +159,18 @@ public class EnemyController : MonoBehaviour {
         if (collision != null && collision.gameObject.CompareTag("Player")) {
             collision.gameObject.GetComponentInChildren<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
         }
+
+
     }
+    private void OnTriggerEnter2D(Collider2D collision) {
+        HealthManager targetHealthManager = collision.GetComponent<HealthManager>();
+        Debug.Log(this.name + (" trigger happened"));
+        if (targetHealthManager == null) return;
+
+        targetHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+        targetHealthManager.GetKnockback(transform, statsManager.strength);
+    }
+
 
     //private void OnDrawGizmos() {
     //    Gizmos.color = Color.yellow;

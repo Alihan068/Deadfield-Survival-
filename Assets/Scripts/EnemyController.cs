@@ -52,13 +52,13 @@ public class EnemyController : MonoBehaviour {
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
     }
     void FlipEnemyFacing() {
-
-        transform.localScale = new Vector2(Mathf.Sign(-rb2d.linearVelocity.x), 1f);
+        Debug.Log("Move");
+        transform.localScale = new Vector2((-Mathf.Sign(rb2d.linearVelocity.x)), transform.localScale.y);
     }
 
 
     void EnemyMoveBehavior(EnemyType enemyType) {
-        Debug.Log("Move");
+      
         FlipEnemyFacing();
         switch (enemyType) {
             case EnemyType.Melee:
@@ -98,9 +98,8 @@ public class EnemyController : MonoBehaviour {
             return;
         } else {
             rangedParticleAttack.ParticleSystemToggle(true);
-            Vector2 toTarget = (Vector2)playerController.transform.position - rb2d.position;
-            Vector2 directionNormalized = toTarget.normalized;
-            transform.localScale = new Vector2(Mathf.Sign(directionNormalized.x),1f);
+            float directionSign = Mathf.Sign(playerController.transform.position.x - transform.position.x);
+            transform.localScale = new Vector2(-directionSign, 1f);
             //Debug.Log("RangedAttack!");
 
         }

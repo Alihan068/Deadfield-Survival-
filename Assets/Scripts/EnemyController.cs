@@ -23,8 +23,7 @@ public class EnemyController : MonoBehaviour {
     Coroutine chargeCoroutine;
     PlayerController playerController;
     HealthManager healthManager;
-
-    public bool canMove = true;
+    RangedParticleAttack rangedParticleAttack;
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
@@ -34,14 +33,15 @@ public class EnemyController : MonoBehaviour {
     void OnEnable() {
         healthManager = GetComponent<HealthManager>();
         statsManager = GetComponent<StatsManager>();
+        rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerController = FindAnyObjectByType<PlayerController>();
         EnemyBaseStatImplementation(enemyType);
     }
 
-    void FixedUpdate() {
-        if(!canMove) return;
+    void Update() {
+        if(!statsManager.canMove) return;
 
         CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
@@ -82,14 +82,18 @@ public class EnemyController : MonoBehaviour {
 
     void RangedEnemyMovement() {
         if (distanceToPlayer <= minRange) {
+            rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             return;
             
         } else if ( distanceToPlayer >= statsManager.baseRange) {
+            rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             return;
-        } else {     
+        } else {
+            rangedParticleAttack.ParticleSystemToggle(true);
             //Debug.Log("RangedAttack!");
+            
         }
 
         rb2d.linearVelocity = Vector2.zero;
@@ -148,8 +152,8 @@ public class EnemyController : MonoBehaviour {
                 statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
-                healthManager.knockbackMultiplier = 50;
-                rb2d.mass += 50;
+                healthManager.baseKnockback = 50;
+                rb2d.mass += 10;
                 statsManager.strength += 5;
                 break;
         }
@@ -158,19 +162,9 @@ public class EnemyController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision != null && collision.gameObject.CompareTag("Player")) {
             collision.gameObject.GetComponentInChildren<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
+            collision.gameObject.GetComponentInChildren<HealthManager>().GetKnockback(transform, statsManager.strength);
         }
-
-
     }
-    private void OnTriggerEnter2D(Collider2D collision) {
-        HealthManager targetHealthManager = collision.GetComponent<HealthManager>();
-        Debug.Log(this.name + (" trigger happened"));
-        if (targetHealthManager == null) return;
-
-        targetHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        targetHealthManager.GetKnockback(transform, statsManager.strength);
-    }
-
 
     //private void OnDrawGizmos() {
     //    Gizmos.color = Color.yellow;

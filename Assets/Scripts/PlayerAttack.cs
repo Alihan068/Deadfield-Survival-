@@ -7,14 +7,13 @@ public class PlayerAttack : MonoBehaviour
     StatsManager statsManager;
     Weapon weapon;
 
-    bool isPlayer = false;
-    
+
+    bool canAttack = true;
     void Start()
     {
         weapon = GetComponentInChildren<Weapon>();
         statsManager = GetComponent<StatsManager>();
         weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
-        isPlayer = statsManager.isPlayer;
     }
 
     // Update is called once per frame
@@ -33,8 +32,12 @@ public class PlayerAttack : MonoBehaviour
         }
     }
     public IEnumerator MeleeAnimationAttack(Animator animator,float attackDelay) {
-        animator.SetTrigger("isAttacking");
-        yield return new WaitForSeconds(attackDelay);
+        if (canAttack) {
+            canAttack = false;
+            animator.SetTrigger("isAttacking");
+            yield return new WaitForSeconds(statsManager.meleeSpeed);
+            canAttack = true;
+        }
     }
 
 

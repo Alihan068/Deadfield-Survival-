@@ -88,7 +88,7 @@ public class Weapon : MonoBehaviour {
         if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
 
         if (pressed && particleAttack != null)
-            particleAttack.ParticleSystemPlay();
+            particleAttack.ParticleSystemUpdateStats();
 
         var em = projectilesParticleSystem.emission;
         em.enabled = pressed;

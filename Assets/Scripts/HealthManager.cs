@@ -3,8 +3,6 @@ using Unity.Cinemachine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.Cinemachine.CinemachineTargetGroup;
-using static UnityEngine.GraphicsBuffer;
 
 public class HealthManager : MonoBehaviour
 {
@@ -17,7 +15,7 @@ public class HealthManager : MonoBehaviour
     EnemyController enemyController;
 
     public float maxHealthPoint = 100;
-    public float knockbackMultiplier = 10f;
+    public float baseKnockback = 10f;
     [SerializeField] float knockbackStagger = 0.15f;
     public bool isUnstoppable = false;
     bool isKnocked;
@@ -42,11 +40,13 @@ public class HealthManager : MonoBehaviour
 
     public void CalculateIncomingDamage(float rawDamage) {
         float calculatedDamage;
+        //TODO: Add resistance calculations
         calculatedDamage = rawDamage;
         TakeFinalDamage(calculatedDamage);
     }
     
     public void GetKnockback(Transform source, float amount) {
+        Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
             Debug.LogError("Rigidbody2D is null!");
             return;
@@ -65,7 +65,10 @@ public class HealthManager : MonoBehaviour
         rb2d.linearVelocity = Vector2.zero;
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-        rb2d.AddForce(knockbackDirection * (amount - statsManager.strength) * knockbackMultiplier, ForceMode2D.Impulse);
+
+        float knockbackStrCompare = amount - statsManager.strength;
+
+        rb2d.AddForce(knockbackDirection * LogarithmicScale(knockbackStrCompare, 50) * baseKnockback, ForceMode2D.Impulse);
 
         if (!isKnocked) StartCoroutine(KnockbackPause());
     }
@@ -77,19 +80,17 @@ public class HealthManager : MonoBehaviour
 
         else {
             maxHealthPoint -= damage;
-            Debug.Log(this.name +" took " + damage + "damage! \nRemaining hp: " + maxHealthPoint);
+            Debug.Log(this.name +" took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
         }
     }
 
     IEnumerator KnockbackPause() {
-        
         isKnocked = true;
-        var enemy = GetComponent<EnemyController>();
-        if (enemy != null) enemy.canMove = false;
-        float knockStun = knockbackStagger - (statsManager.strength / 100);
-        yield return new WaitForSeconds(Mathf.Clamp(knockStun,0,float.MaxValue));
+        statsManager.canMove = false;
+        float knockStun = knockbackStagger; /*(statsManager.strength / 100)*/
+        yield return new WaitForSeconds(ClampedValue(knockStun));
 
-        if (enemy != null) enemy.canMove = true;
+        statsManager.canMove = true;
         isKnocked = false;
     }
 
@@ -132,4 +133,29 @@ public class HealthManager : MonoBehaviour
     void DestroyPlayer() {
         Destroy(gameObject);
     }
+
+    float ClampedValue(float value) { 
+    value = Mathf.Clamp(value, 0, float.MaxValue);
+        return value;
+    }
+
+    float ToPercent(float value, float max) {
+        if (max <= Mathf.Epsilon)
+            return 0f;
+
+        float ratio = value / max;
+        ratio = Mathf.Clamp01(ratio);
+        return ratio * 100f;
+    }
+    public float LogarithmicScale(float baseValue, float maxLimit) {
+        if (baseValue <= 0f)
+            return 0f;
+        if (maxLimit <= 0f)
+            return baseValue;
+
+        float scaled = maxLimit * (1f - Mathf.Exp(-baseValue / maxLimit));
+        Debug.Log(1 + ((scaled) / 100));
+        return 1 + ((scaled) / 100);
+    }
+
 }

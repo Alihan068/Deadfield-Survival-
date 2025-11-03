@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
 
-    StatsManager playerStatsManager;
+    StatsManager statsManager;
     Rigidbody2D rb2d;
     Animator animator;
 
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     WeaponSwitcher weaponSwitcher;
     float currentDashTime;
 
-    public bool canMove = true;
+    
     bool canDash = true;
     bool playerCollision = true;
 
@@ -28,17 +28,16 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
         weapon = GetComponentInChildren<Weapon>();
-        playerStatsManager = GetComponent<StatsManager>();
+        statsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
     void OnMove(InputValue value) {
-        if (!isAlive) return;
         moveInput = value.Get<Vector2>();
     }
     void OnDash(InputValue value) {
         Debug.Log("ShiftInput");
-        if (canDash && isAlive) {
+        if (canDash && isAlive && statsManager.canMove) {
             StartCoroutine(Dash());
         }
     }
@@ -61,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!isAlive || !statsManager.canMove) return;
         AimForMouse();
         Walk();
     }
@@ -69,8 +69,8 @@ public class PlayerController : MonoBehaviour {
         //if (!canMove) return;       
 
         Vector2 vector = rb2d.linearVelocity;
-        vector.x = moveInput.x * playerStatsManager.moveSpeed;
-        vector.y = moveInput.y * playerStatsManager.moveSpeed;
+        vector.x = moveInput.x * statsManager.moveSpeed;
+        vector.y = moveInput.y * statsManager.moveSpeed;
         rb2d.linearVelocity = vector;
 
         if (animator) {
@@ -115,15 +115,15 @@ public class PlayerController : MonoBehaviour {
 
         rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
 
-        yield return new WaitForSeconds(playerStatsManager.dashCooldown);
+        yield return new WaitForSeconds(statsManager.dashCooldown);
         canDash = true;
 
     }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        if (playerStatsManager != null) {
-            Gizmos.DrawWireSphere(transform.position, playerStatsManager.baseRange);
+        if (statsManager != null) {
+            Gizmos.DrawWireSphere(transform.position, statsManager.baseRange);
         }
     }
 }

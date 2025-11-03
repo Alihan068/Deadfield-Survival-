@@ -1,0 +1,3289 @@
+fileFormatVersion: 2
+guid: 33e678b1e85f3dc43bb029a2cd0fcd3c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2695647065496976640
+    second: momongaRogueLiteDungeon_0
+  - first:
+      213: -6613919573067652020
+    second: momongaRogueLiteDungeon_1
+  - first:
+      213: -5793127267048334725
+    second: momongaRogueLiteDungeon_2
+  - first:
+      213: -4253748341087565041
+    second: momongaRogueLiteDungeon_3
+  - first:
+      213: 5943629665131085557
+    second: momongaRogueLiteDungeon_4
+  - first:
+      213: -3195665874102757658
+    second: momongaRogueLiteDungeon_5
+  - first:
+      213: -1203541197615735043
+    second: momongaRogueLiteDungeon_6
+  - first:
+      213: -2199439756008580723
+    second: momongaRogueLiteDungeon_7
+  - first:
+      213: 2399991042276105482
+    second: momongaRogueLiteDungeon_8
+  - first:
+      213: -2556140483129824937
+    second: momongaRogueLiteDungeon_9
+  - first:
+      213: -5879425625900075728
+    second: momongaRogueLiteDungeon_10
+  - first:
+      213: 7389696624877707992
+    second: momongaRogueLiteDungeon_11
+  - first:
+      213: 2974984773956425065
+    second: momongaRogueLiteDungeon_12
+  - first:
+      213: -1810081248146240850
+    second: momongaRogueLiteDungeon_13
+  - first:
+      213: 1461485768365696013
+    second: momongaRogueLiteDungeon_14
+  - first:
+      213: 3042924428970681876
+    second: momongaRogueLiteDungeon_15
+  - first:
+      213: -4820770276258799014
+    second: momongaRogueLiteDungeon_16
+  - first:
+      213: 6962367709116604795
+    second: momongaRogueLiteDungeon_17
+  - first:
+      213: -1461037356253593587
+    second: momongaRogueLiteDungeon_18
+  - first:
+      213: 8167597647196312059
+    second: momongaRogueLiteDungeon_19
+  - first:
+      213: -5890024586874234681
+    second: momongaRogueLiteDungeon_20
+  - first:
+      213: 472710820967561521
+    second: momongaRogueLiteDungeon_21
+  - first:
+      213: -8789893847153156847
+    second: momongaRogueLiteDungeon_22
+  - first:
+      213: -7359107055105995040
+    second: momongaRogueLiteDungeon_23
+  - first:
+      213: -7501132907808344270
+    second: momongaRogueLiteDungeon_24
+  - first:
+      213: 7973792192088198838
+    second: momongaRogueLiteDungeon_25
+  - first:
+      213: 8193354389418109198
+    second: momongaRogueLiteDungeon_26
+  - first:
+      213: -6823398297649965262
+    second: momongaRogueLiteDungeon_27
+  - first:
+      213: -7899349163855889251
+    second: momongaRogueLiteDungeon_28
+  - first:
+      213: 3535619735083883545
+    second: momongaRogueLiteDungeon_29
+  - first:
+      213: -4044877478859225547
+    second: momongaRogueLiteDungeon_30
+  - first:
+      213: -2630667907931718927
+    second: momongaRogueLiteDungeon_31
+  - first:
+      213: 1845302803182956813
+    second: momongaRogueLiteDungeon_32
+  - first:
+      213: 5311090301001579519
+    second: momongaRogueLiteDungeon_33
+  - first:
+      213: -3786741743323921658
+    second: momongaRogueLiteDungeon_34
+  - first:
+      213: 5614189783133499816
+    second: momongaRogueLiteDungeon_35
+  - first:
+      213: 7640594001222311926
+    second: momongaRogueLiteDungeon_36
+  - first:
+      213: 3339365227790412614
+    second: momongaRogueLiteDungeon_37
+  - first:
+      213: -6390570871575342508
+    second: momongaRogueLiteDungeon_38
+  - first:
+      213: -3731529181750403558
+    second: momongaRogueLiteDungeon_39
+  - first:
+      213: -1377493578876390109
+    second: momongaRogueLiteDungeon_40
+  - first:
+      213: 4990509996277440226
+    second: momongaRogueLiteDungeon_41
+  - first:
+      213: -4911066321070798270
+    second: momongaRogueLiteDungeon_42
+  - first:
+      213: 8186055242074311698
+    second: momongaRogueLiteDungeon_43
+  - first:
+      213: -8151569179134348260
+    second: momongaRogueLiteDungeon_44
+  - first:
+      213: -7232020933160496159
+    second: momongaRogueLiteDungeon_45
+  - first:
+      213: -8399832689205689552
+    second: momongaRogueLiteDungeon_46
+  - first:
+      213: 4964323352783203921
+    second: momongaRogueLiteDungeon_47
+  - first:
+      213: 4171232569166782997
+    second: momongaRogueLiteDungeon_48
+  - first:
+      213: -5155840336800587227
+    second: momongaRogueLiteDungeon_49
+  - first:
+      213: 452044691538079803
+    second: momongaRogueLiteDungeon_50
+  - first:
+      213: -5863507584213948722
+    second: momongaRogueLiteDungeon_51
+  - first:
+      213: 7692821398042726159
+    second: momongaRogueLiteDungeon_52
+  - first:
+      213: 7524850891190320324
+    second: momongaRogueLiteDungeon_53
+  - first:
+      213: -4193585604124212632
+    second: momongaRogueLiteDungeon_54
+  - first:
+      213: -2080823281334295156
+    second: momongaRogueLiteDungeon_55
+  - first:
+      213: -4376801811892671376
+    second: momongaRogueLiteDungeon_56
+  - first:
+      213: 4608925742967389327
+    second: momongaRogueLiteDungeon_57
+  - first:
+      213: -4335208582106200477
+    second: momongaRogueLiteDungeon_58
+  - first:
+      213: 6237183026745244775
+    second: momongaRogueLiteDungeon_59
+  - first:
+      213: 6582008092128456772
+    second: momongaRogueLiteDungeon_60
+  - first:
+      213: -9137707567376843311
+    second: momongaRogueLiteDungeon_61
+  - first:
+      213: -6898660451334505396
+    second: momongaRogueLiteDungeon_62
+  - first:
+      213: -3266974285175149272
+    second: momongaRogueLiteDungeon_63
+  - first:
+      213: -2984079951788430258
+    second: momongaRogueLiteDungeon_64
+  - first:
+      213: -6933340873431782691
+    second: momongaRogueLiteDungeon_65
+  - first:
+      213: 414419554932597235
+    second: momongaRogueLiteDungeon_66
+  - first:
+      213: 2710446984184078442
+    second: momongaRogueLiteDungeon_67
+  - first:
+      213: -1981357678010301347
+    second: momongaRogueLiteDungeon_68
+  - first:
+      213: 7128335230592928062
+    second: momongaRogueLiteDungeon_69
+  - first:
+      213: 858611932309714574
+    second: momongaRogueLiteDungeon_70
+  - first:
+      213: -7556005788660946153
+    second: momongaRogueLiteDungeon_71
+  - first:
+      213: -900732588135672578
+    second: momongaRogueLiteDungeon_72
+  - first:
+      213: 1578639953007135111
+    second: momongaRogueLiteDungeon_73
+  - first:
+      213: -4320817695042432744
+    second: momongaRogueLiteDungeon_74
+  - first:
+      213: -1422028587144768727
+    second: momongaRogueLiteDungeon_75
+  - first:
+      213: -8074800746008868877
+    second: momongaRogueLiteDungeon_76
+  - first:
+      213: -5206343202579520839
+    second: momongaRogueLiteDungeon_77
+  - first:
+      213: -6213449737047923188
+    second: momongaRogueLiteDungeon_78
+  - first:
+      213: -6150690077413584831
+    second: momongaRogueLiteDungeon_79
+  - first:
+      213: -7932724000762586590
+    second: momongaRogueLiteDungeon_80
+  - first:
+      213: -2346612799703309728
+    second: momongaRogueLiteDungeon_81
+  - first:
+      213: -7874561748243662847
+    second: momongaRogueLiteDungeon_82
+  - first:
+      213: 6196610351789413426
+    second: momongaRogueLiteDungeon_83
+  - first:
+      213: -4470530044471152039
+    second: momongaRogueLiteDungeon_84
+  - first:
+      213: -7362586356889386668
+    second: momongaRogueLiteDungeon_85
+  - first:
+      213: -2006532558483082748
+    second: momongaRogueLiteDungeon_86
+  - first:
+      213: -8694232207050125316
+    second: momongaRogueLiteDungeon_87
+  - first:
+      213: -854740758947192071
+    second: momongaRogueLiteDungeon_88
+  - first:
+      213: -6286150295053614802
+    second: momongaRogueLiteDungeon_89
+  - first:
+      213: -7029422926948071375
+    second: momongaRogueLiteDungeon_90
+  - first:
+      213: -2795581826213193647
+    second: momongaRogueLiteDungeon_91
+  - first:
+      213: 8085495166541085543
+    second: momongaRogueLiteDungeon_92
+  - first:
+      213: -3750155006971702212
+    second: momongaRogueLiteDungeon_93
+  - first:
+      213: 2027509282798136857
+    second: momongaRogueLiteDungeon_94
+  - first:
+      213: 6094309311173984449
+    second: momongaRogueLiteDungeon_95
+  - first:
+      213: -8962874792755687760
+    second: momongaRogueLiteDungeon_96
+  - first:
+      213: -541002951286197859
+    second: momongaRogueLiteDungeon_97
+  - first:
+      213: 3507712016692833699
+    second: momongaRogueLiteDungeon_98
+  - first:
+      213: 6699435466727272847
+    second: momongaRogueLiteDungeon_99
+  - first:
+      213: 8255225618482675770
+    second: momongaRogueLiteDungeon_100
+  - first:
+      213: -964126828848150519
+    second: momongaRogueLiteDungeon_101
+  - first:
+      213: 1879173193636523082
+    second: momongaRogueLiteDungeon_102
+  - first:
+      213: -6378505678473130323
+    second: momongaRogueLiteDungeon_103
+  - first:
+      213: -4256033389551542643
+    second: momongaRogueLiteDungeon_104
+  - first:
+      213: 5502788577349860725
+    second: momongaRogueLiteDungeon_105
+  - first:
+      213: 5917089906705218236
+    second: momongaRogueLiteDungeon_106
+  - first:
+      213: -6661506138530923581
+    second: momongaRogueLiteDungeon_107
+  - first:
+      213: 7382381279714355564
+    second: momongaRogueLiteDungeon_108
+  - first:
+      213: 595683080703388754
+    second: momongaRogueLiteDungeon_109
+  - first:
+      213: 8139454102870729973
+    second: momongaRogueLiteDungeon_110
+  - first:
+      213: 8651854162131248863
+    second: momongaRogueLiteDungeon_111
+  - first:
+      213: -4984279175044687286
+    second: momongaRogueLiteDungeon_112
+  - first:
+      213: 4126185646715176348
+    second: momongaRogueLiteDungeon_113
+  - first:
+      213: -7443690389270495798
+    second: momongaRogueLiteDungeon_114
+  - first:
+      213: 5401301803695456960
+    second: momongaRogueLiteDungeon_115
+  - first:
+      213: -4260042794312084327
+    second: momongaRogueLiteDungeon_116
+  - first:
+      213: -3421019844741369326
+    second: momongaRogueLiteDungeon_117
+  - first:
+      213: 5748164766701232407
+    second: momongaRogueLiteDungeon_118
+  - first:
+      213: -646070718173296071
+    second: momongaRogueLiteDungeon_119
+  - first:
+      213: 3905534404523434534
+    second: momongaRogueLiteDungeon_120
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 447
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0038a3da643279ad0800000000000000
+      internalID: -2695647065496976640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_1
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 447
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c44ac4ab033a634a0800000000000000
+      internalID: -6613919573067652020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_2
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 447
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7a54f4a17daa9fa0800000000000000
+      internalID: -5793127267048334725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_3
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 447
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0b819dcb66a7f4c0800000000000000
+      internalID: -4253748341087565041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_4
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 447
+        width: 8
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5febc9290b30c7250800000000000000
+      internalID: 5943629665131085557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_5
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 453
+        width: 12
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e65441a1d6b6a3d0800000000000000
+      internalID: -3195665874102757658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_6
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 452
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfed09b48a92c4fe0800000000000000
+      internalID: -1203541197615735043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_7
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 452
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d899c3ee1350a71e0800000000000000
+      internalID: -2199439756008580723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_8
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 452
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0d9cf2232b7e4120800000000000000
+      internalID: 2399991042276105482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_9
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 447
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7592d0b06c3c68cd0800000000000000
+      internalID: -2556140483129824937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_10
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 447
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 035b5e43b85186ea0800000000000000
+      internalID: -5879425625900075728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_11
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 447
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d22db39de97d8660800000000000000
+      internalID: 7389696624877707992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_12
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 447
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9655ed7c3e4494920800000000000000
+      internalID: 2974984773956425065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_13
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 415
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaac5ade1bc41e6e0800000000000000
+      internalID: -1810081248146240850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_14
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 417
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d04e9b3209d384410800000000000000
+      internalID: 1461485768365696013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_15
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 415
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 416e72365a3aa3a20800000000000000
+      internalID: 3042924428970681876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_16
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 415
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5225dba9fe291db0800000000000000
+      internalID: -4820770276258799014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_17
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 416
+        width: 10
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71ab811b8c4f9060800000000000000
+      internalID: 6962367709116604795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_18
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 417
+        width: 12
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00cde0f34a59bbe0800000000000000
+      internalID: -1461037356253593587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_19
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 415
+        width: 14
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1d37d49c2295170800000000000000
+      internalID: 8167597647196312059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_20
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 383
+        width: 10
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c85b0d48dd624ea0800000000000000
+      internalID: -5890024586874234681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_21
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 416
+        width: 11
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1393145bcf76f8600800000000000000
+      internalID: 472710820967561521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_22
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 417
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d5b0bed16040680800000000000000
+      internalID: -8789893847153156847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_23
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 415
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee0654af133fd990800000000000000
+      internalID: -7359107055105995040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_24
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 417
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2373711fc5f96e790800000000000000
+      internalID: -7501132907808344270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_25
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 415
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6be433270c998ae60800000000000000
+      internalID: 7973792192088198838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_26
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 415
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e09672c2864a4b170800000000000000
+      internalID: 8193354389418109198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_27
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 383
+        width: 22
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2379193766b6e41a0800000000000000
+      internalID: -6823398297649965262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_28
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 383
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c379bb9cfdf5290800000000000000
+      internalID: -7899349163855889251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_29
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 383
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91c1982aa6b011130800000000000000
+      internalID: 3535619735083883545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_30
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 383
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5364e981d55bdd7c0800000000000000
+      internalID: -4044877478859225547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_31
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 386
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fab5b1c97dfd7bd0800000000000000
+      internalID: -2630667907931718927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_32
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 386
+        width: 10
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01b0c66f15db9910800000000000000
+      internalID: 1845302803182956813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_33
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 383
+        width: 10
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffbb8394d78c4b940800000000000000
+      internalID: 5311090301001579519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_34
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 383
+        width: 12
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 603c80d827ac27bc0800000000000000
+      internalID: -3786741743323921658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_35
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 383
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a1bc4dccdb99ed40800000000000000
+      internalID: 5614189783133499816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_36
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 383
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ff16d333c7d80a60800000000000000
+      internalID: 7640594001222311926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_37
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 383
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64b2db16bfec75e20800000000000000
+      internalID: 3339365227790412614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_38
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 383
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4521bc7a6a12057a0800000000000000
+      internalID: -6390570871575342508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_39
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 351
+        width: 22
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1e53cccaf1f63cc0800000000000000
+      internalID: -3731529181750403558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_40
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 353
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 325f0b663e822ece0800000000000000
+      internalID: -1377493578876390109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_41
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 351
+        width: 22
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ee1728966ad14540800000000000000
+      internalID: 4990509996277440226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_42
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 351
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ac030733368dbb0800000000000000
+      internalID: -4911066321070798270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_43
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 352
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21c409ffed5ba9170800000000000000
+      internalID: 8186055242074311698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_44
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 353
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c14bcab350fcfde80800000000000000
+      internalID: -8151569179134348260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_45
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 358
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e397c63743b2ab90800000000000000
+      internalID: -7232020933160496159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_46
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 354
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0334e236caccd6b80800000000000000
+      internalID: -8399832689205689552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_47
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 342
+        width: 8
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15ea1d889c1d4e440800000000000000
+      internalID: 4964323352783203921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_48
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 351
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512e9b8ebe133e930800000000000000
+      internalID: 4171232569166782997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_49
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 353
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522ee5ec786c278b0800000000000000
+      internalID: -5155840336800587227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_50
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 351
+        width: 22
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b307abd704cf54600800000000000000
+      internalID: 452044691538079803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_51
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 351
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec66e191be2a0aea0800000000000000
+      internalID: -5863507584213948722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_52
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 319
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0f4cde9d4462ca60800000000000000
+      internalID: 7692821398042726159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_53
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 319
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc3e256404ad6860800000000000000
+      internalID: 7524850891190320324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_54
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 319
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8620cf29c146dc5c0800000000000000
+      internalID: -4193585604124212632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_55
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 319
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c85e4b3104e6f13e0800000000000000
+      internalID: -2080823281334295156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_56
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 322
+        width: 9
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07ce9ddf0f97243c0800000000000000
+      internalID: -4376801811892671376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_57
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 322
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8c79b94b8136ff30800000000000000
+      internalID: 4608925742967389327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_58
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 324
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 366c55473ce36d3c0800000000000000
+      internalID: -4335208582106200477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_59
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 322
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76cfe34baecee8650800000000000000
+      internalID: 6237183026745244775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_60
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 319
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4403010ac7df75b50800000000000000
+      internalID: 6582008092128456772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_61
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 319
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ddba119167503180800000000000000
+      internalID: -9137707567376843311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_62
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 319
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4cbb24ced80340a0800000000000000
+      internalID: -6898660451334505396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_63
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 319
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82dacc1623069a2d0800000000000000
+      internalID: -3266974285175149272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_64
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 287
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4c294c181b6696d0800000000000000
+      internalID: -2984079951788430258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_65
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 289
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddae664c533d7cf90800000000000000
+      internalID: -6933340873431782691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_66
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 287
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f1abb7b36050c500800000000000000
+      internalID: 414419554932597235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_67
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 287
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6022daeb217d9520800000000000000
+      internalID: 2710446984184078442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_68
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 290
+        width: 8
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d54043580bdc084e0800000000000000
+      internalID: -1981357678010301347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_69
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 288
+        width: 6
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e39c46bef1fece260800000000000000
+      internalID: 7128335230592928062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_70
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 289
+        width: 11
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e867b39d0076aeb00800000000000000
+      internalID: 858611932309714574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_71
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 287
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71ba116c4cca32790800000000000000
+      internalID: -7556005788660946153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_72
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 289
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef41e8ebb74ff73f0800000000000000
+      internalID: -900732588135672578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_73
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 287
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 789ca3b5ca478e510800000000000000
+      internalID: 1578639953007135111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_74
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 287
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81116c3f23f5904c0800000000000000
+      internalID: -4320817695042432744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_75
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 255
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92319c2c880f34ce0800000000000000
+      internalID: -1422028587144768727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_76
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 255
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f7051ee08b80ff80800000000000000
+      internalID: -8074800746008868877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_77
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 255
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b26a7f017a5fb7b0800000000000000
+      internalID: -5206343202579520839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_78
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 255
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06a389626465c9a0800000000000000
+      internalID: -6213449737047923188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_79
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 258
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1405e3c56fb54aaa0800000000000000
+      internalID: -6150690077413584831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_80
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 258
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22a9459fc8d49e190800000000000000
+      internalID: -7932724000762586590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_81
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 258
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 062ac4077182f6fd0800000000000000
+      internalID: -2346612799703309728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_82
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 258
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108be0aafcfe7b290800000000000000
+      internalID: -7874561748243662847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_83
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 256
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2349aeda848cef550800000000000000
+      internalID: 6196610351789413426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_84
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 258
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 952f5954c9c75f1c0800000000000000
+      internalID: -4470530044471152039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_85
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 258
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 451887197b6d2d990800000000000000
+      internalID: -7362586356889386668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_86
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 255
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4023c55e44d5724e0800000000000000
+      internalID: -2006532558483082748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_87
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 255
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff44082fd1e75780800000000000000
+      internalID: -8694232207050125316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_88
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 255
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f2a7efeec95324f0800000000000000
+      internalID: -854740758947192071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_89
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 255
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e21cc92bc9b13c8a0800000000000000
+      internalID: -6286150295053614802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_90
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 223
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13806476719727e90800000000000000
+      internalID: -7029422926948071375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_91
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 225
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 158560404291439d0800000000000000
+      internalID: -2795581826213193647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_92
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 223
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76bb1d2e303753070800000000000000
+      internalID: 8085495166541085543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_93
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 223
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c349ccce3e5c4fbc0800000000000000
+      internalID: -3750155006971702212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_94
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 241
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e6df353f8232c10800000000000000
+      internalID: 2027509282798136857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_95
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 241
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c081eb8706539450800000000000000
+      internalID: 6094309311173984449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_96
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 241
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0be8e730dd87d9380800000000000000
+      internalID: -8962874792755687760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_97
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 223
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d91f522aea8fd78f0800000000000000
+      internalID: -541002951286197859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_98
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 225
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ad68599e75eda030800000000000000
+      internalID: 3507712016692833699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_99
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 223
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f81bee5df0d29fc50800000000000000
+      internalID: 6699435466727272847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_100
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 223
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a304d5246f3709270800000000000000
+      internalID: 8255225618482675770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_101
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 191
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9080510e1cbbe92f0800000000000000
+      internalID: -964126828848150519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_102
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 191
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4c2426301a241a10800000000000000
+      internalID: 1879173193636523082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_103
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 191
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dae0cc451eefa77a0800000000000000
+      internalID: -6378505678473130323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_104
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 191
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8e149f7e288fe4c0800000000000000
+      internalID: -4256033389551542643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_105
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 191
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57df30b5e05dd5c40800000000000000
+      internalID: 5502788577349860725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_106
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 191
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbab6398be9bd1250800000000000000
+      internalID: 5917089906705218236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_107
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 191
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cbb7cf06739d83a0800000000000000
+      internalID: -6661506138530923581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_108
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 191
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c692edd09ac737660800000000000000
+      internalID: 7382381279714355564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_109
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 159
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25c29081b9a444800800000000000000
+      internalID: 595683080703388754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_110
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 159
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4a433c16625f070800000000000000
+      internalID: 8139454102870729973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_111
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 159
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6615e558f811870800000000000000
+      internalID: 8651854162131248863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_112
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 159
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4a95168f7844dab0800000000000000
+      internalID: -4984279175044687286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_113
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 159
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9506c5fbf7234930800000000000000
+      internalID: 4126185646715176348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_114
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 161
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acdfa818703b2b890800000000000000
+      internalID: -7443690389270495798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_115
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 159
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c2c1f58f5745fa40800000000000000
+      internalID: 5401301803695456960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_116
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 159
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 994d01536a941e4c0800000000000000
+      internalID: -4260042794312084327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_117
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 127
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 212f0a893981680d0800000000000000
+      internalID: -3421019844741369326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_118
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 127
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 711a4a5766595cf40800000000000000
+      internalID: 5748164766701232407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_119
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 127
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93acf77da12b807f0800000000000000
+      internalID: -646070718173296071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: momongaRogueLiteDungeon_120
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 127
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 622afa739de333630800000000000000
+      internalID: 3905534404523434534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      momongaRogueLiteDungeon_0: -2695647065496976640
+      momongaRogueLiteDungeon_1: -6613919573067652020
+      momongaRogueLiteDungeon_10: -5879425625900075728
+      momongaRogueLiteDungeon_100: 8255225618482675770
+      momongaRogueLiteDungeon_101: -964126828848150519
+      momongaRogueLiteDungeon_102: 1879173193636523082
+      momongaRogueLiteDungeon_103: -6378505678473130323
+      momongaRogueLiteDungeon_104: -4256033389551542643
+      momongaRogueLiteDungeon_105: 5502788577349860725
+      momongaRogueLiteDungeon_106: 5917089906705218236
+      momongaRogueLiteDungeon_107: -6661506138530923581
+      momongaRogueLiteDungeon_108: 7382381279714355564
+      momongaRogueLiteDungeon_109: 595683080703388754
+      momongaRogueLiteDungeon_11: 7389696624877707992
+      momongaRogueLiteDungeon_110: 8139454102870729973
+      momongaRogueLiteDungeon_111: 8651854162131248863
+      momongaRogueLiteDungeon_112: -4984279175044687286
+      momongaRogueLiteDungeon_113: 4126185646715176348
+      momongaRogueLiteDungeon_114: -7443690389270495798
+      momongaRogueLiteDungeon_115: 5401301803695456960
+      momongaRogueLiteDungeon_116: -4260042794312084327
+      momongaRogueLiteDungeon_117: -3421019844741369326
+      momongaRogueLiteDungeon_118: 5748164766701232407
+      momongaRogueLiteDungeon_119: -646070718173296071
+      momongaRogueLiteDungeon_12: 2974984773956425065
+      momongaRogueLiteDungeon_120: 3905534404523434534
+      momongaRogueLiteDungeon_13: -1810081248146240850
+      momongaRogueLiteDungeon_14: 1461485768365696013
+      momongaRogueLiteDungeon_15: 3042924428970681876
+      momongaRogueLiteDungeon_16: -4820770276258799014
+      momongaRogueLiteDungeon_17: 6962367709116604795
+      momongaRogueLiteDungeon_18: -1461037356253593587
+      momongaRogueLiteDungeon_19: 8167597647196312059
+      momongaRogueLiteDungeon_2: -5793127267048334725
+      momongaRogueLiteDungeon_20: -5890024586874234681
+      momongaRogueLiteDungeon_21: 472710820967561521
+      momongaRogueLiteDungeon_22: -8789893847153156847
+      momongaRogueLiteDungeon_23: -7359107055105995040
+      momongaRogueLiteDungeon_24: -7501132907808344270
+      momongaRogueLiteDungeon_25: 7973792192088198838
+      momongaRogueLiteDungeon_26: 8193354389418109198
+      momongaRogueLiteDungeon_27: -6823398297649965262
+      momongaRogueLiteDungeon_28: -7899349163855889251
+      momongaRogueLiteDungeon_29: 3535619735083883545
+      momongaRogueLiteDungeon_3: -4253748341087565041
+      momongaRogueLiteDungeon_30: -4044877478859225547
+      momongaRogueLiteDungeon_31: -2630667907931718927
+      momongaRogueLiteDungeon_32: 1845302803182956813
+      momongaRogueLiteDungeon_33: 5311090301001579519
+      momongaRogueLiteDungeon_34: -3786741743323921658
+      momongaRogueLiteDungeon_35: 5614189783133499816
+      momongaRogueLiteDungeon_36: 7640594001222311926
+      momongaRogueLiteDungeon_37: 3339365227790412614
+      momongaRogueLiteDungeon_38: -6390570871575342508
+      momongaRogueLiteDungeon_39: -3731529181750403558
+      momongaRogueLiteDungeon_4: 5943629665131085557
+      momongaRogueLiteDungeon_40: -1377493578876390109
+      momongaRogueLiteDungeon_41: 4990509996277440226
+      momongaRogueLiteDungeon_42: -4911066321070798270
+      momongaRogueLiteDungeon_43: 8186055242074311698
+      momongaRogueLiteDungeon_44: -8151569179134348260
+      momongaRogueLiteDungeon_45: -7232020933160496159
+      momongaRogueLiteDungeon_46: -8399832689205689552
+      momongaRogueLiteDungeon_47: 4964323352783203921
+      momongaRogueLiteDungeon_48: 4171232569166782997
+      momongaRogueLiteDungeon_49: -5155840336800587227
+      momongaRogueLiteDungeon_5: -3195665874102757658
+      momongaRogueLiteDungeon_50: 452044691538079803
+      momongaRogueLiteDungeon_51: -5863507584213948722
+      momongaRogueLiteDungeon_52: 7692821398042726159
+      momongaRogueLiteDungeon_53: 7524850891190320324
+      momongaRogueLiteDungeon_54: -4193585604124212632
+      momongaRogueLiteDungeon_55: -2080823281334295156
+      momongaRogueLiteDungeon_56: -4376801811892671376
+      momongaRogueLiteDungeon_57: 4608925742967389327
+      momongaRogueLiteDungeon_58: -4335208582106200477
+      momongaRogueLiteDungeon_59: 6237183026745244775
+      momongaRogueLiteDungeon_6: -1203541197615735043
+      momongaRogueLiteDungeon_60: 6582008092128456772
+      momongaRogueLiteDungeon_61: -9137707567376843311
+      momongaRogueLiteDungeon_62: -6898660451334505396
+      momongaRogueLiteDungeon_63: -3266974285175149272
+      momongaRogueLiteDungeon_64: -2984079951788430258
+      momongaRogueLiteDungeon_65: -6933340873431782691
+      momongaRogueLiteDungeon_66: 414419554932597235
+      momongaRogueLiteDungeon_67: 2710446984184078442
+      momongaRogueLiteDungeon_68: -1981357678010301347
+      momongaRogueLiteDungeon_69: 7128335230592928062
+      momongaRogueLiteDungeon_7: -2199439756008580723
+      momongaRogueLiteDungeon_70: 858611932309714574
+      momongaRogueLiteDungeon_71: -7556005788660946153
+      momongaRogueLiteDungeon_72: -900732588135672578
+      momongaRogueLiteDungeon_73: 1578639953007135111
+      momongaRogueLiteDungeon_74: -4320817695042432744
+      momongaRogueLiteDungeon_75: -1422028587144768727
+      momongaRogueLiteDungeon_76: -8074800746008868877
+      momongaRogueLiteDungeon_77: -5206343202579520839
+      momongaRogueLiteDungeon_78: -6213449737047923188
+      momongaRogueLiteDungeon_79: -6150690077413584831
+      momongaRogueLiteDungeon_8: 2399991042276105482
+      momongaRogueLiteDungeon_80: -7932724000762586590
+      momongaRogueLiteDungeon_81: -2346612799703309728
+      momongaRogueLiteDungeon_82: -7874561748243662847
+      momongaRogueLiteDungeon_83: 6196610351789413426
+      momongaRogueLiteDungeon_84: -4470530044471152039
+      momongaRogueLiteDungeon_85: -7362586356889386668
+      momongaRogueLiteDungeon_86: -2006532558483082748
+      momongaRogueLiteDungeon_87: -8694232207050125316
+      momongaRogueLiteDungeon_88: -854740758947192071
+      momongaRogueLiteDungeon_89: -6286150295053614802
+      momongaRogueLiteDungeon_9: -2556140483129824937
+      momongaRogueLiteDungeon_90: -7029422926948071375
+      momongaRogueLiteDungeon_91: -2795581826213193647
+      momongaRogueLiteDungeon_92: 8085495166541085543
+      momongaRogueLiteDungeon_93: -3750155006971702212
+      momongaRogueLiteDungeon_94: 2027509282798136857
+      momongaRogueLiteDungeon_95: 6094309311173984449
+      momongaRogueLiteDungeon_96: -8962874792755687760
+      momongaRogueLiteDungeon_97: -541002951286197859
+      momongaRogueLiteDungeon_98: 3507712016692833699
+      momongaRogueLiteDungeon_99: 6699435466727272847
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

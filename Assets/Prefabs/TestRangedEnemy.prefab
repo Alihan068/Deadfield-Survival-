@@ -54,6 +54,7 @@ MonoBehaviour:
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
+  animator: {fileID: 0}
 --- !u!114 &4859991307130562853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +89,7 @@ MonoBehaviour:
   canCollectItems: 0
   canMove: 1
   canBeDamaged: 1
-  moveSpeed: 3
+  moveSpeed: 2
   dashCooldown: 1
   jumpCooldown: 1
   extraHealth: 1

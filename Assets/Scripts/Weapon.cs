@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour {
     Animator animator;
     RangedParticleAttack particleAttack;
     ParticleSystem projectilesParticleSystem;
+    EnemyController enemyController;
 
     Coroutine immunityCoroutine;
 
@@ -33,8 +34,15 @@ public class Weapon : MonoBehaviour {
     [SerializeField] float haste = 1f;
 
     void Awake() {
-        controller = GetComponentInParent<PlayerController>();
         statsManager = GetComponentInParent<StatsManager>();
+
+        if (statsManager.isPlayer) {
+            controller = GetComponentInParent<PlayerController>();
+        }
+        else {
+            enemyController = GetComponentInParent<EnemyController>();
+        }
+
         animator = GetComponent<Animator>();
         particleAttack = GetComponent<RangedParticleAttack>();
         projectilesParticleSystem = GetComponent<ParticleSystem>();
@@ -69,24 +77,26 @@ public class Weapon : MonoBehaviour {
     }
 
     void OnEnable() {
-        controller.weapon = this;
-        GiveBaseStats();
+        if (statsManager.isPlayer) {
+            controller.weapon = this;
+            GiveBaseStats();
 
-        if (projectilesParticleSystem != null) {
-            var main = projectilesParticleSystem.main;
-            main.loop = true;
-            main.startDelay = 0f;
+            if (projectilesParticleSystem != null) {
+                var main = projectilesParticleSystem.main;
+                main.loop = true;
+                main.startDelay = 0f;
 
-            var em = projectilesParticleSystem.emission;
-            em.enabled = false;
+                var em = projectilesParticleSystem.emission;
+                em.enabled = false;
 
-            if (!projectilesParticleSystem.isPlaying)
-                projectilesParticleSystem.Play();
+                if (!projectilesParticleSystem.isPlaying)
+                    projectilesParticleSystem.Play();
+            }
         }
     }
 
     public void SetFiring(bool pressed) {
-        if (projectilesParticleSystem == null) return;
+        if (projectilesParticleSystem == null ) return;
         if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
 
         if (pressed && particleAttack != null)
@@ -97,7 +107,9 @@ public class Weapon : MonoBehaviour {
     }
 
     private void OnDisable() {
-        TakeBaseStats();
+        if (statsManager.isPlayer) {
+            TakeBaseStats();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

@@ -19,11 +19,12 @@ public class EnemyController : MonoBehaviour {
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
-    Animator animator;
     Coroutine chargeCoroutine;
     PlayerController playerController;
     HealthManager healthManager;
     RangedParticleAttack rangedParticleAttack;
+
+    [SerializeField] Animator animator;
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
@@ -35,7 +36,6 @@ public class EnemyController : MonoBehaviour {
         statsManager = GetComponent<StatsManager>();
         rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
         rb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerController = FindAnyObjectByType<PlayerController>();
         EnemyBaseStatImplementation(enemyType);
     }
@@ -52,7 +52,6 @@ public class EnemyController : MonoBehaviour {
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
     }
     void FlipEnemyFacing() {
-        Debug.Log("Move");
         transform.localScale = new Vector2((-Mathf.Sign(rb2d.linearVelocity.x)), transform.localScale.y);
     }
 
@@ -76,6 +75,7 @@ public class EnemyController : MonoBehaviour {
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
             Debug.Log(this.name + "attack");
+            animator.SetTrigger("isAttacking");
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;

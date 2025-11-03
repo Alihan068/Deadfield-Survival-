@@ -11,6 +11,7 @@ public class StatsManager : MonoBehaviour {
     //public int playerIndex = 0;
     public bool canCollectItems = false;
     public bool canMove = true;
+    public bool canBeDamaged = true;
 
     [Header("Movement")]
     public float moveSpeed = 5f;

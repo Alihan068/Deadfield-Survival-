@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-
     Coroutine knockbackCoroutine;
     Coroutine coroutine;
     StatsManager statsManager;
@@ -74,6 +73,11 @@ public class HealthManager : MonoBehaviour
     }
 
     void TakeFinalDamage(float damage) {
+        if (!statsManager.canBeDamaged) {
+            Debug.Log(this.name + " can't be Damaged");
+            return;
+        }
+
         if (damage > maxHealthPoint) {
             DeathSequence();
         }
@@ -157,5 +161,9 @@ public class HealthManager : MonoBehaviour
         Debug.Log(1 + ((scaled) / 100));
         return 1 + ((scaled) / 100);
     }
-
+    IEnumerator StopTime() {
+        Time.timeScale = 0f;
+        yield return new WaitForSeconds(0.1f);
+        Time.timeScale = 1f;
+    }
 }

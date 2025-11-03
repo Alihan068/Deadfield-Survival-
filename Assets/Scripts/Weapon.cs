@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour {
     RangedParticleAttack particleAttack;
     ParticleSystem projectilesParticleSystem;
 
+    Coroutine immunityCoroutine;
+
     public WeaponType weaponType;
     public LayerMask weaponTargetLayer;
 

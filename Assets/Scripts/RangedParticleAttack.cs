@@ -28,7 +28,7 @@ public class RangedParticleAttack : MonoBehaviour {
     }
 
     public void ParticleSystemToggle(bool state) {
-        
+
         ParticleSystemUpdateStats();
         if (state) {
             if (!isPlaying) {
@@ -45,16 +45,18 @@ public class RangedParticleAttack : MonoBehaviour {
 
 
     private void OnParticleCollision(GameObject other) {
-        Debug.Log(other.name);
+        Debug.Log("HIT! " + other.name);
         if (other == null || other.layer == this.gameObject.layer) {
             Debug.Log("Target: " + other.name + " is the same layer with attacker: " + this.name);
             return;
         }
-        HealthManager targetHealthManager = other.GetComponent<HealthManager>();
+        other.TryGetComponent<HealthManager>(out HealthManager targetHealthManager);
+
         if (targetHealthManager == null) {
             Debug.Log("Target: " + other.name + "Has no healthManager");
         }
-        targetHealthManager.CalculateIncomingDamage(statsManager.rangedDamage);
-        targetHealthManager.GetKnockback(transform, statsManager.haste);
+        else {
+            targetHealthManager.CalculateIncomingDamage(statsManager.rangedDamage);
+        }
     }
 }

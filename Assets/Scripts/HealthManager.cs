@@ -4,8 +4,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour
-{
+public class HealthManager : MonoBehaviour {
     Coroutine knockbackCoroutine;
     Coroutine coroutine;
     StatsManager statsManager;
@@ -22,16 +21,18 @@ public class HealthManager : MonoBehaviour
     [SerializeField] float deathSpin = 10f;
     [SerializeField] float deathKick = 10f;
 
+    [SerializeField] SpriteRenderer bodySprite;
+
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
     }
-    void Start()
-    {
+    void Start() {
         statsManager = GetComponent<StatsManager>();
-        if (statsManager.isPlayer) { 
-            playerController = GetComponent<PlayerController>(); 
-        } else {
+        if (statsManager.isPlayer) {
+            playerController = GetComponent<PlayerController>();
+        }
+        else {
             enemyController = GetComponent<EnemyController>();
         }
 
@@ -43,7 +44,7 @@ public class HealthManager : MonoBehaviour
         calculatedDamage = rawDamage;
         TakeFinalDamage(calculatedDamage);
     }
-    
+
     public void GetKnockback(Transform source, float amount) {
         Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
@@ -83,9 +84,17 @@ public class HealthManager : MonoBehaviour
         }
 
         else {
+            StartCoroutine(TakeDamageEffects());
             maxHealthPoint -= damage;
-            Debug.Log(this.name +" took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
+            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
         }
+    }
+    IEnumerator TakeDamageEffects() {
+
+        Color previousColor = bodySprite.color;
+        bodySprite.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        bodySprite.color = previousColor;
     }
 
     IEnumerator KnockbackPause() {
@@ -138,8 +147,8 @@ public class HealthManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    float ClampedValue(float value) { 
-    value = Mathf.Clamp(value, 0, float.MaxValue);
+    float ClampedValue(float value) {
+        value = Mathf.Clamp(value, 0, float.MaxValue);
         return value;
     }
 

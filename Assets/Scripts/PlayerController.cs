@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 
         if (animator) {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
-            //animator.SetBool("isWalking", hasHorizontal);
+            animator.SetBool("isWalking", hasHorizontal);
         }
     }
 

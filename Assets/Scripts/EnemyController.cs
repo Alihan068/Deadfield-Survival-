@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour {
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
-    
+
     void Awake() {
         statsManager = GetComponent<StatsManager>();
     }
@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Update() {
-        if(!statsManager.canMove) return;
+        if (!statsManager.canMove) return;
 
         CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
@@ -115,10 +115,19 @@ public class EnemyController : MonoBehaviour {
             ChaseTarget(playerController.transform);
             return;
         }
-        else
-        {
+        else {
             rangedParticleAttack.ParticleSystemToggle(true);
             rb2d.linearVelocity = Vector2.zero;
+        }
+    }
+
+    void AnimationHandler() {
+
+        if (rb2d.linearVelocity != Vector2.zero) {
+            bodyAnimator.SetBool("isWalking", true);
+        }
+        else {
+            bodyAnimator.SetBool("isWalking", false);
         }
     }
 
@@ -132,7 +141,7 @@ public class EnemyController : MonoBehaviour {
         else if (distanceToPlayer > statsManager.baseRange) {
             if (chargeCoroutine == null) {
                 ChaseTarget(playerController.transform);
-                return; 
+                return;
             }
         }
     }
@@ -170,7 +179,7 @@ public class EnemyController : MonoBehaviour {
             case EnemyType.Melee:
                 statsManager.strength += 5;
                 break;
-            case EnemyType.Ranged:          
+            case EnemyType.Ranged:
                 minRange = statsManager.baseRange;
                 statsManager.baseRange += attackZoneValue;
                 break;

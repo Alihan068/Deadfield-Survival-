@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour {
 
     void Walk() {
         //if (!canMove) return;       
-
+        FlipSprite();
         Vector2 vector = rb2d.linearVelocity;
         vector.x = moveInput.x * statsManager.moveSpeed;
         vector.y = moveInput.y * statsManager.moveSpeed;

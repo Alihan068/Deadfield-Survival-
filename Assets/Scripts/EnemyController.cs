@@ -25,7 +25,8 @@ public class EnemyController : MonoBehaviour {
     RangedParticleAttack rangedParticleAttack;
     [SerializeField] SpriteRenderer characterSprite;
 
-    [SerializeField] Animator animator;
+    [SerializeField] Animator weaponAnimator;
+    Animator bodyAnimator;
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
@@ -41,6 +42,7 @@ public class EnemyController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         playerController = FindAnyObjectByType<PlayerController>();
         EnemyBaseStatImplementation(enemyType);
+        bodyAnimator = GetComponent<Animator>();
     }
 
     void Update() {
@@ -55,15 +57,21 @@ public class EnemyController : MonoBehaviour {
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
     }
 
-    void FlipEnemyFacing()
-    {
+    void FlipEnemyFacing() {
+        if (playerController == null || rb2d == null || characterSprite == null) return;
+
+        if (rb2d.linearVelocity.sqrMagnitude <= Mathf.Epsilon) {
+            float dx = playerController.transform.position.x - transform.position.x;
+            if (Mathf.Abs(dx) > Mathf.Epsilon) {
+                characterSprite.flipX = dx < 0f;
+            }
+        }
+
         float vx = rb2d.linearVelocity.x;
-        if (vx > Mathf.Epsilon)
-        {
+        if (vx > Mathf.Epsilon) {
             characterSprite.flipX = false;
         }
-        else if (vx < -Mathf.Epsilon)
-        {
+        else if (vx < -Mathf.Epsilon) {
             characterSprite.flipX = true;
         }
     }
@@ -87,7 +95,7 @@ public class EnemyController : MonoBehaviour {
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
             Debug.Log(this.name + "attack");
-            animator.SetTrigger("isAttacking");
+            weaponAnimator.SetTrigger("isAttacking");
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
@@ -160,7 +168,7 @@ public class EnemyController : MonoBehaviour {
     void EnemyBaseStatImplementation(EnemyType enemyType) {
         switch (enemyType) {
             case EnemyType.Melee:
-
+                statsManager.strength += 5;
                 break;
             case EnemyType.Ranged:          
                 minRange = statsManager.baseRange;

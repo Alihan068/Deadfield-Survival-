@@ -8,13 +8,14 @@ public class PlayerController : MonoBehaviour {
     StatsManager statsManager;
     Rigidbody2D rb2d;
     Animator animator;
-
+    PlayerAttack playerAttack;
     Coroutine coroutine;
 
     [SerializeField] SpriteRenderer playerSprite;
 
     [SerializeField] float startDashTime = 1f;
     [SerializeField] float dashSpeed = 10f;
+
     WeaponSwitcher weaponSwitcher;
     float currentDashTime;
 
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     bool isAlive = true;
 
     void Start() {
+        playerAttack = GetComponent<PlayerAttack>();
         weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
         weapon = GetComponentInChildren<Weapon>();
         statsManager = GetComponent<StatsManager>();
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
         switch (weapon.weaponType) {
             case WeaponType.Melee:
-                if (pressed) weapon.AttackAnimation();
+                playerAttack.AttackCoroutine(pressed);
                 break;
 
             case WeaponType.Ranged:

@@ -43,10 +43,10 @@ public class StatsManager : MonoBehaviour {
     [Header("Melee Attributes")]
     public float meleeSwipeAngle = 1f;
     public float meleeDamage = 1f;
-    public float meleeSpeed = 1f;
+    public float meleeAttackSpeed = 1f;
     public float parryCooldown = 1f;
     public float weaponSize = 1f;
-
+    public float slowestAttackSPeedPerSecond = 5f;
     [Header("Ranged Attributes")]
     public float rangedSpeed = 1f;
     public float rangedDamage = 1f;
@@ -74,6 +74,7 @@ public class StatsManager : MonoBehaviour {
             return calculation;
         }
     }
+
     public void ApplyEffect(CollectibleItemSO.ItemEffect effect) {
         Debug.Log("Apply Effects");
         switch (effect.targetStat) {
@@ -135,7 +136,7 @@ public class StatsManager : MonoBehaviour {
                 meleeDamage = ModifyStatBasedOnvariables(meleeDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
                 break;
             case TargetStat.meleeSpeed:
-                meleeSpeed = ModifyStatBasedOnvariables(meleeSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                meleeAttackSpeed = ModifyStatBasedOnvariables(meleeAttackSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
                 break;
             case TargetStat.parryCooldown:
                 parryCooldown = ModifyStatBasedOnvariables(parryCooldown, effect.effectValue, effect.ifIncrease, effect.ifPercentage);

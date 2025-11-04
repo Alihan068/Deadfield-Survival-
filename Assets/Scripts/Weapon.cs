@@ -33,6 +33,8 @@ public class Weapon : MonoBehaviour {
     [SerializeField] float intelligence = 1f;
     [SerializeField] float haste = 1f;
 
+    int animIndex = 1;
+
     void Awake() {
         statsManager = GetComponentInParent<StatsManager>();
 
@@ -48,15 +50,28 @@ public class Weapon : MonoBehaviour {
         projectilesParticleSystem = GetComponent<ParticleSystem>();
     }
 
-    public void AttackAnimation() {
-        animator.SetTrigger("isAttacking");
+    public void MultipleAnimation() {
+        if (animIndex == 1) {
+            animator.SetTrigger("UpsideDownAttack");
+            
+            animIndex++;
+            Debug.Log("UpToDown! next index: " + animIndex);
+        }
+        else if(animIndex == 2) {
+            animator.SetTrigger("DownSideUpAttack");
+            animIndex--;
+            Debug.Log("DownToUp! next index: " + animIndex);
+        }
+        else {
+            Debug.Log("BrokenAnimIndex");
+        }
     }
 
     void GiveBaseStats() {
         Debug.Log(this.name + " active");
         statsManager.baseDamage += weaponDamage;
         statsManager.baseRange += weaponRange;
-        statsManager.meleeSpeed += attackSpeed;
+        statsManager.meleeAttackSpeed += attackSpeed;
         statsManager.rangedSpeed += attackSpeed;
         statsManager.projectileSpeed += projectileSpeed;
         statsManager.armor += armor;
@@ -68,7 +83,7 @@ public class Weapon : MonoBehaviour {
     void TakeBaseStats() {
         statsManager.baseDamage -= weaponDamage;
         statsManager.baseRange -= weaponRange;
-        statsManager.meleeSpeed -= attackSpeed;
+        statsManager.meleeAttackSpeed -= attackSpeed;
         statsManager.rangedSpeed -= attackSpeed;
         statsManager.projectileSpeed -= projectileSpeed;
         statsManager.armor -= armor;

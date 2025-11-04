@@ -47,16 +47,17 @@ public class PlayerAttack : MonoBehaviour {
                 isAttacking = true;
                 weapon.MultipleAnimation();
                 Debug.Log("Attacked");
-                yield return new WaitForSeconds(statsManager.meleeAttackSpeed);
+                yield return new WaitForSeconds(1f / statsManager.meleeAttackSpeed);
                 isAttacking = false;
             }
             yield return null;
         }
     }
 
-    //float CalculateAttackSpeed() {
-    //    return ;
-    //}
+    void CalculateAttackSpeed(float attackSpeed) { 
+    
+    }
+    
 
 
 

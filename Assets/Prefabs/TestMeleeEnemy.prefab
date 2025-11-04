@@ -293,6 +293,7 @@ MonoBehaviour:
   isUnstoppable: 0
   deathSpin: 10
   deathKick: 10
+  bodySprite: {fileID: 6282207474666347761}
 --- !u!114 &4036508397430527571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,7 +598,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7359107055105995040, guid: 33e678b1e85f3dc43bb029a2cd0fcd3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 
         switch (weapon.weaponType) {
             case WeaponType.Melee:
-                if (pressed) weapon.AttackAnimation();
+                weapon.SetMeleeHold(pressed);
                 break;
 
             case WeaponType.Ranged:

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum WeaponType {
     Melee,
@@ -33,7 +34,24 @@ public class Weapon : MonoBehaviour {
     [SerializeField] float intelligence = 1f;
     [SerializeField] float haste = 1f;
 
+    [Header("Player attacking animation related")]
+    private readonly string topToBottomAttackAnim = "TopToBottomAttack";
+    private readonly string bottomToTopAttackAnim = "BottomToTopAttack";
+    [SerializeField] float meleeCrossFade = 0.05f;
+    [SerializeField] float meleeCooldown = 0.25f;
+
+    int meleeHashA1;
+    int meleeHashA2;
+    bool meleeHeld;
+    bool meleeLoopRunning;
+    int meleeIndex; // 0 -> A1, 1 -> A2
+    Coroutine meleeLoop;
+
+
     void Awake() {
+        meleeHashA1 = Animator.StringToHash(topToBottomAttackAnim);
+        meleeHashA2 = Animator.StringToHash(bottomToTopAttackAnim);
+
         statsManager = GetComponentInParent<StatsManager>();
 
         if (statsManager.isPlayer) {
@@ -105,6 +123,69 @@ public class Weapon : MonoBehaviour {
         var em = projectilesParticleSystem.emission;
         em.enabled = pressed;
     }
+
+    public void SetMeleeHold(bool pressed)
+    {
+        if (weaponType != WeaponType.Melee) return;
+        meleeHeld = pressed;
+
+        if (pressed)
+        {
+            if (!meleeLoopRunning)
+            {
+                meleeLoop = StartCoroutine(MeleeLoop());
+            }
+        }
+    }
+
+    IEnumerator MeleeLoop() {
+        meleeLoopRunning = true;
+
+        while (true)
+        {
+            int targetHash;
+            if (meleeIndex == 0) {
+                targetHash = meleeHashA1;
+            }
+            else {
+                targetHash = meleeHashA2;
+            }
+
+            int layer = 0;
+            animator.CrossFade(targetHash, meleeCrossFade, layer, 0f);
+
+            // ensure the state actually became current
+            yield return null;
+            while (animator.GetCurrentAnimatorStateInfo(0).shortNameHash != targetHash)
+            {
+                yield return null;
+            }
+
+            // wait for the clip to finish
+            while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            {
+                yield return null;
+            }
+
+            // cooldown gap between swings
+            float t = 0f;
+            while (t < meleeCooldown)
+            {
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            if (!meleeHeld) break;
+
+            // alternate A1 <-> A2
+            if (meleeIndex == 0) meleeIndex = 1;
+            else meleeIndex = 0;
+        }
+
+        meleeLoopRunning = false;
+        meleeLoop = null;
+    }
+
 
     private void OnDisable() {
         if (statsManager.isPlayer) {

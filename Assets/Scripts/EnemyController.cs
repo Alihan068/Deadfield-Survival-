@@ -23,14 +23,17 @@ public class EnemyController : MonoBehaviour {
     PlayerController playerController;
     HealthManager healthManager;
     RangedParticleAttack rangedParticleAttack;
+    [SerializeField] SpriteRenderer characterSprite;
 
     [SerializeField] Animator animator;
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
+    
     void Awake() {
         statsManager = GetComponent<StatsManager>();
     }
+
     void OnEnable() {
         healthManager = GetComponent<HealthManager>();
         statsManager = GetComponent<StatsManager>();
@@ -51,14 +54,22 @@ public class EnemyController : MonoBehaviour {
         rotationToPlayer = (transform.position - playerController.transform.position).normalized;
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
     }
-    void FlipEnemyFacing() {
-        transform.localScale = new Vector2((-Mathf.Sign(rb2d.linearVelocity.x)), transform.localScale.y);
+
+    void FlipEnemyFacing()
+    {
+        float vx = rb2d.linearVelocity.x;
+        if (vx > Mathf.Epsilon)
+        {
+            characterSprite.flipX = false;
+        }
+        else if (vx < -Mathf.Epsilon)
+        {
+            characterSprite.flipX = true;
+        }
     }
 
 
     void EnemyMoveBehavior(EnemyType enemyType) {
-      
-        FlipEnemyFacing();
         switch (enemyType) {
             case EnemyType.Melee:
                 MeleeEnemyMovement();
@@ -70,8 +81,9 @@ public class EnemyController : MonoBehaviour {
                 ChargerMovement();
                 break;
         }
-        
+        FlipEnemyFacing();
     }
+
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
             Debug.Log(this.name + "attack");
@@ -80,10 +92,8 @@ public class EnemyController : MonoBehaviour {
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);  
-            return;
+            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
         }
-        rb2d.linearVelocity = Vector2.zero;
     }
 
     void RangedEnemyMovement() {
@@ -91,20 +101,17 @@ public class EnemyController : MonoBehaviour {
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             return;
-            
-        } else if ( distanceToPlayer >= statsManager.baseRange) {
+        }
+        else if (distanceToPlayer >= statsManager.baseRange) {
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             return;
-        } else {
-            rangedParticleAttack.ParticleSystemToggle(true);
-            float directionSign = Mathf.Sign(playerController.transform.position.x - transform.position.x);
-            transform.localScale = new Vector2(-directionSign, 1f);
-            //Debug.Log("RangedAttack!");
-
         }
-
-        rb2d.linearVelocity = Vector2.zero;
+        else
+        {
+            rangedParticleAttack.ParticleSystemToggle(true);
+            rb2d.linearVelocity = Vector2.zero;
+        }
     }
 
     void ChargerMovement() {

@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 
     Coroutine coroutine;
 
+    [SerializeField] SpriteRenderer playerSprite;
+
     [SerializeField] float startDashTime = 1f;
     [SerializeField] float dashSpeed = 10f;
     WeaponSwitcher weaponSwitcher;
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour {
 
     void Walk() {
         //if (!canMove) return;       
-        FlipSprite();
+        //FlipSprite();
         Vector2 vector = rb2d.linearVelocity;
         vector.x = moveInput.x * statsManager.moveSpeed;
         vector.y = moveInput.y * statsManager.moveSpeed;
@@ -76,14 +78,6 @@ public class PlayerController : MonoBehaviour {
         if (animator) {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
             //animator.SetBool("isWalking", hasHorizontal);
-        }
-    }
-    void FlipSprite() {
-
-        bool playerHasHorizntalSpeed = Mathf.Abs(rb2d.linearVelocity.x) > Mathf.Epsilon;
-        if (playerHasHorizntalSpeed) {
-            transform.localScale =
-                new Vector2(Mathf.Sign(rb2d.linearVelocity.x) * Mathf.Abs(transform.localScale.x), transform.localScale.y);
         }
     }
 
@@ -97,7 +91,18 @@ public class PlayerController : MonoBehaviour {
             weaponSwitcher.transform.up = direction;
         }
 
+        if (playerSprite != null) {
+            float dx = mouseWorldPos.x - transform.position.x;
+            if (Mathf.Abs(dx) > Mathf.Epsilon) {
+                bool faceLeft;
+                if (dx < 0f) faceLeft = true;
+                else faceLeft = false;
+
+                playerSprite.flipX = faceLeft;
+            }
+        }
     }
+
     IEnumerator Dash() {
         Debug.Log("DashCoroutine");
         canDash = false;

@@ -13,6 +13,8 @@ public class StatsManager : MonoBehaviour {
     public bool canMove = true;
     public bool canBeDamaged = true;
     public bool canAttack = true;
+    public bool isUnstoppable = false;
+    public bool isKnocked;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -20,6 +22,7 @@ public class StatsManager : MonoBehaviour {
     public float jumpCooldown = 1f;
 
     [Header("Base Stats")]
+    public float maxHealthPoint = 100;
     public float extraHealth = 1f;
     public float baseRange = 1f;
     [Tooltip("Effects Knockback-KnockbackResistance")]
@@ -35,6 +38,9 @@ public class StatsManager : MonoBehaviour {
     public float explosionSize = 1f;
     public float explosionDamage = 1f;
     public float baseDamage = 1f;
+    [Header("Knockback Attributes")]
+    public float baseKnockback = 10f;
+    public float knockbackStagger = 0.15f;
 
     [Header("General Defensive")]
     public float damageReduction = 1f;

@@ -57,7 +57,7 @@ public class RangedParticleAttack : MonoBehaviour {
             Debug.Log("Target: " + other.name + "Has no healthManager");
         }
         else {
-            targetHealthManager.CalculateIncomingDamage(statsManager.rangedDamage);
+            targetHealthManager.CalculateIncomingDamage(statsManager.rangedDamage, transform);
         }
     }
 }

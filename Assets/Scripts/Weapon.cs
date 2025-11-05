@@ -136,7 +136,6 @@ public class Weapon : MonoBehaviour {
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
         if (enemyHealthManager == null) return;
 
-        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        enemyHealthManager.GetKnockback(transform, statsManager.strength);
+        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage, transform);
     }
 }

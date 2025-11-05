@@ -11,12 +11,7 @@ public class HealthManager : MonoBehaviour {
     PlayerController playerController;
     Rigidbody2D rb2d;
     EnemyController enemyController;
-
-    public float maxHealthPoint = 100;
-    public float baseKnockback = 10f;
-    [SerializeField] float knockbackStagger = 0.15f;
-    public bool isUnstoppable = false;
-    public bool isKnocked;
+    CustomTime customTime;
 
     [SerializeField] float deathSpin = 10f;
     [SerializeField] float deathKick = 10f;
@@ -29,6 +24,8 @@ public class HealthManager : MonoBehaviour {
     }
     void Start() {
         statsManager = GetComponent<StatsManager>();
+        customTime = GetComponent<CustomTime>();
+
         if (statsManager.isPlayer) {
             playerController = GetComponent<PlayerController>();
         }
@@ -38,26 +35,27 @@ public class HealthManager : MonoBehaviour {
 
     }
 
-    public void CalculateIncomingDamage(float rawDamage) {
+    public void CalculateIncomingDamage(float rawDamage, Transform damageSourceTransform) {
         float calculatedDamage;
         //TODO: Add resistance calculations
         calculatedDamage = rawDamage;
-        TakeFinalDamage(calculatedDamage);
+        TakeFinalDamage(calculatedDamage, damageSourceTransform);
     }
 
-    void TakeFinalDamage(float damage) {
+    void TakeFinalDamage(float damage, Transform damageSourceTransform) {
 
         if (!statsManager.canBeDamaged) {
             Debug.Log(this.name + " can't be Damaged");
             return;
         }
-        if (damage > maxHealthPoint) {
+        if (damage > statsManager.maxHealthPoint) {
             DeathSequence();
         }
         else {
+            customTime.GetKnockback(statsManager.strength, damageSourceTransform);
             StartCoroutine(TakeDamageEffects());
-            maxHealthPoint -= damage;
-            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
+            statsManager.maxHealthPoint -= damage;
+            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.maxHealthPoint);
         }
     }
     IEnumerator TakeDamageEffects() {
@@ -67,45 +65,6 @@ public class HealthManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         bodySprite.color = Color.white;
     }
-
-    public void GetKnockback(Transform source, float amount) {
-        Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
-        if (rb2d == null) {
-            Debug.LogError("Rigidbody2D is null!");
-            return;
-        }
-        if (isUnstoppable) {
-            Debug.Log(this.name + ("isUnstopabble!"));
-            return;
-        }
-        //TODO: convert to  both player and enemy controller to, interrupt method in the controller scripts if any additions will be added.
-        if (statsManager.isPlayer) {
-            playerController.StopAllCoroutines();
-        }
-        else {
-            enemyController.StopAllCoroutines();
-        }
-        rb2d.linearVelocity = Vector2.zero;
-
-        Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-
-        float knockbackStrCompare = amount - statsManager.strength;
-
-        rb2d.AddForce(knockbackDirection * LogarithmicScale(knockbackStrCompare, 50) * baseKnockback, ForceMode2D.Impulse);
-
-        if (!isKnocked) StartCoroutine(KnockbackPause());
-    }
-    IEnumerator KnockbackPause() {
-        isKnocked = true;
-        statsManager.canMove = false;
-        float knockStun = knockbackStagger; /*(statsManager.strength / 100)*/
-        yield return new WaitForSeconds(ClampedValue(knockStun));
-
-        statsManager.canMove = true;
-        isKnocked = false;
-    }
-
-
 
     void DeathSequence() {
 
@@ -148,30 +107,7 @@ public class HealthManager : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    float ClampedValue(float value) {
-        value = Mathf.Clamp(value, 0, float.MaxValue);
-        return value;
-    }
-
-    float ToPercent(float value, float max) {
-        if (max <= Mathf.Epsilon)
-            return 0f;
-
-        float ratio = value / max;
-        ratio = Mathf.Clamp01(ratio);
-        return ratio * 100f;
-    }
-    public float LogarithmicScale(float baseValue, float maxLimit) {
-        if (baseValue <= 0f)
-            return 0f;
-        if (maxLimit <= 0f)
-            return baseValue;
-
-        float scaled = maxLimit * (1f - Mathf.Exp(-baseValue / maxLimit));
-        Debug.Log(1 + ((scaled) / 100));
-        return 1 + ((scaled) / 100);
-    }
-
+  
     IEnumerator HitStop() {
         yield return new WaitForSecondsRealtime(0.1f);
     }

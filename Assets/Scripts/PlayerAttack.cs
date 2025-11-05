@@ -16,20 +16,20 @@ public class PlayerAttack : MonoBehaviour {
         weaponSwitcher = GetComponentInParent<WeaponSwitcher>();
     }
 
-    // Update is called once per frame
-    void Update() {
+    //// Update is called once per frame
+    //void Update() {
 
-    }
+    //}
 
-    void AttackWithMeleeWeapon() {
-        Vector2 vector = weapon.transform.position;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(vector, statsManager.weaponSize, weapon.weaponTargetLayer);
-        foreach (Collider2D hit in hits) {
-            Debug.Log("Hit target: " + hit.name);
-            HealthManager targetHealthManager = hit.GetComponent<HealthManager>();
-            targetHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        }
-    }
+    //void AttackWithMeleeWeapon() {
+    //    Vector2 vector = weapon.transform.position;
+    //    Collider2D[] hits = Physics2D.OverlapCircleAll(vector, statsManager.weaponSize, weapon.weaponTargetLayer);
+    //    foreach (Collider2D hit in hits) {
+    //        Debug.Log("Hit target: " + hit.name);
+    //        HealthManager targetHealthManager = hit.GetComponent<HealthManager>();
+    //        targetHealthManager.CalculateIncomingDamage(statsManager.baseDamage, transform);
+    //    }
+    //}
 
     public void AttackCoroutine(bool pressed) {
         pressingAttack = pressed;
@@ -54,14 +54,6 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    void CalculateAttackSpeed(float attackSpeed) { 
-    
-    }
-    
-
-
-
-
     private void OnDisable() {
         if (attackCoroutine != null) {
             StopCoroutine(attackCoroutine);
@@ -69,25 +61,6 @@ public class PlayerAttack : MonoBehaviour {
             pressingAttack = false;
         }
     }
-
-  
-
-
-    //    void MeleeSwitch() {
-    //        while (t < meleeCooldown) {
-    //            t += Time.deltaTime;
-    //            yield return null;
-    //        }
-
-    //        if (!meleeHeld) break;
-
-    //        // alternate A1 <-> A2
-    //        if (meleeIndex == 0) meleeIndex = 1;
-    //        else meleeIndex = 0;
-    //    }
-    //}
-
-
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;

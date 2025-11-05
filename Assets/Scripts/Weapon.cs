@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour {
         projectilesParticleSystem = GetComponent<ParticleSystem>();
     }
 
-    public void MultipleAnimation() {
+    public void MultipleAttackAnimation() {
         if (animIndex == 1) {
             animator.SetTrigger("UpsideDownAttack");
             
@@ -65,6 +65,9 @@ public class Weapon : MonoBehaviour {
         else {
             Debug.Log("BrokenAnimIndex");
         }
+    }
+    public void RegularAttackAnimation() {
+        animator.SetTrigger("isAttacking");
     }
 
     void GiveBaseStats() {
@@ -128,6 +131,8 @@ public class Weapon : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.CompareTag("Weapon")) return;
+
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
         if (enemyHealthManager == null) return;
 

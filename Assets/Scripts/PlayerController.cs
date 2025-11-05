@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     WeaponSwitcher weaponSwitcher;
     float currentDashTime;
 
-    
+    public bool canAttack = true;
     bool canDash = true;
     bool playerCollision = true;
 

@@ -90,7 +90,7 @@ public class HealthManager : MonoBehaviour {
         }
     }
     IEnumerator TakeDamageEffects() {
-
+        Debug.Log(this.name + "damageEffects");
         Color previousColor = bodySprite.color;
         bodySprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);

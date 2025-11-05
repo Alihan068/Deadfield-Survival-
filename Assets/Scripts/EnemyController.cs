@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] EnemyType enemyType;
 
     [SerializeField] float attackZoneValue;
+
     float minRange;
     [SerializeField] float chargeSpeed = 2f;
     [SerializeField] float chargeCooldown = 2f;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour {
     HealthManager healthManager;
     RangedParticleAttack rangedParticleAttack;
     [SerializeField] SpriteRenderer characterSprite;
+    Weapon weaponScript;
 
     [SerializeField] Animator weaponAnimator;
     Animator bodyAnimator;
@@ -36,13 +38,16 @@ public class EnemyController : MonoBehaviour {
     }
 
     void OnEnable() {
-        healthManager = GetComponent<HealthManager>();
         statsManager = GetComponent<StatsManager>();
-        rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
+        healthManager = GetComponent<HealthManager>();
         rb2d = GetComponent<Rigidbody2D>();
-        playerController = FindAnyObjectByType<PlayerController>();
-        EnemyBaseStatImplementation(enemyType);
         bodyAnimator = GetComponent<Animator>();
+
+        weaponScript = GetComponentInChildren<Weapon>();
+        rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
+        
+        playerController = FindAnyObjectByType<PlayerController>();
+        EnemyBaseStatImplementation(enemyType);       
     }
 
     void Update() {
@@ -76,7 +81,6 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-
     void EnemyMoveBehavior(EnemyType enemyType) {
         switch (enemyType) {
             case EnemyType.Melee:
@@ -94,8 +98,8 @@ public class EnemyController : MonoBehaviour {
 
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
-            Debug.Log(this.name + "attack");
-            weaponAnimator.SetTrigger("isAttacking");
+                rb2d.linearVelocity = Vector2.zero;
+                weaponAnimator.SetTrigger("isAttacking");          
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;

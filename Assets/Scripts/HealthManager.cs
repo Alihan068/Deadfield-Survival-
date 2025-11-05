@@ -16,7 +16,7 @@ public class HealthManager : MonoBehaviour {
     public float baseKnockback = 10f;
     [SerializeField] float knockbackStagger = 0.15f;
     public bool isUnstoppable = false;
-    bool isKnocked;
+    public bool isKnocked;
 
     [SerializeField] float deathSpin = 10f;
     [SerializeField] float deathKick = 10f;
@@ -45,6 +45,29 @@ public class HealthManager : MonoBehaviour {
         TakeFinalDamage(calculatedDamage);
     }
 
+    void TakeFinalDamage(float damage) {
+
+        if (!statsManager.canBeDamaged) {
+            Debug.Log(this.name + " can't be Damaged");
+            return;
+        }
+        if (damage > maxHealthPoint) {
+            DeathSequence();
+        }
+        else {
+            StartCoroutine(TakeDamageEffects());
+            maxHealthPoint -= damage;
+            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
+        }
+    }
+    IEnumerator TakeDamageEffects() {
+        Debug.Log(this.name + "damageEffects");
+        Color previousColor = bodySprite.color;
+        bodySprite.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        bodySprite.color = Color.white;
+    }
+
     public void GetKnockback(Transform source, float amount) {
         Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
@@ -55,7 +78,7 @@ public class HealthManager : MonoBehaviour {
             Debug.Log(this.name + ("isUnstopabble!"));
             return;
         }
-        //TODO: convert to interrupt method in the controller scripts if any additions will be added.
+        //TODO: convert to  both player and enemy controller to, interrupt method in the controller scripts if any additions will be added.
         if (statsManager.isPlayer) {
             playerController.StopAllCoroutines();
         }
@@ -72,31 +95,6 @@ public class HealthManager : MonoBehaviour {
 
         if (!isKnocked) StartCoroutine(KnockbackPause());
     }
-
-    void TakeFinalDamage(float damage) {
-        if (!statsManager.canBeDamaged) {
-            Debug.Log(this.name + " can't be Damaged");
-            return;
-        }
-
-        if (damage > maxHealthPoint) {
-            DeathSequence();
-        }
-
-        else {
-            StartCoroutine(TakeDamageEffects());
-            maxHealthPoint -= damage;
-            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
-        }
-    }
-    IEnumerator TakeDamageEffects() {
-        Debug.Log(this.name + "damageEffects");
-        Color previousColor = bodySprite.color;
-        bodySprite.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        bodySprite.color = previousColor;
-    }
-
     IEnumerator KnockbackPause() {
         isKnocked = true;
         statsManager.canMove = false;
@@ -107,9 +105,12 @@ public class HealthManager : MonoBehaviour {
         isKnocked = false;
     }
 
+
+
     void DeathSequence() {
 
         DeathEffects();
+        statsManager.canMove = false;
         Destroy(gameObject, 3f);
     }
 
@@ -120,7 +121,7 @@ public class HealthManager : MonoBehaviour {
         }
 
         //RedColorBlink
-        GetComponent<SpriteRenderer>().color = Color.red;
+        bodySprite.color = Color.red;
         Invoke(nameof(ResetSpriteColor), 0.2f);
         //Disable Colliders
         Collider2D[] collider2Ds = GetComponents<Collider2D>();
@@ -170,9 +171,8 @@ public class HealthManager : MonoBehaviour {
         Debug.Log(1 + ((scaled) / 100));
         return 1 + ((scaled) / 100);
     }
-    IEnumerator StopTime() {
-        Time.timeScale = 0f;
-        yield return new WaitForSeconds(0.1f);
-        Time.timeScale = 1f;
+
+    IEnumerator HitStop() {
+        yield return new WaitForSecondsRealtime(0.1f);
     }
 }

@@ -30,6 +30,6 @@ public class WeaponFlipper : MonoBehaviour {
         if (dx < 0f) sign = -1f;
         else sign = 1f;
 
-        transform.localScale = new Vector3(baseScale.x * sign, baseScale.y, baseScale.z);
+        transform.localScale = new Vector3(baseScale.x, baseScale.y * sign, baseScale.z);
     }
 }

@@ -99,9 +99,10 @@ public class EnemyController : MonoBehaviour {
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
                 rb2d.linearVelocity = Vector2.zero;
-                weaponAnimator.SetTrigger("isAttacking");          
+                weaponAnimator.SetBool("isAttacking", true);          
         }
         else if (distanceToPlayer > statsManager.baseRange) {
+            weaponAnimator.SetBool("isAttacking", false);
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
             rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;

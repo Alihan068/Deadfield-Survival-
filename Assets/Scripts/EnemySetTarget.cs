@@ -21,7 +21,7 @@ public class EnemySetTarget : MonoBehaviour {
     void AimForTarget() {
         Vector2 targetPos = target.position;
         Vector2 targetDir = (target.position - transform.position);
-        transform.up = targetDir;
+        transform.right = targetDir;
 
 
     }

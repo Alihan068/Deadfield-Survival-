@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour {
         }
         FlipEnemyFacing();
     }
-
+    //TODO: Make enemy attack based on meleeAttackSpeed by setting the animation speed.
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
                 rb2d.linearVelocity = Vector2.zero;
@@ -198,12 +198,12 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision != null && collision.gameObject.CompareTag("Player")) {
-            collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
-            collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision) {
+    //    if (collision != null && collision.gameObject.CompareTag("Player")) {
+    //        collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
+    //        collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
+    //    }
+    //}
 
     //private void OnDrawGizmos() {
     //    Gizmos.color = Color.yellow;

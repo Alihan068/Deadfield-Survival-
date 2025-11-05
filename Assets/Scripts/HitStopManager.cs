@@ -39,12 +39,13 @@ public class HitStopManager : MonoBehaviour {
     /// Calculates freeze duration based on damage
     /// </summary>
     public float CalculateFreezeDuration(float damage) {
-        float duration = baseFreezeTime + (damage * damageMultiplier);
+        float duration = baseFreezeTime /*+ (damage * damageMultiplier)*/;
+        Debug.Log("Duration: " + duration);
         return Mathf.Min(duration, maxFreezeTime);
     }
 
     IEnumerator HitStopCoroutine(float duration) {
-        if (hitStopCoroutine == null) {
+
             // Find all objects with CustomTime component
             CustomTime[] allTimedObjects = FindObjectsByType<CustomTime>(FindObjectsSortMode.None);
 
@@ -66,7 +67,7 @@ public class HitStopManager : MonoBehaviour {
 
             hitStopCoroutine = null;
         }
-    }
+    
 
     /// <summary>
     /// Manually trigger a hit stop with custom duration

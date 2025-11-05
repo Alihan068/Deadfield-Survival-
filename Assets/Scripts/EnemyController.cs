@@ -6,11 +6,10 @@ public enum EnemyType {
     Ranged,
     Charger,
 }
+
 public class EnemyController : MonoBehaviour {
 
-    //[SerializeField] CollectibleItemSO baseStats;
     [SerializeField] EnemyType enemyType;
-
     [SerializeField] float attackZoneValue;
 
     float minRange;
@@ -20,6 +19,7 @@ public class EnemyController : MonoBehaviour {
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
+    CustomTime customTime;
     Coroutine chargeCoroutine;
     PlayerController playerController;
     HealthManager healthManager;
@@ -33,8 +33,12 @@ public class EnemyController : MonoBehaviour {
     Vector3 rotationToPlayer;
     float distanceToPlayer;
 
+    // Knockback state
+    public bool isInKnockback = false;
+
     void Awake() {
         statsManager = GetComponent<StatsManager>();
+        customTime = GetComponent<CustomTime>();
     }
 
     void OnEnable() {
@@ -45,18 +49,19 @@ public class EnemyController : MonoBehaviour {
 
         weaponScript = GetComponentInChildren<Weapon>();
         rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
-        
+
         playerController = FindAnyObjectByType<PlayerController>();
-        EnemyBaseStatImplementation(enemyType);       
+        EnemyBaseStatImplementation(enemyType);
     }
 
     void Update() {
-        if (!statsManager.canMove) return;
+        // Don't move if frozen, can't move, or in knockback
+        if (!statsManager.canMove || customTime.timeScale <= 0 || isInKnockback) return;
 
         CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
-
     }
+
     void CalculateDistanceToPlayer() {
         rotationToPlayer = (transform.position - playerController.transform.position).normalized;
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
@@ -98,29 +103,37 @@ public class EnemyController : MonoBehaviour {
 
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
-                rb2d.linearVelocity = Vector2.zero;
-                weaponAnimator.SetTrigger("isAttacking");          
+            rb2d.linearVelocity = Vector2.zero;
+            if (weaponAnimator != null)
+                weaponAnimator.SetTrigger("isAttacking");
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+
+            // Only apply velocity if not frozen
+            if (customTime.timeScale > 0) {
+                rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+            }
         }
     }
 
     void RangedEnemyMovement() {
         if (distanceToPlayer <= minRange) {
-            rangedParticleAttack.ParticleSystemToggle(false);
+            if (rangedParticleAttack != null)
+                rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             return;
         }
         else if (distanceToPlayer >= statsManager.baseRange) {
-            rangedParticleAttack.ParticleSystemToggle(false);
+            if (rangedParticleAttack != null)
+                rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             return;
         }
         else {
-            rangedParticleAttack.ParticleSystemToggle(true);
+            if (rangedParticleAttack != null)
+                rangedParticleAttack.ParticleSystemToggle(true);
             rb2d.linearVelocity = Vector2.zero;
         }
     }
@@ -149,33 +162,49 @@ public class EnemyController : MonoBehaviour {
             }
         }
     }
+
     IEnumerator ChargeTarget(Transform target) {
         rb2d.linearVelocity = Vector2.zero;
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
-        yield return new WaitForSeconds(1);
+
+        // Use real time for wait so it's not affected by freezes
+        yield return new WaitForSecondsRealtime(1);
+
         healthManager.isUnstoppable = true;
         Debug.Log("Charge!");
-        rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
-        yield return new WaitForSeconds(chargeTime);
+
+        if (customTime.timeScale > 0) {
+            rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
+        }
+
+        yield return new WaitForSecondsRealtime(chargeTime);
+
         healthManager.isUnstoppable = false;
         rb2d.linearVelocity = Vector2.zero;
-        yield return new WaitForSeconds(chargeCooldown);
+
+        yield return new WaitForSecondsRealtime(chargeCooldown);
         chargeCoroutine = null;
     }
 
     void ChaseTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        //rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+
+        // Only apply velocity if not frozen
+        if (customTime.timeScale > 0) {
+            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+        }
     }
 
     void RunFromTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        //rb2d.MovePosition(rb2d.position + -directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = -directionNormalized * statsManager.moveSpeed;
+
+        // Only apply velocity if not frozen
+        if (customTime.timeScale > 0) {
+            rb2d.linearVelocity = -directionNormalized * statsManager.moveSpeed;
+        }
     }
 
     void EnemyBaseStatImplementation(EnemyType enemyType) {

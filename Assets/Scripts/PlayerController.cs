@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D rb2d;
     Animator animator;
     PlayerAttack playerAttack;
+    CustomTime customTime;
     Coroutine coroutine;
 
     [SerializeField] SpriteRenderer playerSprite;
@@ -35,21 +36,30 @@ public class PlayerController : MonoBehaviour {
         statsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        customTime = GetComponent<CustomTime>();
+
+        // Add CustomTime if not present
+        if (customTime == null) {
+            customTime = gameObject.AddComponent<CustomTime>();
+        }
     }
+
     void OnMove(InputValue value) {
         moveInput = value.Get<Vector2>();
     }
+
     void OnDash(InputValue value) {
         Debug.Log("ShiftInput");
-        if (canDash && isAlive && statsManager.canMove) {
+        if (canDash && isAlive && statsManager.canMove && customTime.timeScale > 0) {
             StartCoroutine(Dash());
         }
     }
+
     void OnAttack(InputValue value) {
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
         bool pressed = value.Get<float>() >= 1f;
-        Debug.Log($"OnAttack called - pressed: {pressed}");
+        //Debug.Log($"OnAttack called - pressed: {pressed}");
 
         switch (weapon.weaponType) {
             case WeaponType.Melee:
@@ -62,20 +72,23 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     void Update() {
-        if (!isAlive || !statsManager.canMove) return;
+        if (!isAlive || !statsManager.canMove || customTime.timeScale <= 0) return;
         AimForMouse();
         Walk();
     }
 
     void Walk() {
-        //if (!canMove) return;       
-        //FlipSprite();
         Vector2 vector = rb2d.linearVelocity;
+
+        // Use customTime.DeltaTime for time-scaled movement
         vector.x = moveInput.x * statsManager.moveSpeed;
         vector.y = moveInput.y * statsManager.moveSpeed;
-        rb2d.linearVelocity = vector;
+
+        // Only apply velocity if not frozen
+        if (customTime.timeScale > 0) {
+            rb2d.linearVelocity = vector;
+        }
 
         if (animator) {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
@@ -109,22 +122,24 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("DashCoroutine");
         canDash = false;
         playerCollision = false;
-        currentDashTime = startDashTime; // Reset the dash timer.
+        currentDashTime = startDashTime;
 
         while (currentDashTime > 0f) {
-            currentDashTime -= Time.deltaTime; // Lower the dash timer each frame.
+            // Use customTime.DeltaTime for time-scaled dash
+            currentDashTime -= customTime.DeltaTime;
 
-            rb2d.linearVelocity = moveInput * dashSpeed; // Dash in the direction that was held down.
-            // No need to multiply by Time.DeltaTime here, physics are already consistent across different FPS.
+            if (customTime.timeScale > 0) {
+                rb2d.linearVelocity = moveInput * dashSpeed;
+            }
 
-            yield return null; // Returns out of the coroutine this frame so we don't hit an infinite loop.
+            yield return null;
         }
 
-        rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
+        rb2d.linearVelocity = new Vector2(0f, 0f);
 
-        yield return new WaitForSeconds(statsManager.dashCooldown);
+        // Use real time for cooldown so it's not affected by freezes
+        yield return new WaitForSecondsRealtime(statsManager.dashCooldown);
         canDash = true;
-
     }
 
     private void OnDrawGizmos() {

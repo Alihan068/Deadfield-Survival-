@@ -1,178 +1,133 @@
-using System.Collections;
-using Unity.Cinemachine;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class HealthManager : MonoBehaviour {
-    Coroutine knockbackCoroutine;
-    Coroutine coroutine;
-    StatsManager statsManager;
-    PlayerController playerController;
-    Rigidbody2D rb2d;
-    EnemyController enemyController;
+    [Header("Health Settings")]
+    [SerializeField] float maxHealth = 100f;
+    [SerializeField] float currentHealth;
 
-    public float maxHealthPoint = 100;
+    [Header("Knockback Settings")]
     public float baseKnockback = 10f;
-    [SerializeField] float knockbackStagger = 0.15f;
+    [SerializeField] float knockbackResistance = 1f;
+
+    [Header("Status")]
     public bool isUnstoppable = false;
-    bool isKnocked;
 
-    [SerializeField] float deathSpin = 10f;
-    [SerializeField] float deathKick = 10f;
+    [Header("Hit Stop Settings")]
+    [SerializeField] bool triggersHitStop = true;
 
-    [SerializeField] SpriteRenderer bodySprite;
+    private Rigidbody2D rb2d;
+    private StatsManager statsManager;
+    private CustomTime customTime;
+    private bool isDying = false;
 
-    private void OnEnable() {
-        statsManager = GetComponent<StatsManager>();
+    void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
-    }
-    void Start() {
         statsManager = GetComponent<StatsManager>();
-        if (statsManager.isPlayer) {
-            playerController = GetComponent<PlayerController>();
-        }
-        else {
-            enemyController = GetComponent<EnemyController>();
-        }
-
+        customTime = GetComponent<CustomTime>();
+        currentHealth = maxHealth;
     }
 
-    public void CalculateIncomingDamage(float rawDamage) {
-        float calculatedDamage;
-        //TODO: Add resistance calculations
-        calculatedDamage = rawDamage;
-        TakeFinalDamage(calculatedDamage);
-    }
-
-    public void GetKnockback(Transform source, float amount) {
-        Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
-        if (rb2d == null) {
-            Debug.LogError("Rigidbody2D is null!");
+    public void CalculateIncomingDamage(float incomingDamage) {
+        if (statsManager != null && !statsManager.canBeDamaged)
             return;
+
+        if (isDying) return; // Already dying, ignore further damage
+
+        // Apply damage reduction/armor
+        float finalDamage = incomingDamage;
+        if (statsManager != null) {
+            finalDamage = incomingDamage / statsManager.armor;
+            finalDamage *= (1f - (statsManager.damageReduction / 100f));
         }
-        if (isUnstoppable) {
-            Debug.Log(this.name + ("isUnstopabble!"));
+
+        // Apply damage
+        currentHealth -= finalDamage;
+
+        //Debug.Log($"{gameObject.name} took {finalDamage} damage. Health: {currentHealth}/{maxHealth}");
+
+        // Check if should die
+        bool shouldDie = currentHealth <= 0;
+
+        // Trigger hit stop effect AFTER applying damage
+        if (triggersHitStop && HitStopManager.Instance != null) {
+            float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(finalDamage);
+            HitStopManager.Instance.TriggerHitStop(finalDamage);
+
+            // If should die, delay death until after hit stop
+            if (shouldDie) {
+                isDying = true;
+                StartCoroutine(DelayedDeath(hitStopDuration + 0.05f));
+            }
+        }
+        else if (shouldDie) {
+            // No hit stop, die immediately
+            Die();
+        }
+    }
+
+    IEnumerator DelayedDeath(float delay) {
+        // Wait for hit stop to complete (plus small buffer)
+        yield return new WaitForSecondsRealtime(delay + 0.05f);
+        Die();
+    }
+
+    public void GetKnockback(Transform attacker, float attackerStrength) {
+        if (isUnstoppable || rb2d == null)
             return;
+
+        // Calculate knockback direction
+        Vector2 knockbackDirection = (transform.position - attacker.position).normalized;
+
+        // Calculate knockback force
+        float knockbackForce = baseKnockback + attackerStrength;
+        if (statsManager != null) {
+            knockbackForce /= statsManager.strength; // Use strength as knockback resistance
         }
-        //TODO: convert to interrupt method in the controller scripts if any additions will be added.
-        if (statsManager.isPlayer) {
-            playerController.StopAllCoroutines();
-        }
-        else {
-            enemyController.StopAllCoroutines();
-        }
-        rb2d.linearVelocity = Vector2.zero;
 
-        Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-
-        float knockbackStrCompare = amount - statsManager.strength;
-
-        rb2d.AddForce(knockbackDirection * LogarithmicScale(knockbackStrCompare, 50) * baseKnockback, ForceMode2D.Impulse);
-
-        if (!isKnocked) StartCoroutine(KnockbackPause());
+        // Apply knockback
+        rb2d.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
     }
 
-    void TakeFinalDamage(float damage) {
-        if (!statsManager.canBeDamaged) {
-            Debug.Log(this.name + " can't be Damaged");
+    /// <summary>
+    /// Calculate and schedule knockback to be applied after unfreeze
+    /// </summary>
+    public void ScheduleKnockback(Transform attacker, float attackerStrength) {
+        if (isUnstoppable || rb2d == null || customTime == null)
             return;
+
+        // Calculate knockback direction
+        Vector2 knockbackDirection = (transform.position - attacker.position).normalized;
+
+        // Calculate knockback velocity (much stronger than before!)
+        // Base knockback speed + attacker strength, reduced by defender strength
+        float knockbackSpeed = baseKnockback + (attackerStrength * 2f);
+
+        if (statsManager != null && statsManager.strength > 1f) {
+            // Reduce by defender strength (but not below 50% of base)
+            knockbackSpeed = Mathf.Max(knockbackSpeed * 0.5f, knockbackSpeed / Mathf.Sqrt(statsManager.strength));
         }
 
-        if (damage > maxHealthPoint) {
-            DeathSequence();
-        }
+        // Calculate final knockback velocity vector
+        Vector2 knockbackVelocity = knockbackDirection * knockbackSpeed;
 
-        else {
-            StartCoroutine(TakeDamageEffects());
-            maxHealthPoint -= damage;
-            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + maxHealthPoint);
-        }
-    }
-    IEnumerator TakeDamageEffects() {
-        Debug.Log(this.name + "damageEffects");
-        Color previousColor = bodySprite.color;
-        bodySprite.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        bodySprite.color = previousColor;
+        // Schedule it to be applied when unfrozen
+        customTime.ApplyKnockbackOnUnfreeze(knockbackVelocity);
+
+        //Debug.Log($"{gameObject.name} knockback scheduled: direction={knockbackDirection}, speed={knockbackSpeed}, velocity={knockbackVelocity}");
     }
 
-    IEnumerator KnockbackPause() {
-        isKnocked = true;
-        statsManager.canMove = false;
-        float knockStun = knockbackStagger; /*(statsManager.strength / 100)*/
-        yield return new WaitForSeconds(ClampedValue(knockStun));
-
-        statsManager.canMove = true;
-        isKnocked = false;
-    }
-
-    void DeathSequence() {
-
-        DeathEffects();
-        Destroy(gameObject, 3f);
-    }
-
-    void DeathEffects() {
-        if (statsManager.isPlayer) {
-            //Stop Camera on death area
-            FindAnyObjectByType<CinemachineCamera>().enabled = false;
-        }
-
-        //RedColorBlink
-        GetComponent<SpriteRenderer>().color = Color.red;
-        Invoke(nameof(ResetSpriteColor), 0.2f);
-        //Disable Colliders
-        Collider2D[] collider2Ds = GetComponents<Collider2D>();
-        foreach (Collider2D col in collider2Ds) {
-            col.enabled = false;
-        }
-        //DeathSpin
-        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
-        rb2d.linearVelocity = Vector2.up * deathKick;
-        rb2d.freezeRotation = false;
-        rb2d.AddTorque(deathSpin, ForceMode2D.Impulse);
-
-        Invoke(nameof(StopSpin), 2f);
-
-        Invoke(nameof(DestroyPlayer), 5f);
-    }
-    void ResetSpriteColor() {
-        GetComponent<SpriteRenderer>().color = Color.white;
-    }
-    void StopSpin() {
-        rb2d.angularVelocity = 0f;
-    }
-    void DestroyPlayer() {
+    void Die() {
+        Debug.Log($"{gameObject.name} died!");
+        // Add death logic here (animations, loot drops, etc.)
         Destroy(gameObject);
     }
 
-    float ClampedValue(float value) {
-        value = Mathf.Clamp(value, 0, float.MaxValue);
-        return value;
+    public void Heal(float amount) {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
     }
 
-    float ToPercent(float value, float max) {
-        if (max <= Mathf.Epsilon)
-            return 0f;
-
-        float ratio = value / max;
-        ratio = Mathf.Clamp01(ratio);
-        return ratio * 100f;
-    }
-    public float LogarithmicScale(float baseValue, float maxLimit) {
-        if (baseValue <= 0f)
-            return 0f;
-        if (maxLimit <= 0f)
-            return baseValue;
-
-        float scaled = maxLimit * (1f - Mathf.Exp(-baseValue / maxLimit));
-        Debug.Log(1 + ((scaled) / 100));
-        return 1 + ((scaled) / 100);
-    }
-    IEnumerator StopTime() {
-        Time.timeScale = 0f;
-        yield return new WaitForSeconds(0.1f);
-        Time.timeScale = 1f;
+    public float GetHealthPercentage() {
+        return currentHealth / maxHealth;
     }
 }

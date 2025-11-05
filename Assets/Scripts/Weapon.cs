@@ -53,11 +53,11 @@ public class Weapon : MonoBehaviour {
     public void MultipleAttackAnimation() {
         if (animIndex == 1) {
             animator.SetTrigger("UpsideDownAttack");
-            
+
             animIndex++;
             //Debug.Log("UpToDown! next index: " + animIndex);
         }
-        else if(animIndex == 2) {
+        else if (animIndex == 2) {
             animator.SetTrigger("DownSideUpAttack");
             animIndex--;
             //Debug.Log("DownToUp! next index: " + animIndex);
@@ -66,6 +66,7 @@ public class Weapon : MonoBehaviour {
             //Debug.Log("BrokenAnimIndex");
         }
     }
+
     public void RegularAttackAnimation() {
         animator.SetTrigger("isAttacking");
     }
@@ -114,7 +115,7 @@ public class Weapon : MonoBehaviour {
     }
 
     public void SetFiring(bool pressed) {
-        if (projectilesParticleSystem == null ) return;
+        if (projectilesParticleSystem == null) return;
         if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
 
         if (pressed && particleAttack != null)
@@ -132,14 +133,14 @@ public class Weapon : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("Weapon")) return;
-        
+
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
         CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
 
-        if (enemyHealthManager == null) return;
-
-        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        enemyCustomTime.ScheduleKnockback(statsManager.strength, transform);
+        if (enemyHealthManager != null) enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+        if ((this.CompareTag("Player") && enemyCustomTime != null)) {
+            enemyCustomTime.ScheduleKnockback(statsManager.strength, transform);
+                }
 
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitStopManager : MonoBehaviour {
@@ -43,24 +44,28 @@ public class HitStopManager : MonoBehaviour {
     }
 
     IEnumerator HitStopCoroutine(float duration) {
-        // Find all objects with CustomTime component
-        CustomTime[] allTimedObjects = FindObjectsByType<CustomTime>(FindObjectsSortMode.None);
+        if (hitStopCoroutine == null) {
+            // Find all objects with CustomTime component
+            CustomTime[] allTimedObjects = FindObjectsByType<CustomTime>(FindObjectsSortMode.None);
 
-        // Freeze all objects
-        foreach (CustomTime timedObject in allTimedObjects) {
-            timedObject.Freeze();
+            // Freeze all objects
+            foreach (CustomTime timedObject in allTimedObjects) {
+                Debug.Log(timedObject.name + "Freeze");
+                timedObject.Freeze();
+            }
+
+            // Wait for the freeze duration (using unscaled time)
+            yield return new WaitForSecondsRealtime(duration);
+            // Unfreeze all objects
+            foreach (CustomTime timedObject in allTimedObjects) {             
+                if (timedObject != null) {
+                    Debug.Log(timedObject.name + "Unfreeze");
+                    timedObject.Unfreeze();
+                }
+            }
+
+            hitStopCoroutine = null;
         }
-
-        // Wait for the freeze duration (using unscaled time)
-        yield return new WaitForSecondsRealtime(duration);
-
-        // Unfreeze all objects
-        foreach (CustomTime timedObject in allTimedObjects) {
-            if (timedObject != null)
-                timedObject.Unfreeze();
-        }
-
-        hitStopCoroutine = null;
     }
 
     /// <summary>

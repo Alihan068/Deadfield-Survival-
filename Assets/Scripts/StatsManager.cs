@@ -15,7 +15,7 @@ public class StatsManager : MonoBehaviour {
     public bool canAttack = true;
     public bool isUnstoppable = false;
     public bool isKnocked;
-    public bool triggersHitStop = true;
+    public bool triggersHitStop = false;
 
     [Header("Movement")]
     public float moveSpeed = 5f;

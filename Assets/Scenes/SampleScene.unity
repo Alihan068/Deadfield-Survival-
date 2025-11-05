@@ -431,6 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1020281752}
   - component: {fileID: 1020281751}
+  - component: {fileID: 1020281753}
   m_Layer: 0
   m_Name: HitStopManager
   m_TagString: Untagged
@@ -468,6 +469,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1020281753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020281750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad0af2d92fc3344fad3a9f88dd60a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForceSettings
+  targetFrameRate: 60
 --- !u!1 &1037074656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1467748530105117138, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
@@ -630,7 +644,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 128
@@ -643,7 +657,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12941,7 +12955,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5618176630043808493, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      propertyPath: triggersHitStop
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1600856814197934861, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2356717068507826095, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
     - {fileID: 1700373011029729276, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
@@ -13102,6 +13121,10 @@ PrefabInstance:
     - target: {fileID: 4036508397430527571, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
       propertyPath: moveSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036508397430527571, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
+      propertyPath: triggersHitStop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4036508397430527571, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
       propertyPath: baseAppliedKnockback

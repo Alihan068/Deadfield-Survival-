@@ -77,14 +77,14 @@ public class CustomTime : MonoBehaviour {
                 rb2d.linearVelocity = Vector2.zero;
                 rb2d.angularVelocity = 0f;
 
-                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback , 0, 49), 50) * statsManager.baseAppliedKnockback, ForceMode2D.Impulse);
+                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50) * statsManager.baseAppliedKnockback, ForceMode2D.Impulse);
                 //Debug.Log(GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50));
                 //rb2d.linearVelocity = pendingKnockback; // Set velocity directly
 
-                // Disable enemy AI during knockback
-                if (enemyController != null) {
-                    StartCoroutine(KnockbackPause());
+                if (knockbackCoroutine != null) {
+                    StopCoroutine(knockbackCoroutine);
                 }
+                knockbackCoroutine = StartCoroutine(KnockbackPause());
 
                 pendingKnockback = 0f;
                 pendingDirection = Vector2.zero;
@@ -103,16 +103,19 @@ public class CustomTime : MonoBehaviour {
         }
 
         wasFrozen = false;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        Debug.Log($"{rb2d.linearVelocity}  {rb2d.angularVelocity} {rb2d.constraints}");
     }
     public void ApplyKnockbackOnUnfreeze(float knockbackForce, Vector2 knockbackDirection) {
         pendingKnockback = knockbackForce;
         pendingDirection = knockbackDirection;
         hasPendingKnockback = true;
-        Debug.Log($"{gameObject.name} knockback scheduled: {knockbackForce}");
+        //Debug.Log($"{gameObject.name} knockback scheduled: {knockbackForce}");
     }
 
     public void ScheduleKnockback(float amount, Transform source) {
-        Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
+        //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
             Debug.LogError("Rigidbody2D is null!");
             return;
@@ -121,7 +124,15 @@ public class CustomTime : MonoBehaviour {
             Debug.Log(this.name + ("isUnstopabble!"));
             return;
         }
-        //TODO: convert to  both player and enemy controller to, interrupt method in the controller scripts if any additions will be added.
+
+        if (knockbackCoroutine != null) {
+            StopCoroutine(knockbackCoroutine);
+            knockbackCoroutine = null;
+
+            statsManager.canMove = true;
+            statsManager.isKnocked = false;
+        }
+
         if (statsManager.isPlayer) {
             GetComponent<PlayerController>().StopAllCoroutines();
         }
@@ -151,6 +162,7 @@ public class CustomTime : MonoBehaviour {
 
         statsManager.canMove = true;
         statsManager.isKnocked = false;
+        knockbackCoroutine = null;  // Clear reference
     }
 
 

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4238081780735660894}
   - component: {fileID: 7662145271820085341}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Free Smoke Fx  Pixel 07_52
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446912699084663836}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.5113762, w: 0.85935694}
-  m_LocalPosition: {x: 0.33500007, y: 0.08300001, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.19937679, w: 0.9799229}
+  m_LocalPosition: {x: -0.381, y: 0.237, z: 0}
   m_LocalScale: {x: 1.5800002, y: 1.5800002, z: 1.58}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5877360024632952450}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -61.511}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 23.001}
 --- !u!212 &7662145271820085341
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1405394704789139292}
   - component: {fileID: 281415022794589685}
+  - component: {fileID: 4756911746294075688}
   m_Layer: 7
   m_Name: EnemyWeaponTarget
   m_TagString: Weapon
@@ -135,6 +136,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9465069b59b14034099fa25da175d65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySetTarget
+--- !u!114 &4756911746294075688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467748530105117138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333cb3d85a7d7824ba2887eb45dbbcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponFlipper
 --- !u!1 &1785546727986418690
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +159,8 @@ GameObject:
   - component: {fileID: 5877360024632952450}
   - component: {fileID: 2449213418758821721}
   - component: {fileID: 974074049334810001}
-  - component: {fileID: 6284054571073918701}
+  - component: {fileID: 7129022672158274401}
+  - component: {fileID: 4358752827637941420}
   m_Layer: 7
   m_Name: EnemyWeapon
   m_TagString: Weapon
@@ -162,8 +176,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785546727986418690}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -205,7 +219,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6284054571073918701
+--- !u!114 &7129022672158274401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,9 +228,68 @@ MonoBehaviour:
   m_GameObject: {fileID: 1785546727986418690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 333cb3d85a7d7824ba2887eb45dbbcf2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ca127ced792bdc4e9dd382ba3a03b55, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponFlipper
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  weaponType: 0
+  weaponTargetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  ammoPrefab: {fileID: 0}
+  weaponDamage: 1
+  weaponRange: 1
+  attackSpeed: 1
+  projectileSpeed: 1
+  armor: 1
+  strength: 1
+  intelligence: 1
+  haste: 1
+--- !u!61 &4358752827637941420
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785546727986418690}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 119
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.375, y: 1.03125}
+    newSize: {x: 0.12, y: 0.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.2, y: 0.7}
+  m_EdgeRadius: 0
 --- !u!1 &3228312248860382617
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +301,7 @@ GameObject:
   - component: {fileID: 2462377054996597749}
   - component: {fileID: 7208469731526115650}
   - component: {fileID: 2007725369526588859}
+  - component: {fileID: 7365257722722793717}
   - component: {fileID: 4036508397430527571}
   - component: {fileID: 3812033877247482487}
   - component: {fileID: 6446798802793032937}
@@ -287,13 +361,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb99c44e6dcfa747a547ced708b26fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
-  maxHealthPoint: 100
-  baseKnockback: 10
-  knockbackStagger: 0.15
-  isUnstoppable: 0
   deathSpin: 10
   deathKick: 10
-  bodySprite: {fileID: 0}
+  bodySprite: {fileID: 6282207474666347761}
+--- !u!114 &7365257722722793717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228312248860382617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84c43a319d6fdf45a5c945170f06796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomTime
+  timeScale: 1
+  knockbackDuration: 0.2
 --- !u!114 &4036508397430527571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,11 +394,16 @@ MonoBehaviour:
   canCollectItems: 0
   canMove: 1
   canBeDamaged: 1
+  canAttack: 1
+  isUnstoppable: 0
+  isKnocked: 0
+  triggersHitStop: 1
   moveSpeed: 2
   dashCooldown: 1
   jumpCooldown: 1
+  maxHealthPoint: 100
   extraHealth: 1
-  baseRange: 1.5
+  baseRange: 0.7
   strength: 2
   intelligence: 2
   vitality: 5
@@ -326,6 +415,8 @@ MonoBehaviour:
   explosionSize: 1
   explosionDamage: 1
   baseDamage: 1
+  baseAppliedKnockback: 2
+  knockbackStagger: 0.15
   damageReduction: 1
   stunResistance: 1
   debufResistance: 1
@@ -442,7 +533,7 @@ GameObject:
   - component: {fileID: 3260015949137456758}
   m_Layer: 7
   m_Name: WeaponTransformAdjust
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -455,14 +546,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4461559951270259284}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.17364825, w: 0.9848078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5877360024632952450}
   m_Father: {fileID: 1405394704789139292}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6767822316161854858
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,9 +564,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2935594340521730148}
   - component: {fileID: 8337697221786891571}
-  m_Layer: 0
+  - component: {fileID: 8818766322112561449}
+  m_Layer: 7
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,13 +580,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6767822316161854858}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.50000006, w: 0.8660254}
-  m_LocalPosition: {x: -0.277, y: -0.08700002, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.3, z: 0}
   m_LocalScale: {x: 0.8000001, y: 0.8000001, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5877360024632952450}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8337697221786891571
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -553,6 +645,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &8818766322112561449
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767822316161854858}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7652299855664015745
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,7 +750,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7359107055105995040, guid: 33e678b1e85f3dc43bb029a2cd0fcd3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

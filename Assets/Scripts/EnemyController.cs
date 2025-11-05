@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyType {
@@ -31,6 +32,9 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] Animator weaponAnimator;
     Animator bodyAnimator;
 
+    string attackAnimName = "ChargeAttack";
+    int attackAnimHash;
+
     Vector3 rotationToPlayer;
     float distanceToPlayer;
 
@@ -47,9 +51,11 @@ public class EnemyController : MonoBehaviour {
 
         weaponScript = GetComponentInChildren<Weapon>();
         rangedParticleAttack = GetComponentInChildren<RangedParticleAttack>();
-        
+
         playerController = FindAnyObjectByType<PlayerController>();
-        EnemyBaseStatImplementation(enemyType);       
+        EnemyBaseStatImplementation(enemyType);
+
+        attackAnimHash = Animator.StringToHash(attackAnimName);
     }
 
     void Update() {
@@ -100,8 +106,12 @@ public class EnemyController : MonoBehaviour {
     //TODO: Make enemy attack based on meleeAttackSpeed by setting the animation speed.
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
-                rb2d.linearVelocity = Vector2.zero;
-                weaponAnimator.SetBool("isAttacking", true);          
+            rb2d.linearVelocity = Vector2.zero;
+
+            float attackSpeed = Mathf.Max(0.01f,statsManager.meleeAttackSpeed);
+            weaponAnimator.SetFloat("attackSpeed", attackSpeed);
+
+            weaponAnimator.SetBool("isAttacking", true);
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             weaponAnimator.SetBool("isAttacking", false);
@@ -198,12 +208,12 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision) {
-    //    if (collision != null && collision.gameObject.CompareTag("Player")) {
-    //        collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
-    //        collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
-    //    }
-    //}
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision != null && collision.gameObject.CompareTag("Player")) {
+            collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
+            collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
+        }
+    }
 
     //private void OnDrawGizmos() {
     //    Gizmos.color = Color.yellow;

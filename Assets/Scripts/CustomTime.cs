@@ -77,7 +77,9 @@ public class CustomTime : MonoBehaviour {
                 rb2d.linearVelocity = Vector2.zero;
                 rb2d.angularVelocity = 0f;
 
-                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50) * statsManager.baseAppliedKnockback, ForceMode2D.Impulse);
+                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50) * statsManager.baseAppliedKnockback
+                    + 1f * pendingDirection, ForceMode2D.Impulse);
+
                 //Debug.Log(GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50));
                 //rb2d.linearVelocity = pendingKnockback; // Set velocity directly
 
@@ -105,7 +107,7 @@ public class CustomTime : MonoBehaviour {
         wasFrozen = false;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        Debug.Log($"{rb2d.linearVelocity}  {rb2d.angularVelocity} {rb2d.constraints}");
+        //Debug.Log($"{rb2d.linearVelocity}  {rb2d.angularVelocity} {rb2d.constraints}");
     }
     public void ApplyKnockbackOnUnfreeze(float knockbackForce, Vector2 knockbackDirection) {
         pendingKnockback = knockbackForce;

@@ -55,7 +55,7 @@ public class HealthManager : MonoBehaviour {
             if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
                 float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(damage);
                 HitStopManager.Instance.TriggerHitStop(damage);
-
+                //TODO: Separate knockback later
             }
             StartCoroutine(TakeDamageEffects());
             statsManager.maxHealthPoint -= damage;

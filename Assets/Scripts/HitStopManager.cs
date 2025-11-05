@@ -40,7 +40,7 @@ public class HitStopManager : MonoBehaviour {
     /// </summary>
     public float CalculateFreezeDuration(float damage) {
         float duration = baseFreezeTime /*+ (damage * damageMultiplier)*/;
-        Debug.Log("Duration: " + duration);
+        //Debug.Log("Duration: " + duration);
         return Mathf.Min(duration, maxFreezeTime);
     }
 
@@ -51,7 +51,7 @@ public class HitStopManager : MonoBehaviour {
 
             // Freeze all objects
             foreach (CustomTime timedObject in allTimedObjects) {
-                Debug.Log(timedObject.name + "Freeze");
+                //Debug.Log(timedObject.name + "Freeze");
                 timedObject.Freeze();
             }
 
@@ -60,7 +60,7 @@ public class HitStopManager : MonoBehaviour {
             // Unfreeze all objects
             foreach (CustomTime timedObject in allTimedObjects) {             
                 if (timedObject != null) {
-                    Debug.Log(timedObject.name + "Unfreeze");
+                    //Debug.Log(timedObject.name + "Unfreeze");
                     timedObject.Unfreeze();
                 }
             }

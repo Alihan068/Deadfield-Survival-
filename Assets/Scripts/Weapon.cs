@@ -138,9 +138,9 @@ public class Weapon : MonoBehaviour {
         CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
 
         if (enemyHealthManager != null) enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-        if ((this.CompareTag("Player") && enemyCustomTime != null)) {
+
+        if (enemyCustomTime != null) {
             enemyCustomTime.ScheduleKnockback(statsManager.strength, transform);
                 }
-
     }
 }

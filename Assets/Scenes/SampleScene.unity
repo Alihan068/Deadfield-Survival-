@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitStopManager
   baseFreezeTime: 0.05
-  damageMultiplier: 0.01
+  damageMultiplier: 0
   maxFreezeTime: 0.3
 --- !u!4 &1020281752
 Transform:
@@ -633,7 +633,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -13101,6 +13101,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4036508397430527571, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
       propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036508397430527571, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
+      propertyPath: baseAppliedKnockback
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4238081780735660894, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}

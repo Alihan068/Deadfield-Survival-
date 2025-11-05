@@ -55,15 +55,15 @@ public class Weapon : MonoBehaviour {
             animator.SetTrigger("UpsideDownAttack");
             
             animIndex++;
-            Debug.Log("UpToDown! next index: " + animIndex);
+            //Debug.Log("UpToDown! next index: " + animIndex);
         }
         else if(animIndex == 2) {
             animator.SetTrigger("DownSideUpAttack");
             animIndex--;
-            Debug.Log("DownToUp! next index: " + animIndex);
+            //Debug.Log("DownToUp! next index: " + animIndex);
         }
         else {
-            Debug.Log("BrokenAnimIndex");
+            //Debug.Log("BrokenAnimIndex");
         }
     }
     public void RegularAttackAnimation() {
@@ -71,7 +71,7 @@ public class Weapon : MonoBehaviour {
     }
 
     void GiveBaseStats() {
-        Debug.Log(this.name + " active");
+        //Debug.Log(this.name + " active");
         statsManager.baseDamage += weaponDamage;
         statsManager.baseRange += weaponRange;
         statsManager.meleeAttackSpeed += attackSpeed;
@@ -132,10 +132,14 @@ public class Weapon : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("Weapon")) return;
-
+        
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
+        CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
+
         if (enemyHealthManager == null) return;
 
-        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage, transform);
+        enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+        enemyCustomTime.ScheduleKnockback(statsManager.strength, transform);
+
     }
 }

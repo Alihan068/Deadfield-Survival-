@@ -15,6 +15,7 @@ public class StatsManager : MonoBehaviour {
     public bool canAttack = true;
     public bool isUnstoppable = false;
     public bool isKnocked;
+    public bool triggersHitStop = true;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -39,7 +40,7 @@ public class StatsManager : MonoBehaviour {
     public float explosionDamage = 1f;
     public float baseDamage = 1f;
     [Header("Knockback Attributes")]
-    public float baseKnockback = 10f;
+    public float baseAppliedKnockback = 10f;
     public float knockbackStagger = 0.15f;
 
     [Header("General Defensive")]

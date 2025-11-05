@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
 
     StatsManager statsManager;
+    CustomTime customTime;
     Rigidbody2D rb2d;
     Animator animator;
     PlayerAttack playerAttack;
@@ -29,10 +30,11 @@ public class PlayerController : MonoBehaviour {
     bool isAlive = true;
 
     void Start() {
+        statsManager = GetComponent<StatsManager>();
+        customTime = GetComponent<CustomTime>();
         playerAttack = GetComponent<PlayerAttack>();
         weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
-        weapon = GetComponentInChildren<Weapon>();
-        statsManager = GetComponent<StatsManager>();
+        weapon = GetComponentInChildren<Weapon>();    
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     }
     void OnDash(InputValue value) {
         Debug.Log("ShiftInput");
-        if (canDash && isAlive && statsManager.canMove) {
+        if (canDash && isAlive && statsManager.canMove && customTime.timeScale > 0) {
             StartCoroutine(Dash());
         }
     }
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour {
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
         bool pressed = value.Get<float>() >= 1f;
-        Debug.Log($"OnAttack called - pressed: {pressed}");
+        //Debug.Log($"OnAttack called - pressed: {pressed}");
 
         switch (weapon.weaponType) {
             case WeaponType.Melee:
@@ -64,7 +66,10 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!isAlive || !statsManager.canMove) return;
+        if (!isAlive 
+            || !statsManager.canMove 
+            || customTime.timeScale <= 0 
+            || statsManager.isKnocked) return;
         AimForMouse();
         Walk();
     }
@@ -75,7 +80,9 @@ public class PlayerController : MonoBehaviour {
         Vector2 vector = rb2d.linearVelocity;
         vector.x = moveInput.x * statsManager.moveSpeed;
         vector.y = moveInput.y * statsManager.moveSpeed;
-        rb2d.linearVelocity = vector;
+
+            rb2d.linearVelocity = vector;
+        
 
         if (animator) {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
@@ -114,8 +121,9 @@ public class PlayerController : MonoBehaviour {
         while (currentDashTime > 0f) {
             currentDashTime -= Time.deltaTime; // Lower the dash timer each frame.
 
-            rb2d.linearVelocity = moveInput * dashSpeed; // Dash in the direction that was held down.
-            // No need to multiply by Time.DeltaTime here, physics are already consistent across different FPS.
+            if (customTime.timeScale > 0) {
+                rb2d.linearVelocity = moveInput * dashSpeed;
+            }
 
             yield return null; // Returns out of the coroutine this frame so we don't hit an infinite loop.
         }

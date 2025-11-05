@@ -18,11 +18,11 @@ public class CustomTime : MonoBehaviour {
     private RigidbodyConstraints2D savedConstraints;
     private bool wasFrozen = false;
 
-    
-
+    Coroutine knockbackCoroutine;
 
     // Store pending knockback to apply after unfreeze
-    private Vector2 pendingKnockback = Vector2.zero;
+    private float pendingKnockback = 0;
+    Vector2 pendingDirection = Vector2.zero;
     private bool hasPendingKnockback = false;
 
     // Reference to enemy controller if this is an enemy
@@ -35,7 +35,7 @@ public class CustomTime : MonoBehaviour {
     void Awake() {
         statsManager = GetComponent<StatsManager>();
         rb2d = GetComponent<Rigidbody2D>();
-        animators = GetComponentsInChildren<Animator>();     
+        animators = GetComponentsInChildren<Animator>();
         enemyController = GetComponent<EnemyController>();
         healthManager = GetComponent<HealthManager>();
     }
@@ -77,15 +77,17 @@ public class CustomTime : MonoBehaviour {
                 rb2d.linearVelocity = Vector2.zero;
                 rb2d.angularVelocity = 0f;
 
-                //Debug.Log($"{gameObject.name} applying pending knockback: {pendingKnockback}");
-                rb2d.linearVelocity = pendingKnockback; // Set velocity directly
+                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback , 0, 49), 50) * statsManager.baseAppliedKnockback, ForceMode2D.Impulse);
+                //Debug.Log(GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50));
+                //rb2d.linearVelocity = pendingKnockback; // Set velocity directly
 
                 // Disable enemy AI during knockback
                 if (enemyController != null) {
                     StartCoroutine(KnockbackPause());
                 }
 
-                pendingKnockback = Vector2.zero;
+                pendingKnockback = 0f;
+                pendingDirection = Vector2.zero;
                 hasPendingKnockback = false;
             }
             else {
@@ -102,13 +104,14 @@ public class CustomTime : MonoBehaviour {
 
         wasFrozen = false;
     }
-    public void ApplyKnockbackOnUnfreeze(Vector2 knockbackVelocity) {
-        pendingKnockback = knockbackVelocity;
+    public void ApplyKnockbackOnUnfreeze(float knockbackForce, Vector2 knockbackDirection) {
+        pendingKnockback = knockbackForce;
+        pendingDirection = knockbackDirection;
         hasPendingKnockback = true;
-        //Debug.Log($"{gameObject.name} knockback scheduled: {knockbackVelocity}");
+        Debug.Log($"{gameObject.name} knockback scheduled: {knockbackForce}");
     }
 
-    public void GetKnockback( float amount, Transform source) {
+    public void ScheduleKnockback(float amount, Transform source) {
         Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
             Debug.LogError("Rigidbody2D is null!");
@@ -120,7 +123,7 @@ public class CustomTime : MonoBehaviour {
         }
         //TODO: convert to  both player and enemy controller to, interrupt method in the controller scripts if any additions will be added.
         if (statsManager.isPlayer) {
-          GetComponent<PlayerController>().StopAllCoroutines();
+            GetComponent<PlayerController>().StopAllCoroutines();
         }
         else {
             enemyController.StopAllCoroutines();
@@ -131,13 +134,18 @@ public class CustomTime : MonoBehaviour {
 
         float knockbackStrCompare = amount - statsManager.strength;
 
-        rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
 
-        if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
+        ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
+        //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
+        //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
+
+        //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
     }
+
     IEnumerator KnockbackPause() {
         statsManager.isKnocked = true;
         statsManager.canMove = false;
+        //Debug.Log(this.name + " Knockback Pause");
         float knockStun = statsManager.knockbackStagger; /*(statsManager.strength / 100)*/
         yield return new WaitForSeconds(GeneralCalculations.ClampedValue(knockStun));
 

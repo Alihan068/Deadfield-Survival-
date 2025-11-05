@@ -35,14 +35,14 @@ public class HealthManager : MonoBehaviour {
 
     }
 
-    public void CalculateIncomingDamage(float rawDamage, Transform damageSourceTransform) {
+    public void CalculateIncomingDamage(float rawDamage) {
         float calculatedDamage;
         //TODO: Add resistance calculations
         calculatedDamage = rawDamage;
-        TakeFinalDamage(calculatedDamage, damageSourceTransform);
+        TakeFinalDamage(calculatedDamage);
     }
 
-    void TakeFinalDamage(float damage, Transform damageSourceTransform) {
+    void TakeFinalDamage(float damage) {
 
         if (!statsManager.canBeDamaged) {
             Debug.Log(this.name + " can't be Damaged");
@@ -52,12 +52,18 @@ public class HealthManager : MonoBehaviour {
             DeathSequence();
         }
         else {
-            customTime.GetKnockback(statsManager.strength, damageSourceTransform);
+            if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
+                float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(damage);
+                HitStopManager.Instance.TriggerHitStop(damage);
+
+            }
             StartCoroutine(TakeDamageEffects());
             statsManager.maxHealthPoint -= damage;
             Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.maxHealthPoint);
         }
     }
+
+
     IEnumerator TakeDamageEffects() {
         Debug.Log(this.name + "damageEffects");
         Color previousColor = bodySprite.color;
@@ -70,7 +76,7 @@ public class HealthManager : MonoBehaviour {
 
         DeathEffects();
         statsManager.canMove = false;
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1f);
     }
 
     void DeathEffects() {

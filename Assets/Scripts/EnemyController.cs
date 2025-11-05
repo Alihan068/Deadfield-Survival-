@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour {
     PlayerController playerController;
     HealthManager healthManager;
     RangedParticleAttack rangedParticleAttack;
+    CustomTime customTime;
     [SerializeField] SpriteRenderer characterSprite;
     Weapon weaponScript;
 
@@ -40,6 +41,7 @@ public class EnemyController : MonoBehaviour {
     void OnEnable() {
         statsManager = GetComponent<StatsManager>();
         healthManager = GetComponent<HealthManager>();
+        customTime = GetComponent<CustomTime>();
         rb2d = GetComponent<Rigidbody2D>();
         bodyAnimator = GetComponent<Animator>();
 
@@ -51,7 +53,7 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Update() {
-        if (!statsManager.canMove) return;
+        if (!statsManager.canMove || statsManager.isKnocked || customTime.timeScale <= 0) return;
 
         CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
@@ -189,7 +191,7 @@ public class EnemyController : MonoBehaviour {
                 statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
-                statsManager.baseKnockback = 50;
+                statsManager.baseAppliedKnockback = 50;
                 rb2d.mass += 10;
                 statsManager.strength += 5;
                 break;
@@ -198,8 +200,8 @@ public class EnemyController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision != null && collision.gameObject.CompareTag("Player")) {
-            collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage, transform);
-            
+            collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
+            collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
         }
     }
 

@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 6582008092128456772, guid: 33e678b1e85f3dc43bb029a2cd0fcd3c, type: 3}
-  m_Color: {r: 1, g: 0.6924528, b: 0.6924528, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5092,6 +5092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConroller
   enemyType: 1
   rangeBuffer: 0.5
+  attackZoneValue: 2
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
@@ -5151,7 +5152,7 @@ MonoBehaviour:
   jumpCooldown: 1
   maxHealthPoint: 100
   extraHealth: 1
-  baseRange: 4
+  baseRange: 3
   strength: 2
   intelligence: 2
   vitality: 5
@@ -5244,9 +5245,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &6255891562900438121
 Animator:

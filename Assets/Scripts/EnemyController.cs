@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] EnemyType enemyType;
 
     [SerializeField] float rangeBuffer;
+    [SerializeField] float attackZoneValue;
 
     float minRange;
     [SerializeField] float chargeSpeed = 2f;
@@ -73,19 +74,18 @@ public class EnemyController : MonoBehaviour {
     void FlipEnemyFacing() {
         if (playerController == null || rb2d == null || characterSprite == null) return;
 
-        if (rb2d.linearVelocity.sqrMagnitude <= Mathf.Epsilon) {
-            float dx = playerController.transform.position.x - transform.position.x;
-            if (Mathf.Abs(dx) > Mathf.Epsilon) {
-                characterSprite.flipX = dx < 0f;
-            }
-        }
-
         float vx = rb2d.linearVelocity.x;
-        if (vx > Mathf.Epsilon) {
-            characterSprite.flipX = false;
+        const float dead = 0.05f;
+
+        if (Mathf.Abs(vx) <= dead && rb2d.linearVelocity.sqrMagnitude <= dead * dead) {
+            float dx = playerController.transform.position.x - transform.position.x;
+            if (Mathf.Abs(dx) > dead) characterSprite.flipX = dx < 0f;
         }
-        else if (vx < -Mathf.Epsilon) {
+        else if (vx < -dead) {
             characterSprite.flipX = true;
+        }
+        else if (vx > dead) {
+            characterSprite.flipX = false;
         }
     }
 
@@ -93,17 +93,15 @@ public class EnemyController : MonoBehaviour {
         switch (enemyType) {
             case EnemyType.Melee:
                 MeleeEnemyMovement();
-                FlipEnemyFacing();
                 break;
             case EnemyType.Ranged:
                 RangedEnemyMovement();
                 break;
             case EnemyType.Charger:
                 ChargerMovement();
-                FlipEnemyFacing();
                 break;
         }
-
+        FlipEnemyFacing();
     }
     //TODO: Make enemy attack based on meleeAttackSpeed by setting the animation speed.
     void MeleeEnemyMovement() {
@@ -127,29 +125,19 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= minRange - rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
-            FlipEnemyFacing();
             return;
         }
         else if (distanceToPlayer >= statsManager.baseRange + rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
-            FlipEnemyFacing();
             return;
         }
         else {
             rangedParticleAttack.ParticleSystemToggle(true);
-            rb2d.linearVelocity = Vector2.zero;
-
-        }
-    }
-
-    void AnimationHandler() {
-
-        if (rb2d.linearVelocity != Vector2.zero) {
-            bodyAnimator.SetBool("isWalking", true);
-        }
-        else {
-            bodyAnimator.SetBool("isWalking", false);
+            rb2d.linearVelocity = Vector2.Lerp(
+                rb2d.linearVelocity,
+                Vector2.zero,
+                0.30f);
         }
     }
 
@@ -157,30 +145,33 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= statsManager.baseRange) {
             if (chargeCoroutine == null) {
                 chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
-                Debug.Log(rb2d.constraints);
             }
             return;
         }
         else if (distanceToPlayer > statsManager.baseRange) {
-
-            chargeCoroutine = null;
-            ChaseTarget(playerController.transform);
-            
-            return;
-
+            if (chargeCoroutine == null) {
+                ChaseTarget(playerController.transform);
+                return;
+            }
         }
     }
     IEnumerator ChargeTarget(Transform target) {
-        statsManager.isUnstoppable = true;
-        rb2d.linearVelocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.Lerp(
+            rb2d.linearVelocity,
+            Vector2.zero,
+            0.30f);
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return new WaitForSeconds(1);
+        statsManager.isUnstoppable = true;
         Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
         statsManager.isUnstoppable = false;
-        rb2d.linearVelocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.Lerp(
+            rb2d.linearVelocity,
+            Vector2.zero,
+            0.30f);
         yield return new WaitForSeconds(chargeCooldown);
         chargeCoroutine = null;
     }
@@ -189,14 +180,20 @@ public class EnemyController : MonoBehaviour {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
         //rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+        rb2d.linearVelocity = Vector2.Lerp(
+            rb2d.linearVelocity,
+            directionNormalized * statsManager.moveSpeed,
+            0.10f);
     }
 
     void RunFromTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
         //rb2d.MovePosition(rb2d.position + -directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = -directionNormalized * statsManager.moveSpeed;
+        rb2d.linearVelocity = Vector2.Lerp(
+            rb2d.linearVelocity,
+            -directionNormalized * statsManager.moveSpeed,
+            0.10f);
     }
 
     void EnemyBaseStatImplementation(EnemyType enemyType) {
@@ -206,6 +203,7 @@ public class EnemyController : MonoBehaviour {
                 break;
             case EnemyType.Ranged:
                 minRange = statsManager.baseRange;
+                statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
                 statsManager.baseAppliedKnockback = 50;

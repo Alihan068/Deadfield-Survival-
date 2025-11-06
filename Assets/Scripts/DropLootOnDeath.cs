@@ -2,46 +2,52 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct WeightedObject {
-    public GameObject gameObject;
-    public float weight;
+public struct CollectibleItem {
+    public GameObject collectibleItemPrefab;
+    public ItemRarity itemRarity;
+    [Min(0f)] public float weight;
 }
 
 public class DropLootOnDeath : MonoBehaviour {
+    [Range(0f, 1f)]
+    public float generalDropFrequency = 1f; // 0 - never create. 1 - always create. 0.5 - create 50% of the time.
 
-    public float frequency = 1; //0 - never create. 1 - always create. 0.5 - create 50% of the time.
-
-    public List<WeightedObject> weightedObjectList;
-
-    //Game game;
+    public List<CollectibleItem> collectibleItems;
 
     // Use this for initialization
     void Start() {
-        //game = FindObjectOfType<Game>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        ValidateWeightedObjects();
     }
 
     private void OnDestroy() {
-        if (Random.Range(0f, .99f) < frequency) {
+        if (Application.isPlaying && !gameObject.scene.isLoaded)
+            return;
+
+        if (Random.Range(0f, 0.99f) < generalDropFrequency) {
             GameObject gameObjectToCreate = SelectWeightedObject();
-            Instantiate(gameObjectToCreate, transform.position, transform.rotation);
+            if (gameObjectToCreate != null) {
+                Instantiate(gameObjectToCreate, transform.position, transform.rotation);
+            }
         }
     }
 
     private GameObject SelectWeightedObject() {
-        GameObject selected = null;
-        float maxChoice = SumOfWeights;
-        float randChoice = Random.Range(0, maxChoice);
-        float weightSum = 0;
+        List<CollectibleItem> validObjects = GetValidObjects();
 
-        foreach (WeightedObject weightedObject in weightedObjectList) {
+        if (validObjects.Count == 0) {
+            Debug.LogWarning($"{name}: No valid weighted objects to spawn!");
+            return null;
+        }
+
+        GameObject selected = null;
+        float maxChoice = CalculateSumOfWeights(validObjects);
+        float randChoice = Random.Range(0f, maxChoice);
+        float weightSum = 0f;
+
+        foreach (CollectibleItem weightedObject in validObjects) {
             weightSum += weightedObject.weight;
             if (randChoice <= weightSum) {
-                selected = weightedObject.gameObject;
+                selected = weightedObject.collectibleItemPrefab;
                 break;
             }
         }
@@ -49,14 +55,62 @@ public class DropLootOnDeath : MonoBehaviour {
         return selected;
     }
 
+    private List<CollectibleItem> GetValidObjects() {
+        return collectibleItems;
+    }
+
+    private float CalculateSumOfWeights(List<CollectibleItem> objects) {
+        float sumOfWeights = 0f;
+        foreach (CollectibleItem weightedObject in objects) {
+            sumOfWeights += weightedObject.weight;
+        }
+
+        return sumOfWeights;
+    }
+
     private float SumOfWeights {
         get {
-            float sumOfWeights = 0;
-            foreach (WeightedObject weightedObject in weightedObjectList) {
-                sumOfWeights += weightedObject.weight;
+            return CalculateSumOfWeights(collectibleItems);
+        }
+    }
+
+    // Validation method to check if prefabs have GenericItem component
+    private void ValidateWeightedObjects() {
+        foreach (CollectibleItem collectibleItem in collectibleItems) {
+            if (collectibleItem.collectibleItemPrefab == null) {
+                Debug.LogWarning($"{name}: WeightedObject has null prefab!");
+                continue;
             }
 
-            return sumOfWeights;
+            CollectableItem genericItem = collectibleItem.collectibleItemPrefab.GetComponent<CollectableItem>();
+            if (genericItem == null) {
+                Debug.LogError($"{name}: Prefab '{collectibleItem.collectibleItemPrefab.name}' is missing GenericItem component!");
+            }
         }
+    }
+
+    // Helper method to add weighted objects at runtime if needed
+    public void AddWeightedObject(GameObject prefab, ItemRarity rarity, float weight) {
+        CollectibleItem newWeightedObject = new CollectibleItem {
+            collectibleItemPrefab = prefab,
+            itemRarity = rarity,
+            weight = weight
+        };
+
+        collectibleItems.Add(newWeightedObject);
+    }
+
+    // Helper method to get total drop chance for a specific rarity
+    public float GetRarityDropChance(ItemRarity rarity) {
+        float rarityWeight = 0f;
+        float totalWeight = SumOfWeights;
+
+        foreach (CollectibleItem weightedObject in collectibleItems) {
+            if (weightedObject.itemRarity == rarity) {
+                rarityWeight += weightedObject.weight;
+            }
+        }
+
+        return totalWeight > 0 ? (rarityWeight / totalWeight) * generalDropFrequency : 0f;
     }
 }

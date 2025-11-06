@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour {
     //[SerializeField] CollectibleItemSO baseStats;
     [SerializeField] EnemyType enemyType;
 
-    [SerializeField] float attackZoneValue;
+    [SerializeField] float rangeBuffer;
 
     float minRange;
     [SerializeField] float chargeSpeed = 2f;
@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour {
         attackAnimHash = Animator.StringToHash(attackAnimName);
     }
 
-    void Update() {
+    void LateUpdate() {
         if (!statsManager.canMove || statsManager.isKnocked || customTime.timeScale <= 0) return;
 
         CalculateDistanceToPlayer();
@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= statsManager.baseRange) {
             rb2d.linearVelocity = Vector2.zero;
 
-            float attackSpeed = Mathf.Max(0.01f,statsManager.meleeAttackSpeed);
+            float attackSpeed = Mathf.Max(0.01f, statsManager.meleeAttackSpeed);
             weaponAnimator.SetFloat("attackSpeed", attackSpeed);
 
             weaponAnimator.SetBool("isAttacking", true);
@@ -122,12 +122,12 @@ public class EnemyController : MonoBehaviour {
     }
 
     void RangedEnemyMovement() {
-        if (distanceToPlayer <= minRange) {
+        if (distanceToPlayer <= minRange - rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             return;
         }
-        else if (distanceToPlayer >= statsManager.baseRange) {
+        else if (distanceToPlayer >= statsManager.baseRange + rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             return;
@@ -198,7 +198,6 @@ public class EnemyController : MonoBehaviour {
                 break;
             case EnemyType.Ranged:
                 minRange = statsManager.baseRange;
-                statsManager.baseRange += attackZoneValue;
                 break;
             case EnemyType.Charger:
                 statsManager.baseAppliedKnockback = 50;

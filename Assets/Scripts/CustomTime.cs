@@ -138,21 +138,28 @@ public class CustomTime : MonoBehaviour {
         if (statsManager.isPlayer) {
             GetComponent<PlayerController>().StopAllCoroutines();
         }
-        else {
+        else if (enemyController.enemyType != EnemyType.Charger) {
             enemyController.StopAllCoroutines();
         }
-        rb2d.linearVelocity = Vector2.zero;
+        else {
+            enemyController.ResetChargeCoroutine();
+        }
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-
         float knockbackStrCompare = amount - statsManager.strength;
 
+        if (wasFrozen || timeScale <= 0) {
+            rb2d.linearVelocity = Vector2.zero;
+            ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
+        }
+        else {
+            rb2d.linearVelocity = Vector2.zero;
+            rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(knockbackStrCompare, 0, 49), 50) * statsManager.baseAppliedKnockback + 1f * knockbackDirection, ForceMode2D.Impulse);
 
-        ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
-        //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
-        //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
-
-        //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
+            if (knockbackCoroutine == null) {
+                knockbackCoroutine = StartCoroutine(KnockbackPause());
+            }
+        }
     }
 
     IEnumerator KnockbackPause() {

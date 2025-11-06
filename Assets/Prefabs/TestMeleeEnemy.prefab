@@ -331,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConroller
   enemyType: 0
   rangeBuffer: 0
+  attackZoneValue: 0
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
@@ -483,9 +484,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1752609840817653052
 Animator:

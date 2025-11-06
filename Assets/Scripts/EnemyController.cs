@@ -10,7 +10,7 @@ public enum EnemyType {
 public class EnemyController : MonoBehaviour {
 
     //[SerializeField] CollectibleItemSO baseStats;
-    [SerializeField] EnemyType enemyType;
+    public EnemyType enemyType;
 
     [SerializeField] float rangeBuffer;
     [SerializeField] float attackZoneValue;
@@ -22,7 +22,6 @@ public class EnemyController : MonoBehaviour {
 
     StatsManager statsManager;
     Rigidbody2D rb2d;
-    Coroutine chargeCoroutine;
     PlayerController playerController;
     HealthManager healthManager;
     RangedParticleAttack rangedParticleAttack;
@@ -38,6 +37,10 @@ public class EnemyController : MonoBehaviour {
 
     Vector3 rotationToPlayer;
     float distanceToPlayer;
+
+    [Header("Charger enemy related")]
+    Coroutine chargeCoroutine;
+    float nextChargeTime = 0f;
 
     void Awake() {
         statsManager = GetComponent<StatsManager>();
@@ -143,7 +146,7 @@ public class EnemyController : MonoBehaviour {
 
     void ChargerMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
-            if (chargeCoroutine == null) {
+            if (chargeCoroutine == null && Time.time >= nextChargeTime) {
                 chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
             }
             return;
@@ -156,22 +159,21 @@ public class EnemyController : MonoBehaviour {
         }
     }
     IEnumerator ChargeTarget(Transform target) {
-        rb2d.linearVelocity = Vector2.Lerp(
-            rb2d.linearVelocity,
-            Vector2.zero,
-            0.30f);
+        rb2d.linearVelocity = Vector2.Lerp(rb2d.linearVelocity, Vector2.zero, 0.30f);
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return new WaitForSeconds(1);
+
         statsManager.isUnstoppable = true;
         Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
         statsManager.isUnstoppable = false;
-        rb2d.linearVelocity = Vector2.Lerp(
-            rb2d.linearVelocity,
-            Vector2.zero,
-            0.30f);
+
+        rb2d.linearVelocity = Vector2.zero;
+
+        nextChargeTime = Time.time + chargeCooldown;
+
         yield return new WaitForSeconds(chargeCooldown);
         chargeCoroutine = null;
     }
@@ -196,6 +198,17 @@ public class EnemyController : MonoBehaviour {
             0.10f);
     }
 
+    public void ResetChargeCoroutine() {
+        if (chargeCoroutine != null) {
+            StopCoroutine(chargeCoroutine);
+            chargeCoroutine = null;
+
+            statsManager.isUnstoppable = false;
+
+            nextChargeTime = Time.time + chargeCooldown;
+        }
+    }
+
     void EnemyBaseStatImplementation(EnemyType enemyType) {
         switch (enemyType) {
             case EnemyType.Melee:
@@ -207,7 +220,7 @@ public class EnemyController : MonoBehaviour {
                 break;
             case EnemyType.Charger:
                 statsManager.baseAppliedKnockback = 50;
-                rb2d.mass += 10;
+                //rb2d.mass += 10;
                 statsManager.strength += 5;
                 break;
         }

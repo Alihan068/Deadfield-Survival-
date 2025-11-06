@@ -33,10 +33,23 @@ public class CustomTime : MonoBehaviour {
 
     void Awake() {
         statsManager = GetComponent<StatsManager>();
-        rb2d = GetComponent<Rigidbody2D>();
-        animators = GetComponentsInChildren<Animator>();
-        enemyController = GetComponent<EnemyController>();
-        healthManager = GetComponent<HealthManager>();
+
+        if (statsManager.isPlayer) {
+            rb2d = GetComponent<Rigidbody2D>();
+            animators = GetComponentsInChildren<Animator>();
+            healthManager = GetComponent<HealthManager>();
+        }
+
+    }
+    private void OnEnable() {
+        statsManager = GetComponent<StatsManager>();
+
+        if (!statsManager.isPlayer) {
+            healthManager = GetComponent<HealthManager>();
+            rb2d = GetComponent<Rigidbody2D>();
+            animators = GetComponentsInChildren<Animator>();
+           
+        }
     }
 
     // Freeze this object completely
@@ -118,44 +131,5 @@ public class CustomTime : MonoBehaviour {
         hasPendingKnockback = true;
         //Debug.Log($"{gameObject.name} knockback scheduled: {knockbackForce}");
     }
-
-    //public void ScheduleKnockback(float amount, Transform source) {
-    //    //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
-    //    if (rb2d == null) {
-    //        Debug.LogError("Rigidbody2D is null!");
-    //        return;
-    //    }
-    //    if (statsManager.isUnstoppable) {
-    //        Debug.Log(this.name + ("isUnstopabble!"));
-    //        return;
-    //    }
-
-    //    if (healthManager.knockbackCoroutine != null) {
-    //        StopCoroutine(healthManager.knockbackCoroutine);
-    //        healthManager.knockbackCoroutine = null;
-
-    //        statsManager.canMove = true;
-    //        statsManager.isKnocked = false;
-    //    }
-
-    //    if (statsManager.isPlayer) {
-    //        GetComponent<PlayerController>().StopAllCoroutines();
-    //    }
-    //    else {
-    //        enemyController.StopAllCoroutines();
-    //    }
-    //    rb2d.linearVelocity = Vector2.zero;
-
-    //    Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-
-    //    float knockbackStrCompare = amount - statsManager.strength;
-
-
-    //    ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
-    //    //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
-    //    //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
-
-    //    //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
-    //}
 
 }

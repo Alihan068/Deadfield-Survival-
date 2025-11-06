@@ -331,6 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3704783428534497577}
   - component: {fileID: 4072885690011270209}
+  - component: {fileID: 2732188594895348259}
   - component: {fileID: 6389128907580676326}
   - component: {fileID: 7370764666283399509}
   - component: {fileID: 8431421342939060964}
@@ -380,6 +381,28 @@ MonoBehaviour:
   chargeTime: 1.5
   characterSprite: {fileID: 5305484925875630483}
   weaponAnimator: {fileID: 7042469461478051067}
+--- !u!114 &2732188594895348259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483519715111807543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad974ee3b852314d9a7694231a5d8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropLootOnDeath
+  frequency: 1
+  weightedObjectList:
+  - Rarity: 0
+    collectibleItem:
+    - {fileID: 7768459737807016166, guid: 4d0231b6536b90943832c0eccebc891d, type: 3}
+    weight: 10
+  - Rarity: 1
+    collectibleItem:
+    - {fileID: 7768459737807016166, guid: 24ab48eb966545f48a5d457037688e57, type: 3}
+    weight: 90
 --- !u!114 &6389128907580676326
 MonoBehaviour:
   m_ObjectHideFlags: 0

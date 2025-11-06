@@ -35,20 +35,36 @@ public class Weapon : MonoBehaviour {
 
     int animIndex = 1;
 
-    void Awake() {
+    void OnEnable() {
         statsManager = GetComponentInParent<StatsManager>();
+        animator = GetComponent<Animator>();
+
+
+        if (weaponType == WeaponType.Ranged) {
+            projectilesParticleSystem = GetComponent<ParticleSystem>();
+            particleAttack = GetComponent<RangedParticleAttack>();
+        }
 
         if (statsManager.isPlayer) {
             controller = GetComponentInParent<PlayerController>();
-        }
-        else {
-            enemyController = GetComponentInParent<EnemyController>();
+            controller.weapon = this;
+            GiveBaseStats();
+
+            if (projectilesParticleSystem != null) {
+                var main = projectilesParticleSystem.main;
+                main.loop = true;
+                main.startDelay = 0f;
+
+                var em = projectilesParticleSystem.emission;
+                em.enabled = false;
+
+                if (!projectilesParticleSystem.isPlaying)
+                    projectilesParticleSystem.Play();
+            }
         }
 
-        animator = GetComponent<Animator>();
-        particleAttack = GetComponent<RangedParticleAttack>();
-        if (weaponType == WeaponType.Ranged) {
-            projectilesParticleSystem = GetComponent<ParticleSystem>();
+        else {
+            enemyController = GetComponentInParent<EnemyController>();
         }
     }
 
@@ -97,40 +113,7 @@ public class Weapon : MonoBehaviour {
         statsManager.intelligence -= intelligence;
     }
 
-    void OnEnable() {
-        statsManager = GetComponentInParent<StatsManager>();
-
-        if (statsManager.isPlayer) {
-            controller = GetComponentInParent<PlayerController>();
-        }
-        else {
-            enemyController = GetComponentInParent<EnemyController>();
-        }
-
-        animator = GetComponent<Animator>();
-        particleAttack = GetComponent<RangedParticleAttack>();
-        if (weaponType == WeaponType.Ranged) {
-            projectilesParticleSystem = GetComponent<ParticleSystem>();
-        }
-
-        if (statsManager.isPlayer) {
-            controller.weapon = this;
-            GiveBaseStats();
-
-            if (projectilesParticleSystem != null) {
-                var main = projectilesParticleSystem.main;
-                main.loop = true;
-                main.startDelay = 0f;
-
-                var em = projectilesParticleSystem.emission;
-                em.enabled = false;
-
-                if (!projectilesParticleSystem.isPlaying)
-                    projectilesParticleSystem.Play();
-            }
-        }
-    }
-
+   
     public void SetFiring(bool pressed) {
         if (projectilesParticleSystem == null) return;
         if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;

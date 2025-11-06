@@ -159,7 +159,6 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= statsManager.baseRange) {
             if (chargeCoroutine == null) {
                 chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
-                Debug.Log(rb2d.constraints);
             }
             return;
         }
@@ -175,11 +174,11 @@ public class EnemyController : MonoBehaviour {
     IEnumerator ChargeTarget(Transform target) {
         chargeCoroutineRunning = true;
         rb2d.linearVelocity = Vector2.zero;
-        Debug.Log("Wait");       
+        //Debug.Log("Wait");       
         yield return new WaitForSeconds(1);
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return null;
-        Debug.Log("Charge!");
+        //Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
         rb2d.linearVelocity = Vector2.zero;

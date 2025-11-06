@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     float currentDashTime;
 
     public bool canAttack = true;
-    [SerializeField] bool canDash = true;
+    [SerializeField] bool isDashing = true;
     bool playerCollision = true;
 
     public Weapon weapon;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     }
     void OnDash(InputValue value) {
         Debug.Log("ShiftInput");
-        if (canDash && isAlive && statsManager.canMove && customTime.timeScale > 0) {
+        if (isAlive && statsManager.canMove && customTime.timeScale > 0) {
             StartCoroutine(Dash());
         }
     }
@@ -116,9 +116,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     IEnumerator Dash() {
-        Debug.Log("DashCoroutine");
+        //Debug.Log("DashCoroutine");
         statsManager.canMove = false;
-        canDash = false;
+        isDashing = true;
         playerCollision = false;
         currentDashTime = startDashTime; // Reset the dash timer.
 
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour {
         rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
         statsManager.canMove = true;
         yield return new WaitForSeconds(statsManager.dashCooldown);
-        canDash = true;        
+        isDashing = false;        
     }
 
     private void OnDrawGizmos() {

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.ComponentModel;
+using TMPro;
 using Unity.Cinemachine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour {
     public Coroutine knockbackCoroutine;
@@ -19,19 +21,27 @@ public class HealthManager : MonoBehaviour {
 
     [SerializeField] SpriteRenderer bodySprite;
 
+    [SerializeField] Slider healthSlider;
+
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
-        rb2d = GetComponent<Rigidbody2D>();
+
+        if (!statsManager.isPlayer) {
+            enemyController = GetComponent<EnemyController>();
+            rb2d = GetComponent<Rigidbody2D>();
+            customTime = GetComponent<CustomTime>();
+        }
+
     }
     void Start() {
         statsManager = GetComponent<StatsManager>();
-        customTime = GetComponent<CustomTime>();
 
         if (statsManager.isPlayer) {
+            healthSlider.maxValue = statsManager.currentHp + statsManager.extraHealth;
+            healthSlider.value = statsManager.currentHp;
             playerController = GetComponent<PlayerController>();
-        }
-        else {
-            enemyController = GetComponent<EnemyController>();
+            rb2d = GetComponent<Rigidbody2D>();
+            customTime = GetComponent<CustomTime>();
         }
 
     }
@@ -48,25 +58,29 @@ public class HealthManager : MonoBehaviour {
             Debug.Log(this.name + " can't be Damaged");
             return;
         }
-        if (damage > statsManager.maxHealthPoint) {
+        if (damage > statsManager.currentHp) {
             DeathSequence();
         }
         else {
+            
             if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
                 float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(damage);
                 HitStopManager.Instance.TriggerHitStop(damage);
-                
+
             }
             if (enemyController != null) enemyController.BreakCharge();
+
             StartCoroutine(TakeDamageEffects());
-            statsManager.maxHealthPoint -= damage;
-            Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.maxHealthPoint);
+            statsManager.currentHp -= damage;
+            //Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.currentHp);
+
+            if(statsManager.isPlayer) healthSlider.value = statsManager.currentHp;
         }
     }
 
 
     IEnumerator TakeDamageEffects() {
-        Debug.Log(this.name + "damageEffects");
+        //Debug.Log(this.name + "damageEffects");
         Color previousColor = bodySprite.color;
         bodySprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -76,7 +90,7 @@ public class HealthManager : MonoBehaviour {
     public void ApplyKnockback(float amount, Transform source) {
         //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
-            Debug.LogError("Rigidbody2D is null!");
+            Debug.LogError(this.name + "Rigidbody2D is null!" + " Health: " + statsManager.currentHp);
             return;
         }
         if (statsManager.isUnstoppable) {
@@ -105,10 +119,11 @@ public class HealthManager : MonoBehaviour {
         float knockbackStrCompare = amount - statsManager.strength;
 
         if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
-            Debug.Log(this.name + "hitstop knockback");
+            //Debug.Log(this.name + "hitstop knockback");
             customTime.ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
-        } else {
-            Debug.Log(this.name + "Non hitstop knockback");
+        }
+        else {
+            //Debug.Log(this.name + "Non hitstop knockback");
             StartCoroutine(KnockbackPause());
             rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(0, Mathf.Clamp(knockbackStrCompare, 0, 10))
                     + statsManager.baseAppliedKnockback * knockbackDirection, ForceMode2D.Impulse);
@@ -132,52 +147,50 @@ public class HealthManager : MonoBehaviour {
     }
 
 
-
-
-
-void DeathSequence() {
-
-    DeathEffects();
-    statsManager.canMove = false;
-    Destroy(gameObject, 1f);
-}
-
-void DeathEffects() {
-    if (statsManager.isPlayer) {
-        //Stop Camera on death area
-        FindAnyObjectByType<CinemachineCamera>().enabled = false;
+    void DeathSequence() {
+        //Debug.Log(this.name + "isDead!");
+        GetComponent<DropLootOnDeath>().IfDestroy();
+        DeathEffects();
+        statsManager.canMove = false;
+        statsManager.canAttack = false;
     }
 
-    //RedColorBlink
-    bodySprite.color = Color.red;
-    Invoke(nameof(ResetSpriteColor), 0.2f);
-    //Disable Colliders
-    Collider2D[] collider2Ds = GetComponents<Collider2D>();
-    foreach (Collider2D col in collider2Ds) {
-        col.enabled = false;
+    void DeathEffects() {
+        if (statsManager.isPlayer) {
+            //Stop Camera on death area
+            FindAnyObjectByType<CinemachineCamera>().enabled = false;
+        }
+
+        //RedColorBlink
+        bodySprite.color = Color.black;
+        Invoke(nameof(ResetSpriteColor), 0.2f);
+        //Disable Colliders
+        Collider2D[] collider2Ds = GetComponents<Collider2D>();
+        foreach (Collider2D col in collider2Ds) {
+            col.enabled = false;
+        }
+        //DeathSpin
+        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+        rb2d.linearVelocity = Vector2.up * deathKick;
+        rb2d.freezeRotation = false;
+        rb2d.AddTorque(deathSpin, ForceMode2D.Impulse);
+
+        Invoke(nameof(StopSpin), 2f);
+
+        Invoke(nameof(DestroyPlayer), 1f);
     }
-    //DeathSpin
-    Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
-    rb2d.linearVelocity = Vector2.up * deathKick;
-    rb2d.freezeRotation = false;
-    rb2d.AddTorque(deathSpin, ForceMode2D.Impulse);
-
-    Invoke(nameof(StopSpin), 2f);
-
-    Invoke(nameof(DestroyPlayer), 5f);
-}
-void ResetSpriteColor() {
-    GetComponent<SpriteRenderer>().color = Color.white;
-}
-void StopSpin() {
-    rb2d.angularVelocity = 0f;
-}
-void DestroyPlayer() {
-    Destroy(gameObject);
-}
+    void ResetSpriteColor() {
+        bodySprite.color = Color.white;
+    }
+    void StopSpin() {
+        rb2d.angularVelocity = 0f;
+    }
+    void DestroyPlayer() {
+        Destroy(gameObject);
+    }
 
 
-IEnumerator HitStop() {
-    yield return new WaitForSecondsRealtime(0.1f);
-}
+    IEnumerator HitStop() {
+        yield return new WaitForSecondsRealtime(0.1f);
+    }
 }

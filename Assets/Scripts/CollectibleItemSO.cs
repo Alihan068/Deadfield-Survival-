@@ -54,7 +54,7 @@ public enum TargetStat {
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]
 public class CollectibleItemSO : ScriptableObject
 {
-    [SerializeField] SpriteRenderer spriteRenderer;
+    //[SerializeField] SpriteRenderer spriteRenderer;
 
     public ItemRarity itemRarity;
     [Serializable]   
@@ -67,6 +67,8 @@ public class CollectibleItemSO : ScriptableObject
   
     public List<ItemEffect> itemEffects = new List<ItemEffect>();
     StatsManager playerStatsManager;
+
+    
     
 }
 

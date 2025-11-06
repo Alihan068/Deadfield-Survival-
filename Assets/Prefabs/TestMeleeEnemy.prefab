@@ -286,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2462377054996597749}
+  - component: {fileID: 6089275679884540669}
   - component: {fileID: 7208469731526115650}
   - component: {fileID: 2007725369526588859}
   - component: {fileID: 7365257722722793717}
@@ -318,6 +319,28 @@ Transform:
   - {fileID: 9160981334908566976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6089275679884540669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228312248860382617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad974ee3b852314d9a7694231a5d8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropLootOnDeath
+  frequency: 1
+  weightedObjectList:
+  - Rarity: 0
+    collectibleItem:
+    - {fileID: 7768459737807016166, guid: 4d0231b6536b90943832c0eccebc891d, type: 3}
+    weight: 10
+  - Rarity: 1
+    collectibleItem:
+    - {fileID: 7768459737807016166, guid: 24ab48eb966545f48a5d457037688e57, type: 3}
+    weight: 90
 --- !u!114 &7208469731526115650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +415,7 @@ MonoBehaviour:
   maxHealthPoint: 100
   extraHealth: 1
   baseRange: 0.7
-  strength: 2
+  strength: 10
   intelligence: 2
   vitality: 5
   armor: 1
@@ -402,7 +425,7 @@ MonoBehaviour:
   dodgeChance: 1
   explosionSize: 1
   explosionDamage: 1
-  baseDamage: 1
+  baseDamage: 3
   baseAppliedKnockback: 5
   knockbackStagger: 0.15
   damageReduction: 1

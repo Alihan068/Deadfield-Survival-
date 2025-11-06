@@ -35,6 +35,8 @@ public class EnemyController : MonoBehaviour {
     string attackAnimName = "ChargeAttack";
     int attackAnimHash;
 
+    bool chargeCoroutineRunning;
+
     Vector3 rotationToPlayer;
     float distanceToPlayer;
 
@@ -171,18 +173,29 @@ public class EnemyController : MonoBehaviour {
         }
     }
     IEnumerator ChargeTarget(Transform target) {
-        statsManager.isUnstoppable = true;
+        chargeCoroutineRunning = true;
         rb2d.linearVelocity = Vector2.zero;
-        Debug.Log("Wait");
-        Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
+        Debug.Log("Wait");       
         yield return new WaitForSeconds(1);
+        Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
+        yield return null;
         Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
-        statsManager.isUnstoppable = false;
         rb2d.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(chargeCooldown);
+        chargeCoroutineRunning = true;
         chargeCoroutine = null;
+    }
+    public void BreakCharge() {
+        if (enemyType == EnemyType.Charger && chargeCoroutineRunning && chargeCoroutine != null) {
+
+            rb2d.linearVelocity = Vector2.zero;
+            StopCoroutine(chargeCoroutine);
+            chargeCoroutineRunning = true;
+            chargeCoroutine = null;
+            statsManager.isUnstoppable = false;
+        }
     }
 
     void ChaseTarget(Transform target) {
@@ -218,7 +231,7 @@ public class EnemyController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision != null && collision.gameObject.CompareTag("Player")) {
             collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
-            collision.gameObject.GetComponent<CustomTime>().ScheduleKnockback(statsManager.strength, transform);
+            collision.gameObject.GetComponent<HealthManager>().ApplyKnockback(statsManager.strength, transform);
         }
     }
 

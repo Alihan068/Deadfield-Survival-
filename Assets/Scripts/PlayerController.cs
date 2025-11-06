@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     float currentDashTime;
 
     public bool canAttack = true;
-    bool canDash = true;
+    [SerializeField] bool canDash = true;
     bool playerCollision = true;
 
     public Weapon weapon;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
         customTime = GetComponent<CustomTime>();
         playerAttack = GetComponent<PlayerAttack>();
         weaponSwitcher = GetComponentInChildren<WeaponSwitcher>();
-        weapon = GetComponentInChildren<Weapon>();    
+        weapon = GetComponentInChildren<Weapon>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -66,9 +66,9 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        if (!isAlive 
-            || !statsManager.canMove 
-            || customTime.timeScale <= 0 
+        if (!isAlive
+            || !statsManager.canMove
+            || customTime.timeScale <= 0
             || statsManager.isKnocked) return;
         AimForMouse();
         Walk();
@@ -77,12 +77,15 @@ public class PlayerController : MonoBehaviour {
     void Walk() {
         //if (!canMove) return;       
         //FlipSprite();
-        Vector2 vector = rb2d.linearVelocity;
-        vector.x = moveInput.x * statsManager.moveSpeed;
-        vector.y = moveInput.y * statsManager.moveSpeed;
 
-            rb2d.linearVelocity = vector;
-        
+        Vector2 vector = new Vector2(moveInput.x, moveInput.y);
+        if (vector.sqrMagnitude > 1f) {
+            vector.Normalize();
+        }
+        vector *= statsManager.moveSpeed;
+
+        rb2d.linearVelocity = vector;
+
 
         if (animator) {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
@@ -114,6 +117,7 @@ public class PlayerController : MonoBehaviour {
 
     IEnumerator Dash() {
         Debug.Log("DashCoroutine");
+        statsManager.canMove = false;
         canDash = false;
         playerCollision = false;
         currentDashTime = startDashTime; // Reset the dash timer.
@@ -121,18 +125,16 @@ public class PlayerController : MonoBehaviour {
         while (currentDashTime > 0f) {
             currentDashTime -= Time.deltaTime; // Lower the dash timer each frame.
 
-            if (customTime.timeScale > 0) {
-                rb2d.linearVelocity = moveInput * dashSpeed;
-            }
+            rb2d.linearVelocity = moveInput * dashSpeed;
+
 
             yield return null; // Returns out of the coroutine this frame so we don't hit an infinite loop.
         }
 
         rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
-
+        statsManager.canMove = true;
         yield return new WaitForSeconds(statsManager.dashCooldown);
-        canDash = true;
-
+        canDash = true;        
     }
 
     private void OnDrawGizmos() {

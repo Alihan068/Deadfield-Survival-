@@ -47,7 +47,9 @@ public class Weapon : MonoBehaviour {
 
         animator = GetComponent<Animator>();
         particleAttack = GetComponent<RangedParticleAttack>();
-        projectilesParticleSystem = GetComponent<ParticleSystem>();
+        if (weaponType == WeaponType.Ranged) {
+            projectilesParticleSystem = GetComponent<ParticleSystem>();
+        }
     }
 
     public void MultipleAttackAnimation() {
@@ -96,6 +98,21 @@ public class Weapon : MonoBehaviour {
     }
 
     void OnEnable() {
+        statsManager = GetComponentInParent<StatsManager>();
+
+        if (statsManager.isPlayer) {
+            controller = GetComponentInParent<PlayerController>();
+        }
+        else {
+            enemyController = GetComponentInParent<EnemyController>();
+        }
+
+        animator = GetComponent<Animator>();
+        particleAttack = GetComponent<RangedParticleAttack>();
+        if (weaponType == WeaponType.Ranged) {
+            projectilesParticleSystem = GetComponent<ParticleSystem>();
+        }
+
         if (statsManager.isPlayer) {
             controller.weapon = this;
             GiveBaseStats();
@@ -137,10 +154,11 @@ public class Weapon : MonoBehaviour {
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();
         CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
 
-        if (enemyHealthManager != null) enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
-
-        if (enemyCustomTime != null) {
-            enemyCustomTime.ScheduleKnockback(statsManager.strength, transform);
-                }
+        if (enemyHealthManager != null) {
+            enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+            enemyHealthManager.ApplyKnockback(statsManager.strength, transform);
+        }
+            
+                
     }
 }

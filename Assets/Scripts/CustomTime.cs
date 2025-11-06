@@ -18,7 +18,6 @@ public class CustomTime : MonoBehaviour {
     private RigidbodyConstraints2D savedConstraints;
     private bool wasFrozen = false;
 
-    Coroutine knockbackCoroutine;
 
     // Store pending knockback to apply after unfreeze
     private float pendingKnockback = 0;
@@ -77,16 +76,15 @@ public class CustomTime : MonoBehaviour {
                 rb2d.linearVelocity = Vector2.zero;
                 rb2d.angularVelocity = 0f;
 
-                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50) * statsManager.baseAppliedKnockback
-                    + 1f * pendingDirection, ForceMode2D.Impulse);
+                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(0, pendingKnockback)
+                    + statsManager.baseAppliedKnockback * pendingDirection, ForceMode2D.Impulse);
 
-                //Debug.Log(GeneralCalculations.LogarithmicScale(Mathf.Clamp(pendingKnockback, 0, 49), 50));
                 //rb2d.linearVelocity = pendingKnockback; // Set velocity directly
 
-                if (knockbackCoroutine != null) {
-                    StopCoroutine(knockbackCoroutine);
+                if (healthManager.knockbackCoroutine != null) {
+                    StopCoroutine(healthManager.knockbackCoroutine);
                 }
-                knockbackCoroutine = StartCoroutine(KnockbackPause());
+                healthManager.knockbackCoroutine = StartCoroutine(healthManager.KnockbackPause());
 
                 pendingKnockback = 0f;
                 pendingDirection = Vector2.zero;
@@ -110,62 +108,54 @@ public class CustomTime : MonoBehaviour {
         //Debug.Log($"{rb2d.linearVelocity}  {rb2d.angularVelocity} {rb2d.constraints}");
     }
     public void ApplyKnockbackOnUnfreeze(float knockbackForce, Vector2 knockbackDirection) {
-        pendingKnockback = knockbackForce;
+        if (knockbackForce > 0f) {
+            pendingKnockback = knockbackForce;
+        }
+        else {
+            pendingKnockback = 0;
+        }
         pendingDirection = knockbackDirection;
         hasPendingKnockback = true;
         //Debug.Log($"{gameObject.name} knockback scheduled: {knockbackForce}");
     }
 
-    public void ScheduleKnockback(float amount, Transform source) {
-        //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
-        if (rb2d == null) {
-            Debug.LogError("Rigidbody2D is null!");
-            return;
-        }
-        if (statsManager.isUnstoppable) {
-            Debug.Log(this.name + ("isUnstopabble!"));
-            return;
-        }
+    //public void ScheduleKnockback(float amount, Transform source) {
+    //    //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
+    //    if (rb2d == null) {
+    //        Debug.LogError("Rigidbody2D is null!");
+    //        return;
+    //    }
+    //    if (statsManager.isUnstoppable) {
+    //        Debug.Log(this.name + ("isUnstopabble!"));
+    //        return;
+    //    }
 
-        if (knockbackCoroutine != null) {
-            StopCoroutine(knockbackCoroutine);
-            knockbackCoroutine = null;
+    //    if (healthManager.knockbackCoroutine != null) {
+    //        StopCoroutine(healthManager.knockbackCoroutine);
+    //        healthManager.knockbackCoroutine = null;
 
-            statsManager.canMove = true;
-            statsManager.isKnocked = false;
-        }
+    //        statsManager.canMove = true;
+    //        statsManager.isKnocked = false;
+    //    }
 
-        if (statsManager.isPlayer) {
-            GetComponent<PlayerController>().StopAllCoroutines();
-        }
-        else {
-            enemyController.StopAllCoroutines();
-        }
-        rb2d.linearVelocity = Vector2.zero;
+    //    if (statsManager.isPlayer) {
+    //        GetComponent<PlayerController>().StopAllCoroutines();
+    //    }
+    //    else {
+    //        enemyController.StopAllCoroutines();
+    //    }
+    //    rb2d.linearVelocity = Vector2.zero;
 
-        Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
+    //    Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
 
-        float knockbackStrCompare = amount - statsManager.strength;
+    //    float knockbackStrCompare = amount - statsManager.strength;
 
 
-        ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
-        //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
-        //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
+    //    ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
+    //    //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
+    //    //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
 
-        //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
-    }
-
-    IEnumerator KnockbackPause() {
-        statsManager.isKnocked = true;
-        statsManager.canMove = false;
-        //Debug.Log(this.name + " Knockback Pause");
-        float knockStun = statsManager.knockbackStagger; /*(statsManager.strength / 100)*/
-        yield return new WaitForSeconds(GeneralCalculations.ClampedValue(knockStun));
-
-        statsManager.canMove = true;
-        statsManager.isKnocked = false;
-        knockbackCoroutine = null;  // Clear reference
-    }
-
+    //    //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
+    //}
 
 }

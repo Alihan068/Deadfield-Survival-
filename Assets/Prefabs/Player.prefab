@@ -127,6 +127,7 @@ MonoBehaviour:
   startDashTime: 0.1
   dashSpeed: 25
   canAttack: 1
+  canDash: 1
   weapon: {fileID: 0}
 --- !u!114 &4545211926809570616
 MonoBehaviour:
@@ -235,7 +236,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4

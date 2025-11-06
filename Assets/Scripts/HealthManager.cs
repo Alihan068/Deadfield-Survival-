@@ -15,6 +15,7 @@ public class HealthManager : MonoBehaviour {
     Rigidbody2D rb2d;
     EnemyController enemyController;
     CustomTime customTime;
+    EnemySpawner enemySpawner;
 
     [SerializeField] float deathSpin = 10f;
     [SerializeField] float deathKick = 10f;
@@ -22,6 +23,8 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] SpriteRenderer bodySprite;
 
     [SerializeField] Slider healthSlider;
+    [SerializeField] TextMeshProUGUI healthText;
+    //[SerializeField] Image healthFill;
 
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
@@ -30,6 +33,7 @@ public class HealthManager : MonoBehaviour {
             enemyController = GetComponent<EnemyController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
+            enemySpawner = FindFirstObjectByType<EnemySpawner>();
         }
 
     }
@@ -37,12 +41,19 @@ public class HealthManager : MonoBehaviour {
         statsManager = GetComponent<StatsManager>();
 
         if (statsManager.isPlayer) {
-            healthSlider.maxValue = statsManager.currentHp + statsManager.extraHealth;
-            healthSlider.value = statsManager.currentHp;
+            statsManager.maxHealth = statsManager.currentHealth + statsManager.extraHealth;
+            healthSlider.maxValue = statsManager.maxHealth;
+            healthSlider.value = statsManager.currentHealth;
             playerController = GetComponent<PlayerController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
         }
+
+    }
+    private void FixedUpdate() {
+        //TODO: Fix max health, health, current health values. Sliders For Enemies
+        //healthSlider.maxValue = statsManager.maxHealth;
+        //healthSlider.value = statsManager.currentHealth;
 
     }
 
@@ -58,11 +69,11 @@ public class HealthManager : MonoBehaviour {
             Debug.Log(this.name + " can't be Damaged");
             return;
         }
-        if (damage > statsManager.currentHp) {
+        if (damage > statsManager.currentHealth) {
             DeathSequence();
         }
         else {
-            
+
             if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
                 float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(damage);
                 HitStopManager.Instance.TriggerHitStop(damage);
@@ -71,10 +82,14 @@ public class HealthManager : MonoBehaviour {
             if (enemyController != null) enemyController.BreakCharge();
 
             StartCoroutine(TakeDamageEffects());
-            statsManager.currentHp -= damage;
+            statsManager.currentHealth -= damage;
             //Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.currentHp);
 
-            if(statsManager.isPlayer) healthSlider.value = statsManager.currentHp;
+            if (statsManager.isPlayer) {        
+                healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
+                healthSlider.value = statsManager.currentHealth;
+
+            }
         }
     }
 
@@ -90,7 +105,7 @@ public class HealthManager : MonoBehaviour {
     public void ApplyKnockback(float amount, Transform source) {
         //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
         if (rb2d == null) {
-            Debug.LogError(this.name + "Rigidbody2D is null!" + " Health: " + statsManager.currentHp);
+            Debug.LogError(this.name + "Rigidbody2D is null!" + " Health: " + statsManager.currentHealth);
             return;
         }
         if (statsManager.isUnstoppable) {
@@ -148,11 +163,13 @@ public class HealthManager : MonoBehaviour {
 
 
     void DeathSequence() {
+        if (!statsManager.isPlayer) enemySpawner.enemyCount--;
         //Debug.Log(this.name + "isDead!");
         GetComponent<DropLootOnDeath>().IfDestroy();
         DeathEffects();
         statsManager.canMove = false;
         statsManager.canAttack = false;
+
     }
 
     void DeathEffects() {

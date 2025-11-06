@@ -23,8 +23,9 @@ public class StatsManager : MonoBehaviour {
     public float jumpCooldown = 1f;
 
     [Header("Base Stats")]
-    public float currentHp = 100;
+    public float currentHealth = 100;
     public float extraHealth = 1f;
+    public float maxHealth;
     public float baseRange = 1f;
     [Tooltip("Effects Knockback-KnockbackResistance")]
     public float strength = 5f;

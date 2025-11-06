@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
@@ -6,10 +7,15 @@ public class EnemySpawner : MonoBehaviour {
 
     [SerializeField] float minSpawnDistance = 60f;
     [SerializeField] float maxSpawnDistance = 100f;
-    [SerializeField] float spawnDelay = 0.2f;
+    [SerializeField] float spawnDelay = 1f;
     [SerializeField] int spawnCount = 10;
 
+    [SerializeField] TextMeshProUGUI enemyCountText;
+
     Transform target;
+    [SerializeField] int maxEnemyCount = 50;
+    public float enemyCount = 0f;
+    public bool pauseEnemySpawn = false;
     void Start() {
         target = FindFirstObjectByType<PlayerController>().transform;
         StartCoroutine(SpawnEnemyAtRandomPos(spawnCount));
@@ -18,16 +24,18 @@ public class EnemySpawner : MonoBehaviour {
         Vector2 innerCircle = new Vector2(minSpawnDistance + target.position.x, minSpawnDistance + target.position.y);
 
         transform.position = Random.insideUnitCircle * minSpawnDistance;
+        enemyCountText.text = (": " + enemyCount);
     }
 
     // Update is called once per frame
-    void Update() {
-
+    void FixedUpdate() {
+        enemyCountText.text = (": " + enemyCount);
     }
 
     IEnumerator SpawnEnemyAtRandomPos(int spawnAmount) {
 
-        for (int i = 0; i < spawnAmount; i++) {
+        //for (int i = 0; i < spawnAmount; i++)
+        while(!pauseEnemySpawn && enemyCount < maxEnemyCount) {
             Vector2 pos = target.position;
 
             Vector2 randomDriection = Random.insideUnitCircle.normalized;
@@ -39,9 +47,7 @@ public class EnemySpawner : MonoBehaviour {
             Instantiate(EnemyPrefabs[Random.Range(0, EnemyPrefabs.Length)], randomPos, Quaternion.identity);
             //Debug.Log(randomPos);
             yield return new WaitForSeconds(spawnDelay);
-        }
-        Debug.Log("Spawn Sequence Done!");
-        yield return new WaitForSeconds(1f);
+        }     
     }
 
     Vector2 RandomOutsideUnitCircle(float minRadius, Vector2 directionParent) {

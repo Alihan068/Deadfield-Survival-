@@ -31,6 +31,8 @@ public class EnemyController : MonoBehaviour {
 
     [SerializeField] Animator weaponAnimator;
     Animator bodyAnimator;
+    EnemySpawner enemySpawner;
+
 
     string attackAnimName = "ChargeAttack";
     int attackAnimHash;
@@ -58,6 +60,9 @@ public class EnemyController : MonoBehaviour {
         EnemyBaseStatImplementation(enemyType);
 
         attackAnimHash = Animator.StringToHash(attackAnimName);
+
+        enemySpawner = FindFirstObjectByType<EnemySpawner>();
+        enemySpawner.enemyCount++;
     }
 
     void FixedUpdate() {

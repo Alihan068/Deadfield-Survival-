@@ -3,7 +3,8 @@ using UnityEngine;
 
 [System.Serializable]
 public struct WeightedObject {
-    public GameObject gameObject;
+    public ItemRarity Rarity;
+    public GameObject[] collectibleItem;
     public float weight;
 }
 
@@ -41,7 +42,7 @@ public class DropLootOnDeath : MonoBehaviour {
         foreach (WeightedObject weightedObject in weightedObjectList) {
             weightSum += weightedObject.weight;
             if (randChoice <= weightSum) {
-                selected = weightedObject.gameObject;
+                selected = weightedObject.collectibleItem[Random.Range(0, weightedObject.collectibleItem.Length)];
                 break;
             }
         }

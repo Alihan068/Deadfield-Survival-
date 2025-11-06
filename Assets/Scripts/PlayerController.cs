@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (!isAlive 
             || !statsManager.canMove 
             || customTime.timeScale <= 0 

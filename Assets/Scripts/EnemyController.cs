@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour {
         attackAnimHash = Animator.StringToHash(attackAnimName);
     }
 
-    void LateUpdate() {
+    void FixedUpdate() {
         if (!statsManager.canMove || statsManager.isKnocked || customTime.timeScale <= 0) return;
 
         CalculateDistanceToPlayer();
@@ -93,15 +93,17 @@ public class EnemyController : MonoBehaviour {
         switch (enemyType) {
             case EnemyType.Melee:
                 MeleeEnemyMovement();
+                FlipEnemyFacing();
                 break;
             case EnemyType.Ranged:
                 RangedEnemyMovement();
                 break;
             case EnemyType.Charger:
                 ChargerMovement();
+                FlipEnemyFacing();
                 break;
         }
-        FlipEnemyFacing();
+
     }
     //TODO: Make enemy attack based on meleeAttackSpeed by setting the animation speed.
     void MeleeEnemyMovement() {
@@ -125,16 +127,19 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= minRange - rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
+            FlipEnemyFacing();
             return;
         }
         else if (distanceToPlayer >= statsManager.baseRange + rangeBuffer) {
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
+            FlipEnemyFacing();
             return;
         }
         else {
             rangedParticleAttack.ParticleSystemToggle(true);
             rb2d.linearVelocity = Vector2.zero;
+
         }
     }
 
@@ -152,22 +157,25 @@ public class EnemyController : MonoBehaviour {
         if (distanceToPlayer <= statsManager.baseRange) {
             if (chargeCoroutine == null) {
                 chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
+                Debug.Log(rb2d.constraints);
             }
             return;
         }
         else if (distanceToPlayer > statsManager.baseRange) {
-            if (chargeCoroutine == null) {
-                ChaseTarget(playerController.transform);
-                return;
-            }
+
+            chargeCoroutine = null;
+            ChaseTarget(playerController.transform);
+            
+            return;
+
         }
     }
     IEnumerator ChargeTarget(Transform target) {
+        statsManager.isUnstoppable = true;
         rb2d.linearVelocity = Vector2.zero;
         Debug.Log("Wait");
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return new WaitForSeconds(1);
-        statsManager.isUnstoppable = true;
         Debug.Log("Charge!");
         rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);

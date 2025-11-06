@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 8760486088892121566}
   - component: {fileID: 2477296294858086113}
   - component: {fileID: 4063421198692282030}
+  - component: {fileID: 2689509591801385101}
   m_Layer: 7
   m_Name: ParticleSystem
   m_TagString: Untagged
@@ -5025,6 +5026,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &2689509591801385101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473204110538044507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25dd34fe42e8fa448a488c98f220b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangedParticleAttack
 --- !u!1 &5798170528766396109
 GameObject:
   m_ObjectHideFlags: 0
@@ -5078,7 +5091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConroller
   enemyType: 1
-  attackZoneValue: 1
+  rangeBuffer: 0.5
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
@@ -5133,12 +5146,12 @@ MonoBehaviour:
   isUnstoppable: 0
   isKnocked: 0
   triggersHitStop: 1
-  moveSpeed: 2
+  moveSpeed: 1
   dashCooldown: 1
   jumpCooldown: 1
   maxHealthPoint: 100
   extraHealth: 1
-  baseRange: 0.7
+  baseRange: 4
   strength: 2
   intelligence: 2
   vitality: 5
@@ -5266,11 +5279,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1180253074323955986}
-  - component: {fileID: 1005359151222485868}
   - component: {fileID: 5799261681604155946}
   - component: {fileID: 1759358075981740075}
   - component: {fileID: 3965005176572892787}
-  - component: {fileID: 1288442200985521965}
   m_Layer: 7
   m_Name: EnemyWeapon
   m_TagString: Weapon
@@ -5296,18 +5307,6 @@ Transform:
   - {fileID: 8760486088892121566}
   m_Father: {fileID: 1519128723120447489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1005359151222485868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6000163425075958105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e25dd34fe42e8fa448a488c98f220b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangedParticleAttack
 --- !u!95 &5799261681604155946
 Animator:
   serializedVersion: 7
@@ -5401,18 +5400,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.2, y: 0.7}
   m_EdgeRadius: 0
---- !u!114 &1288442200985521965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6000163425075958105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e25dd34fe42e8fa448a488c98f220b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangedParticleAttack
 --- !u!1 &8199575014438137773
 GameObject:
   m_ObjectHideFlags: 0

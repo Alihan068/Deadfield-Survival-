@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour {
         pressingAttack = pressed;
 
         if (attackCoroutine == null && pressed) {
-            Debug.Log("AttackCoroutine started");
+            //Debug.Log("AttackCoroutine started");
             attackCoroutine = StartCoroutine(AttackCooldownHandler());
         }
     }
@@ -46,7 +46,7 @@ public class PlayerAttack : MonoBehaviour {
             if (canAttack && !isAttacking) {
                 isAttacking = true;
                 weapon.MultipleAttackAnimation();
-                Debug.Log("Attacked");
+                //Debug.Log("Attacked");
                 yield return new WaitForSeconds(1f / statsManager.meleeAttackSpeed);
                 isAttacking = false;
             }

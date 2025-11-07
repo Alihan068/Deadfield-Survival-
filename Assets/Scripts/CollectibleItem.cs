@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollectableItem : MonoBehaviour {
+public class CollectibleItem : MonoBehaviour {
 
     [SerializeField] CollectibleItemSO ItemSO;
     StatsManager statsManager;

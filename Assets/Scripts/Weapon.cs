@@ -44,12 +44,25 @@ public class Weapon : MonoBehaviour {
     void OnEnable() {
         statsManager = GetComponentInParent<StatsManager>();
         animator = GetComponent<Animator>();
+
         audioSource = GetComponent<AudioSource>();
 
+        isAttackingRanged = false;
+        isCoroutineRuning = false;
+        if (coroutine != null) {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
         if (weaponType == WeaponType.Ranged) {
-            projectilesParticleSystem = GetComponent<ParticleSystem>();
-            particleAttack = GetComponent<RangedParticleAttack>();
-            StartCoroutine(ToggleRangedAttackAudioLoop());
+            projectilesParticleSystem = GetComponentInChildren<ParticleSystem>();
+            particleAttack = GetComponentInChildren<RangedParticleAttack>();
+
+            if (projectilesParticleSystem != null && projectilesParticleSystem.isPlaying) {
+                projectilesParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                var em = projectilesParticleSystem.emission;
+                em.enabled = false;
+            }
         }
 
         if (statsManager.isPlayer) {
@@ -67,11 +80,12 @@ public class Weapon : MonoBehaviour {
                 main.loop = true;
                 main.startDelay = 0f;
 
+                if (projectilesParticleSystem.isPlaying) {
+                    projectilesParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                }
+
                 var em = projectilesParticleSystem.emission;
                 em.enabled = false;
-
-                if (!projectilesParticleSystem.isPlaying)
-                    projectilesParticleSystem.Play();
             }
         }
 
@@ -104,17 +118,14 @@ public class Weapon : MonoBehaviour {
     }
 
     IEnumerator ToggleRangedAttackAudioLoop() {
-        if (!isCoroutineRuning) {
-            isCoroutineRuning = true;
-            while (isAttackingRanged) {
-                if (weaponType == WeaponType.Ranged) {
-                    PlayWeaponAttackSound();
-                    yield return new WaitForSeconds(1f / statsManager.rangedSpeed);
-                }
-            }
-            yield return null;
-            isCoroutineRuning = false;
+        isCoroutineRuning = true;
+
+        while (isAttackingRanged) {
+            PlayWeaponAttackSound();
+            yield return new WaitForSeconds(1f / statsManager.rangedSpeed);
         }
+
+        isCoroutineRuning = false;
     }
 
     void GiveBaseStats() {
@@ -143,27 +154,62 @@ public class Weapon : MonoBehaviour {
 
     void PlayWeaponAttackSound() {
         if (attackSounds.Length > 0 && audioSource != null) {
-            audioSource.PlayOneShot(attackSounds[Random.Range(0, attackSounds.Length)]);
+            AudioClip clip = attackSounds[Random.Range(0, attackSounds.Length)];
+            audioSource.PlayOneShot(clip);
+        }
+        else {
+            if (attackSounds.Length == 0) {
+                Debug.LogWarning($"No attack sounds assigned to {gameObject.name}!");
+            }
+            if (audioSource == null) {
+                Debug.LogWarning($"AudioSource is NULL on {gameObject.name}!");
+            }
         }
     }
 
 
     public void SetFiring(bool pressed) {
-        if (projectilesParticleSystem == null) return;
-        if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
+        if (pressed) {
+            if (particleAttack != null) {
+                particleAttack.ParticleSystemUpdateStats();
+            }
 
-        if (pressed && particleAttack != null)
-            particleAttack.ParticleSystemUpdateStats();
+            if (!projectilesParticleSystem.isPlaying)
+                projectilesParticleSystem.Play();
 
-        var em = projectilesParticleSystem.emission;
-        em.enabled = pressed;
-        isAttackingRanged = pressed;
+            var em = projectilesParticleSystem.emission;
+            em.enabled = true;
+
+            isAttackingRanged = true;
+            if (!isCoroutineRuning) {
+                coroutine = StartCoroutine(ToggleRangedAttackAudioLoop());
+            }
+        }
+        else {
+            var em = projectilesParticleSystem.emission;
+            em.enabled = false;
+
+            isAttackingRanged = false;
+            if (isCoroutineRuning && coroutine != null) {
+                StopCoroutine(coroutine);
+                coroutine = null;
+                isCoroutineRuning = false;
+            }
+        }
     }
 
     private void OnDisable() {
         if (isCoroutineRuning && coroutine != null) {
             StopCoroutine(coroutine);
             coroutine = null;
+            isCoroutineRuning = false;
+        }
+        isAttackingRanged = false;
+
+        if (projectilesParticleSystem != null && projectilesParticleSystem.isPlaying) {
+            var em = projectilesParticleSystem.emission;
+            em.enabled = false;
+            projectilesParticleSystem.Stop();
         }
 
         if (statsManager.isPlayer) {

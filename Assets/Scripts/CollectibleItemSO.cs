@@ -52,23 +52,21 @@ public enum TargetStat {
 
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]
-public class CollectibleItemSO : ScriptableObject
-{
-    //[SerializeField] SpriteRenderer spriteRenderer;
-
+public class CollectibleItemSO : ScriptableObject {
     public ItemRarity itemRarity;
-    [Serializable]   
+
+    [Header("Visuals")]
+    public Sprite itemIcon;
+    public string itemName;
+
+    [Serializable]
     public class ItemEffect {
-        public TargetStat targetStat;   
+        public TargetStat targetStat;
         public float effectValue;
         public bool ifIncrease = true;
         public bool ifPercentage = false;
     }
-  
-    public List<ItemEffect> itemEffects = new List<ItemEffect>();
-    StatsManager playerStatsManager;
 
-    
-    
+    public List<ItemEffect> itemEffects = new List<ItemEffect>();
 }
 

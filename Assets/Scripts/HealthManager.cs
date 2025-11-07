@@ -170,7 +170,7 @@ public class HealthManager : MonoBehaviour {
 
 
     void DeathSequence() {
-        if (!statsManager.isPlayer) enemySpawner.enemyCount--;
+        if (!statsManager.isPlayer) { enemySpawner.enemyCount--; }
         //Debug.Log(this.name + "isDead!");
         GetComponent<DropLootOnDeath>().IfDestroy();
         DeathEffects();

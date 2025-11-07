@@ -155,7 +155,9 @@ public class Weapon : MonoBehaviour {
     void PlayWeaponAttackSound() {
         if (attackSounds.Length > 0 && audioSource != null) {
             AudioClip clip = attackSounds[Random.Range(0, attackSounds.Length)];
-            audioSource.PlayOneShot(clip);
+            if (clip != null) {
+                audioSource.PlayOneShot(clip);
+            }
         }
         else {
             if (attackSounds.Length == 0) {
@@ -224,7 +226,7 @@ public class Weapon : MonoBehaviour {
         CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
 
         if (enemyHealthManager != null) {
-            enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
+            enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage + statsManager.meleeDamage);
             enemyHealthManager.ApplyKnockback(statsManager.strength, transform);
         }
 

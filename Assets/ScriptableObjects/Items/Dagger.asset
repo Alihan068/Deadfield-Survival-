@@ -16,7 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: -1824137744, guid: b96cafd382b4e69449f99c4357080573, type: 3}
   itemName: Dagger
   itemEffects:
-  - targetStat: 19
+  - targetStat: 22
     effectValue: 5
     ifIncrease: 1
     ifPercentage: 1

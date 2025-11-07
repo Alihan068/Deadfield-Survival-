@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using Unity.Burst;
 using Unity.VisualScripting;
@@ -70,124 +70,170 @@ public class StatsManager : MonoBehaviour {
     public float poisonDamage = 1f;
     public float diseaseDamage = 1f;
 
-     float ModifyStatBasedOnvariables(float stat, float value, bool ifIncrease, bool ifPercentage) {
-        float calculation;
-        if (!ifIncrease) value = -value;
+    private float AdjustStat(float currentValue, float value, bool isPercentage, bool ifIncrease) {
+        float modifier = ifIncrease ? 1f : -1f;
 
-        if (ifPercentage) {
-            calculation = stat + (value / stat) * 100;
-            return calculation;
+        if (isPercentage) {
+            // Mevcut değerin yüzdesi kadar artış veya azalış uygular
+            return currentValue * (1f + modifier * (value / 100f));
         }
         else {
-            calculation = stat + value;
-            return calculation;
+            // Düz ekleme veya çıkarma
+            return currentValue + (modifier * value);
         }
     }
 
     public void ApplyEffect(CollectibleItemSO.ItemEffect effect) {
-        Debug.Log("Apply Effects");
         switch (effect.targetStat) {
+            // Base Stats
+            case TargetStat.currentHealth:
+                currentHealth = AdjustStat(currentHealth, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                break;
+
             case TargetStat.extraHealth:
-                extraHealth = ModifyStatBasedOnvariables(extraHealth, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                extraHealth = AdjustStat(extraHealth, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.dashCooldown:
-                dashCooldown = ModifyStatBasedOnvariables(dashCooldown, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.maxHealth:
+                maxHealth = AdjustStat(maxHealth, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.jumpCooldown:
-                jumpCooldown = ModifyStatBasedOnvariables(jumpCooldown, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.baseRange:
+                baseRange = AdjustStat(baseRange, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.strength:
-                strength = ModifyStatBasedOnvariables(strength, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                strength = AdjustStat(strength, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.intelligence:
-                intelligence = ModifyStatBasedOnvariables(intelligence, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                intelligence = AdjustStat(intelligence, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.moveSpeed:
-                moveSpeed = ModifyStatBasedOnvariables(moveSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
-                break;
+
             case TargetStat.vitality:
-                vitality = ModifyStatBasedOnvariables(vitality, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                vitality = AdjustStat(vitality, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.armor:
-                armor = ModifyStatBasedOnvariables(armor, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                armor = AdjustStat(armor, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.playerSize:
-                playerSize = ModifyStatBasedOnvariables(playerSize, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                playerSize = AdjustStat(playerSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.haste:
-                haste = ModifyStatBasedOnvariables(haste, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                haste = AdjustStat(haste, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            // General Offensive
             case TargetStat.armorPen:
-                armorPen = ModifyStatBasedOnvariables(armorPen, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                armorPen = AdjustStat(armorPen, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.dodgeChance:
-                dodgeChance = ModifyStatBasedOnvariables(dodgeChance, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                dodgeChance = AdjustStat(dodgeChance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.explosionSize:
-                explosionSize = ModifyStatBasedOnvariables(explosionSize, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                explosionSize = AdjustStat(explosionSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.explosionDamage:
-                explosionDamage = ModifyStatBasedOnvariables(explosionDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                explosionDamage = AdjustStat(explosionDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.weaponDamage:
-                baseDamage = ModifyStatBasedOnvariables(baseDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.baseDamage:
+                baseDamage = AdjustStat(baseDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            // Knockback Attributes
+            case TargetStat.baseAppliedKnockback:
+                baseAppliedKnockback = AdjustStat(baseAppliedKnockback, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                break;
+
+            case TargetStat.knockbackStagger:
+                knockbackStagger = AdjustStat(knockbackStagger, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                break;
+
+            // General Defensive
             case TargetStat.damageReduction:
-                damageReduction = ModifyStatBasedOnvariables(damageReduction, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                damageReduction = AdjustStat(damageReduction, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.stunResistance:
-                stunResistance = ModifyStatBasedOnvariables(stunResistance, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                stunResistance = AdjustStat(stunResistance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.debufResistance:
-                debufResistance = ModifyStatBasedOnvariables(debufResistance, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                debufResistance = AdjustStat(debufResistance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            // Melee Attributes
+            case TargetStat.meleeSwipeAngle:
+                meleeSwipeAngle = AdjustStat(meleeSwipeAngle, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                break;
+
             case TargetStat.meleeDamage:
-                meleeDamage = ModifyStatBasedOnvariables(meleeDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                meleeDamage = AdjustStat(meleeDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.meleeSpeed:
-                meleeAttackSpeed = ModifyStatBasedOnvariables(meleeAttackSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.meleeAttackSpeed:
+                meleeAttackSpeed = AdjustStat(meleeAttackSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.parryCooldown:
-                parryCooldown = ModifyStatBasedOnvariables(parryCooldown, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                parryCooldown = AdjustStat(parryCooldown, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.weaponSize:
-                weaponSize = ModifyStatBasedOnvariables(weaponSize, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                weaponSize = AdjustStat(weaponSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.weaponRange:
-                baseRange = ModifyStatBasedOnvariables(baseRange, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.slowestAttackSPeedPerSecond:
+                slowestAttackSPeedPerSecond = AdjustStat(slowestAttackSPeedPerSecond, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            // Ranged Attributes
             case TargetStat.rangedSpeed:
-                rangedSpeed = ModifyStatBasedOnvariables(rangedSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                rangedSpeed = AdjustStat(rangedSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.rangedDamage:
-                rangedDamage = ModifyStatBasedOnvariables(rangedDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                rangedDamage = AdjustStat(rangedDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.projectileAmount:
-                projectileAmount = ModifyStatBasedOnvariables(projectileAmount, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                projectileAmount = AdjustStat(projectileAmount, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.weaponBurst:
-                weaponBurst = ModifyStatBasedOnvariables(weaponBurst, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                weaponBurst = AdjustStat(weaponBurst, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
-            case TargetStat.projectileBounce:
-                projectileSpeed = ModifyStatBasedOnvariables(projectileSpeed, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+
+            case TargetStat.projectileSpeed:
+                projectileSpeed = AdjustStat(projectileSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.projectileSize:
-                projectileSize = ModifyStatBasedOnvariables(projectileSize, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                projectileSize = AdjustStat(projectileSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.spread:
-                spread = ModifyStatBasedOnvariables(spread, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                spread = AdjustStat(spread, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            // DOT Attributes
             case TargetStat.burnDamage:
-                burnDamage = ModifyStatBasedOnvariables(burnDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                burnDamage = AdjustStat(burnDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.poisonDamage:
-                poisonDamage = ModifyStatBasedOnvariables(poisonDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
+                poisonDamage = AdjustStat(poisonDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
             case TargetStat.diseaseDamage:
-                diseaseDamage = ModifyStatBasedOnvariables(diseaseDamage, effect.effectValue, effect.ifIncrease, effect.ifPercentage);
-                break;
-            default:
-                Debug.Log("Something is not right");
+                diseaseDamage = AdjustStat(diseaseDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
         }
     }

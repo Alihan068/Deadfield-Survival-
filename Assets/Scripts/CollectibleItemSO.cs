@@ -14,41 +14,56 @@ public enum ItemRarity {
 }
 
 public enum TargetStat {
+    // Base Stats
+    currentHealth,
     extraHealth,
-    dashCooldown,
-    jumpCooldown,
+    maxHealth,
+    baseRange,
     strength,
     intelligence,
-    moveSpeed,
     vitality,
     armor,
     playerSize,
     haste,
+
+    // General Offensive
     armorPen,
     dodgeChance,
     explosionSize,
     explosionDamage,
-    weaponDamage,
+    baseDamage,
+
+    // Knockback Attributes
+    baseAppliedKnockback,
+    knockbackStagger,
+
+    // General Defensive
     damageReduction,
     stunResistance,
     debufResistance,
+
+    // Melee Attributes
+    meleeSwipeAngle,
     meleeDamage,
-    meleeSpeed,
+    meleeAttackSpeed,
     parryCooldown,
     weaponSize,
-    weaponRange,
+    slowestAttackSPeedPerSecond,
+
+    // Ranged Attributes
     rangedSpeed,
     rangedDamage,
     projectileAmount,
     weaponBurst,
-    projectileBounce,
+    projectileSpeed,
     projectileSize,
     spread,
+
+    // DOT Attributes
     burnDamage,
     poisonDamage,
-    diseaseDamage,
+    diseaseDamage
 }
-
 
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]

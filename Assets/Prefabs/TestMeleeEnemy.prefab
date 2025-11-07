@@ -659,16 +659,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad974ee3b852314d9a7694231a5d8a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropLootOnDeath
-  frequency: 1
+  frequency: 0.5
   weightedObjectList:
   - Rarity: 0
     collectibleItem:
-    - {fileID: 7768459737807016166, guid: 4d0231b6536b90943832c0eccebc891d, type: 3}
-    weight: 10
+    - {fileID: 3691913859926390162, guid: e82f1f536ead60844946392c77d5efaf, type: 3}
+    - {fileID: 8166104013971958066, guid: 7758672418d044349bc1e8af8e5bbaac, type: 3}
+    weight: 60
   - Rarity: 1
     collectibleItem:
-    - {fileID: 7768459737807016166, guid: 24ab48eb966545f48a5d457037688e57, type: 3}
-    weight: 90
+    - {fileID: 6724307884660093185, guid: d83bdc26921490d4ea3600995b3aa047, type: 3}
+    - {fileID: 3255986066996561094, guid: 2fc9773da4c3ecd44bddbdbb8ff1b5e8, type: 3}
+    weight: 34
+  - Rarity: 2
+    collectibleItem:
+    - {fileID: 3892177424060801760, guid: 12db3d8dbdbab8e4883ad90b70418099, type: 3}
+    - {fileID: 3364432162663144731, guid: c62dec39fc5c3b344bf55a92ccd9380f, type: 3}
+    weight: 6
+  - Rarity: 3
+    collectibleItem:
+    - {fileID: 8413388792260504269, guid: dc99549d084dbe34985f4d8914913ed5, type: 3}
+    weight: 1
 --- !u!114 &7208469731526115650
 MonoBehaviour:
   m_ObjectHideFlags: 0

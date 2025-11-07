@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -16,6 +17,22 @@ public class UIManager : MonoBehaviour {
     private void Awake() {
         if (popupRoot != null)
             popupRoot.SetActive(false);
+
+        TogglePause(true);
+    }
+
+    void OnPause(InputValue value) {
+        bool pressed = value.isPressed;
+
+        if (pressed) {
+            TogglePause(false);
+        }
+        else
+            TogglePause(true);
+    
+    }
+    public void TogglePause(bool state) {
+        Time.timeScale = state ? 1 : 0;
     }
 
     public void ShowItemPickup(CollectibleItemSO itemSO) {

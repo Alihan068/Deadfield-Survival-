@@ -24,7 +24,7 @@ MonoBehaviour:
     effectValue: 3
     ifIncrease: 1
     ifPercentage: 0
-  - targetStat: 18
+  - targetStat: 21
     effectValue: 3
     ifIncrease: 1
     ifPercentage: 0

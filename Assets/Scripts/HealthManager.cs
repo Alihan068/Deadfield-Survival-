@@ -16,6 +16,7 @@ public class HealthManager : MonoBehaviour {
     EnemyController enemyController;
     CustomTime customTime;
     EnemySpawner enemySpawner;
+    Weapon weapon;
 
     [SerializeField] float deathSpin = 10f;
     [SerializeField] float deathKick = 10f;
@@ -32,7 +33,7 @@ public class HealthManager : MonoBehaviour {
 
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
-
+        weapon = GetComponentInChildren<Weapon>();
         if (!statsManager.isPlayer) {
             enemyController = GetComponent<EnemyController>();
             rb2d = GetComponent<Rigidbody2D>();
@@ -43,6 +44,8 @@ public class HealthManager : MonoBehaviour {
     }
     void Start() {
         statsManager = GetComponent<StatsManager>();
+        statsManager.currentHealth = statsManager.maxHealth;
+        statsManager.maxHealth += statsManager.extraHealth;
 
         if (statsManager.isPlayer) {
             statsManager.maxHealth = statsManager.currentHealth + statsManager.extraHealth;
@@ -54,10 +57,14 @@ public class HealthManager : MonoBehaviour {
         }
 
     }
-    private void FixedUpdate() {
-        //TODO: Fix max health, health, current health values. Sliders For Enemies
-        //healthSlider.maxValue = statsManager.maxHealth;
-        //healthSlider.value = statsManager.currentHealth;
+    private void Update() {
+        statsManager.currentHealth = statsManager.maxHealth;
+        statsManager.maxHealth += statsManager.extraHealth;
+
+        if (statsManager.isPlayer) {
+            healthSlider.maxValue = statsManager.maxHealth;
+            healthSlider.value = statsManager.currentHealth;
+        }
 
     }
 
@@ -174,6 +181,8 @@ public class HealthManager : MonoBehaviour {
         //Debug.Log(this.name + "isDead!");
         GetComponent<DropLootOnDeath>().IfDestroy();
         DeathEffects();
+        if(statsManager.isPlayer) { playerController.enabled = false; }
+        weapon.enabled = false;
         statsManager.canMove = false;
         statsManager.canAttack = false;
 

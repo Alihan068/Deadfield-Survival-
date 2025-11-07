@@ -5139,6 +5139,14 @@ MonoBehaviour:
   bodySprite: {fileID: 838308474925160081}
   healthSlider: {fileID: 0}
   healthText: {fileID: 0}
+  takeDamageSounds:
+  - {fileID: 8300000, guid: ef9d433c7bf1d1d4ba5e18b3c104cad6, type: 3}
+  - {fileID: 8300000, guid: 00d3cce3bda181b4991eb88bc828ef23, type: 3}
+  - {fileID: 8300000, guid: 6fa6e7fa35fd9e34faf4cc03f3211cd3, type: 3}
+  - {fileID: 8300000, guid: 9535d8d6a46cded4b9695714d39500ad, type: 3}
+  - {fileID: 8300000, guid: 86328c69917a30c4aa7999487da0ecea, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 5a7b59f72c7a2bb40b2ec0e4ec57f7d5, type: 3}
 --- !u!114 &1016314002337748544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5347,7 +5355,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5516,6 +5524,8 @@ MonoBehaviour:
   strength: 1
   intelligence: 1
   haste: 1
+  attackSounds: []
+  equipSounds: []
 --- !u!61 &3965005176572892787
 BoxCollider2D:
   m_ObjectHideFlags: 0

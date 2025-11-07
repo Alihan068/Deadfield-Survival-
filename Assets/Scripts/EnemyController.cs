@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour {
     Animator bodyAnimator;
     EnemySpawner enemySpawner;
 
+    AudioSource audioSource;
+    AudioClip[] baseSounds;
 
     string attackAnimName = "ChargeAttack";
     int attackAnimHash;
@@ -63,6 +65,8 @@ public class EnemyController : MonoBehaviour {
 
         enemySpawner = FindFirstObjectByType<EnemySpawner>();
         enemySpawner.enemyCount++;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate() {
@@ -149,6 +153,7 @@ public class EnemyController : MonoBehaviour {
 
         }
     }
+
 
     void AnimationHandler() {
 

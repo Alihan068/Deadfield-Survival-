@@ -16,7 +16,9 @@ public class Weapon : MonoBehaviour {
     ParticleSystem projectilesParticleSystem;
     EnemyController enemyController;
 
-    Coroutine immunityCoroutine;
+    Coroutine coroutine;
+    bool isCoroutineRuning = false;
+    bool isAttackingRanged = true;
 
     public WeaponType weaponType;
     public LayerMask weaponTargetLayer;
@@ -35,19 +37,29 @@ public class Weapon : MonoBehaviour {
 
     int animIndex = 1;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip[] attackSounds;
+    [SerializeField] AudioClip[] equipSounds;
+
     void OnEnable() {
         statsManager = GetComponentInParent<StatsManager>();
         animator = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
 
         if (weaponType == WeaponType.Ranged) {
             projectilesParticleSystem = GetComponent<ParticleSystem>();
             particleAttack = GetComponent<RangedParticleAttack>();
+            StartCoroutine(ToggleRangedAttackAudioLoop());
         }
 
         if (statsManager.isPlayer) {
             controller = GetComponentInParent<PlayerController>();
             controller.weapon = this;
+
+            if (equipSounds.Length > 0 && audioSource != null) {
+                audioSource.PlayOneShot(equipSounds[Random.Range(0, equipSounds.Length)]);
+            }
+
             GiveBaseStats();
 
             if (projectilesParticleSystem != null) {
@@ -71,12 +83,13 @@ public class Weapon : MonoBehaviour {
     public void MultipleAttackAnimation() {
         if (animIndex == 1) {
             animator.SetTrigger("UpsideDownAttack");
-
+            PlayWeaponAttackSound();
             animIndex++;
             //Debug.Log("UpToDown! next index: " + animIndex);
         }
         else if (animIndex == 2) {
             animator.SetTrigger("DownSideUpAttack");
+            PlayWeaponAttackSound();
             animIndex--;
             //Debug.Log("DownToUp! next index: " + animIndex);
         }
@@ -87,6 +100,21 @@ public class Weapon : MonoBehaviour {
 
     public void RegularAttackAnimation() {
         animator.SetTrigger("isAttacking");
+        PlayWeaponAttackSound();
+    }
+
+    IEnumerator ToggleRangedAttackAudioLoop() {
+        if (!isCoroutineRuning) {
+            isCoroutineRuning = true;
+            while (isAttackingRanged) {
+                if (weaponType == WeaponType.Ranged) {
+                    PlayWeaponAttackSound();
+                    yield return new WaitForSeconds(1f / statsManager.rangedSpeed);
+                }
+            }
+            yield return null;
+            isCoroutineRuning = false;
+        }
     }
 
     void GiveBaseStats() {
@@ -113,7 +141,13 @@ public class Weapon : MonoBehaviour {
         statsManager.intelligence -= intelligence;
     }
 
-   
+    void PlayWeaponAttackSound() {
+        if (attackSounds.Length > 0 && audioSource != null) {
+            audioSource.PlayOneShot(attackSounds[Random.Range(0, attackSounds.Length)]);
+        }
+    }
+
+
     public void SetFiring(bool pressed) {
         if (projectilesParticleSystem == null) return;
         if (weaponType != WeaponType.Ranged && weaponType != WeaponType.Mixed) return;
@@ -123,9 +157,15 @@ public class Weapon : MonoBehaviour {
 
         var em = projectilesParticleSystem.emission;
         em.enabled = pressed;
+        isAttackingRanged = pressed;
     }
 
     private void OnDisable() {
+        if (isCoroutineRuning && coroutine != null) {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
         if (statsManager.isPlayer) {
             TakeBaseStats();
         }
@@ -141,7 +181,7 @@ public class Weapon : MonoBehaviour {
             enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage);
             enemyHealthManager.ApplyKnockback(statsManager.strength, transform);
         }
-            
-                
+
+
     }
 }

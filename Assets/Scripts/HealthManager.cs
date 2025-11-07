@@ -26,6 +26,10 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] TextMeshProUGUI healthText;
     //[SerializeField] Image healthFill;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip[] takeDamageSounds;
+    [SerializeField] AudioClip[] deathSounds;
+
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
 
@@ -96,6 +100,9 @@ public class HealthManager : MonoBehaviour {
 
     IEnumerator TakeDamageEffects() {
         //Debug.Log(this.name + "damageEffects");
+        if (takeDamageSounds.Length > 0 && audioSource != null) {
+            audioSource.PlayOneShot(takeDamageSounds[UnityEngine.Random.Range(0, takeDamageSounds.Length)]);
+        }
         Color previousColor = bodySprite.color;
         bodySprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -176,6 +183,9 @@ public class HealthManager : MonoBehaviour {
         if (statsManager.isPlayer) {
             //Stop Camera on death area
             FindAnyObjectByType<CinemachineCamera>().enabled = false;
+        }
+        if (deathSounds.Length > 0 && audioSource != null) {
+            audioSource.PlayOneShot(deathSounds[UnityEngine.Random.Range(0, deathSounds.Length)]);
         }
 
         //RedColorBlink

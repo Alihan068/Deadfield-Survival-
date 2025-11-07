@@ -3,9 +3,12 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour {
 
     [SerializeField] int currentWeaponIndex = 0;
+    AudioSource audioSource;
+    [SerializeField] AudioClip[] weaponSwitchSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
+        audioSource = GetComponentInParent<AudioSource>();
         SetWeaponActive();
     }
 
@@ -22,7 +25,9 @@ public class WeaponSwitcher : MonoBehaviour {
 
     void SetWeaponActive() {
         int weaponIndex = 0;
-
+        if (weaponSwitchSound.Length > 0 && audioSource != null) {
+            audioSource.PlayOneShot(weaponSwitchSound[Random.Range(0, weaponSwitchSound.Length)]);
+        }
         foreach (Transform weapon in transform) {
 
             if (weaponIndex == currentWeaponIndex) {

@@ -90,7 +90,7 @@
                 {
                     "name": "Pause",
                     "type": "Button",
-                    "id": "f05960ac-3a8c-4cde-b858-230fb4e501f3",
+                    "id": "a29523dc-58ec-4c85-bee3-e046f5ea7627",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -463,11 +463,11 @@
                 },
                 {
                     "name": "",
-                    "id": "18e94061-1892-4454-ac4d-206b7d9b7673",
+                    "id": "fbf90a3d-5dc9-42d4-b28f-ea0cb045c026",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Touch;Keyboard&Mouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -488,10 +488,19 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "396bd941-073f-4406-80c4-49f2834bda78",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "7607c7b6-cd76-4816-beef-bd0341cfe950",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -500,7 +509,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "15cef263-9014-4fd5-94d9-4e4a6234a6ef",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -833,6 +842,17 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3b334d8f-c1e4-4d3d-91f9-b0a45ba98a02",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

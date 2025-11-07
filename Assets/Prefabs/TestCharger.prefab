@@ -473,9 +473,9 @@ MonoBehaviour:
   moveSpeed: 1
   dashCooldown: 1
   jumpCooldown: 1
-  currentHealth: 100
+  currentHealth: 0
   extraHealth: 1
-  maxHealth: 0
+  maxHealth: 100
   baseRange: 4
   strength: 2
   intelligence: 2

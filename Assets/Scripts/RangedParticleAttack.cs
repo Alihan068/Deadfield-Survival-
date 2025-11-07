@@ -39,7 +39,9 @@ public class RangedParticleAttack : MonoBehaviour {
         }
         else {
             isPlaying = false;
-            particleSys.Stop();
+            if (particleSys != null) {
+                particleSys.Stop();
+            }
         }
     }
 

@@ -154,7 +154,6 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-
     void AnimationHandler() {
 
         if (rb2d.linearVelocity != Vector2.zero) {

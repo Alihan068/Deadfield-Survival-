@@ -115,6 +115,8 @@ MonoBehaviour:
   bodySprite: {fileID: 4901925127576502328}
   healthSlider: {fileID: 0}
   healthText: {fileID: 0}
+  takeDamageSounds: []
+  deathSounds: []
 --- !u!114 &6404845291246215501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,9 +172,9 @@ MonoBehaviour:
   moveSpeed: 2
   dashCooldown: 1
   jumpCooldown: 1
-  currentHealth: 100
-  extraHealth: 1
-  maxHealth: 0
+  currentHealth: 0
+  extraHealth: 10
+  maxHealth: 100
   baseRange: 1
   strength: 50
   intelligence: 2
@@ -469,6 +471,12 @@ MonoBehaviour:
   strength: 1
   intelligence: 1
   haste: 1
+  attackSounds:
+  - {fileID: 8300000, guid: 7d116fefccf924a4fa763e8afcbdcb17, type: 3}
+  - {fileID: 8300000, guid: 99135ce6c976ef44780df1687993a2ea, type: 3}
+  - {fileID: 8300000, guid: a566720f2eb03064185fd19d0a97d22a, type: 3}
+  equipSounds:
+  - {fileID: 8300000, guid: fd771a2a228599441b52ccdb9abddb98, type: 3}
 --- !u!212 &4890672249553302959
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5561,6 +5569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSwitcher
   currentWeaponIndex: 0
+  weaponSwitchSound: []
 --- !u!1 &3209876876659375293
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,6 +5722,12 @@ MonoBehaviour:
   strength: 1
   intelligence: 1
   haste: 1
+  attackSounds:
+  - {fileID: 8300000, guid: 9cfa0486e93148d4db119bdba989ec12, type: 3}
+  - {fileID: 8300000, guid: 38845bd3946f588499b96b9b9718816c, type: 3}
+  - {fileID: 8300000, guid: 4e306fb120bb7c64692c5c0e5ff6d0a5, type: 3}
+  equipSounds:
+  - {fileID: 8300000, guid: a934f4982465d584ab8f957829726b17, type: 3}
 --- !u!60 &6806409863037348041
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5828,7 +5843,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

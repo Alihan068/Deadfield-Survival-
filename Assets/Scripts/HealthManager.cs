@@ -44,8 +44,9 @@ public class HealthManager : MonoBehaviour {
     }
     void Start() {
         statsManager = GetComponent<StatsManager>();
-        statsManager.currentHealth = statsManager.maxHealth;
         statsManager.maxHealth += statsManager.extraHealth;
+        statsManager.currentHealth = statsManager.maxHealth;
+       
 
         if (statsManager.isPlayer) {
             statsManager.maxHealth = statsManager.currentHealth + statsManager.extraHealth;
@@ -58,8 +59,6 @@ public class HealthManager : MonoBehaviour {
 
     }
     private void Update() {
-        statsManager.currentHealth = statsManager.maxHealth;
-        statsManager.maxHealth += statsManager.extraHealth;
 
         if (statsManager.isPlayer) {
             healthSlider.maxValue = statsManager.maxHealth;

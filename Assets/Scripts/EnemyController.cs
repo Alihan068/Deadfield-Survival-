@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyType {
-    Melee,
+    MeleeChaser,
+    MeleeWeapon,
     Ranged,
     Charger,
 }
@@ -102,7 +103,7 @@ public class EnemyController : MonoBehaviour {
 
     void EnemyMoveBehavior(EnemyType enemyType) {
         switch (enemyType) {
-            case EnemyType.Melee:
+            case EnemyType.MeleeWeapon:
                 MeleeEnemyMovement();
                 FlipEnemyFacing();
                 break;
@@ -222,7 +223,7 @@ public class EnemyController : MonoBehaviour {
 
     void EnemyBaseStatImplementation(EnemyType enemyType) {
         switch (enemyType) {
-            case EnemyType.Melee:
+            case EnemyType.MeleeWeapon:
                 statsManager.strength += 5;
                 break;
             case EnemyType.Ranged:

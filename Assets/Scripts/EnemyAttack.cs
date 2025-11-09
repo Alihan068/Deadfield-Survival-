@@ -15,7 +15,7 @@ public class EnemyAttack : MonoBehaviour
 
     void AttackTarget(EnemyType enemyType) {
         switch (enemyType) {
-            case EnemyType.Melee:
+            case EnemyType.MeleeWeapon:
                 MeleeAttack();
                 break;
             case EnemyType.Ranged:

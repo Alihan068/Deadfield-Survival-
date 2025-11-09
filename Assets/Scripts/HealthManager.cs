@@ -34,11 +34,13 @@ public class HealthManager : MonoBehaviour {
     private void OnEnable() {
         statsManager = GetComponent<StatsManager>();
         weapon = GetComponentInChildren<Weapon>();
+        audioSource = GetComponent<AudioSource>();
         if (!statsManager.isPlayer) {
             enemyController = GetComponent<EnemyController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
             enemySpawner = FindFirstObjectByType<EnemySpawner>();
+           
         }
 
     }

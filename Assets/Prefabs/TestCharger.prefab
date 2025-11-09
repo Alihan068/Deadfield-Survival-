@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ad50a09a9cce04a89466718511a7a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConroller
-  enemyType: 2
+  enemyType: 3
   rangeBuffer: 0
   chargeSpeed: 3.5
   chargeCooldown: 1
@@ -433,7 +433,7 @@ MonoBehaviour:
   healthSlider: {fileID: 0}
   healthText: {fileID: 0}
   takeDamageSounds:
-  - {fileID: 8300000, guid: afba827d0fcab314f890b33d841c0be1, type: 3}
+  - {fileID: 8300000, guid: cc107af71156e784b944afd9d3d6b337, type: 3}
   deathSounds:
   - {fileID: 8300000, guid: b512b81ab8d98b449a37d0bb6938ebb2, type: 3}
 --- !u!114 &7370764666283399509
@@ -622,7 +622,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -54,6 +54,11 @@ public class RangedParticleAttack : MonoBehaviour {
 #endif
             return;
         }
+
+        if (other.gameObject.CompareTag("Weapon")) {
+            //TODO: DeflectEffects
+            return;
+        }
         other.TryGetComponent<HealthManager>(out HealthManager targetHealthManager);
 
         if (targetHealthManager == null) {

@@ -125,7 +125,7 @@ public class EnemyController : MonoBehaviour {
             float attackSpeed = Mathf.Max(0.01f, statsManager.meleeAttackSpeed);
             weaponAnimator.SetFloat("attackSpeed", attackSpeed);
 
-            weaponAnimator.SetBool("isAttacking", true);
+            weaponAnimator.SetBool("isAttacking", true);  
         }
         else if (distanceToPlayer > statsManager.baseRange) {
             weaponAnimator.SetBool("isAttacking", false);
@@ -137,19 +137,22 @@ public class EnemyController : MonoBehaviour {
 
     void RangedEnemyMovement() {
         if (distanceToPlayer <= minRange - rangeBuffer) {
+            weaponScript.SetFiring(false);
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             FlipEnemyFacing();
             return;
         }
         else if (distanceToPlayer >= statsManager.baseRange + rangeBuffer) {
+            weaponScript.SetFiring(false);
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             FlipEnemyFacing();
             return;
         }
         else {
-            rangedParticleAttack.ParticleSystemToggle(true);
+            weaponScript.SetFiring(true);
+            rangedParticleAttack.ParticleSystemToggle(true);           
             rb2d.linearVelocity = Vector2.zero;
 
         }

@@ -23,7 +23,8 @@ public class StatsManager : MonoBehaviour {
     public float jumpCooldown = 1f;
 
     [Header("Base Stats")]
-    public float currentHealth = 100;
+    public float baseHealth = 100f;
+    public float currentHealth = 100f;
     public float extraHealth = 1f;
     public float maxHealth;
     public float baseRange = 1f;

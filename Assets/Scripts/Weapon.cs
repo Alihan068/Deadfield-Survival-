@@ -161,10 +161,10 @@ public class Weapon : MonoBehaviour {
         }
         else {
             if (attackSounds.Length == 0) {
-                Debug.LogWarning($"No attack sounds assigned to {gameObject.name}!");
+                //Debug.LogWarning($"No attack sounds assigned to {gameObject.name}!");
             }
             if (audioSource == null) {
-                Debug.LogWarning($"AudioSource is NULL on {gameObject.name}!");
+                //Debug.LogWarning($"AudioSource is NULL on {gameObject.name}!");
             }
         }
     }
@@ -172,6 +172,7 @@ public class Weapon : MonoBehaviour {
 
     public void SetFiring(bool pressed) {
         if (pressed) {
+            //Debug.Log(this.name + "Firing!");
             if (particleAttack != null) {
                 particleAttack.ParticleSystemUpdateStats();
             }

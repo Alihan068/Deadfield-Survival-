@@ -40,20 +40,16 @@ public class HealthManager : MonoBehaviour {
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
             enemySpawner = FindFirstObjectByType<EnemySpawner>();
-           
         }
-
     }
+
     void Start() {
         statsManager = GetComponent<StatsManager>();
-        statsManager.maxHealth += statsManager.extraHealth;
+        UpdateMaxHp();
         statsManager.currentHealth = statsManager.maxHealth;
-       
 
         if (statsManager.isPlayer) {
-            statsManager.maxHealth = statsManager.currentHealth + statsManager.extraHealth;
-            healthSlider.maxValue = statsManager.maxHealth;
-            healthSlider.value = statsManager.currentHealth;
+            PlayerHealthBarUpdate();
             playerController = GetComponent<PlayerController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
@@ -63,10 +59,8 @@ public class HealthManager : MonoBehaviour {
     private void Update() {
 
         if (statsManager.isPlayer) {
-            healthSlider.maxValue = statsManager.maxHealth;
-            healthSlider.value = statsManager.currentHealth;
+            PlayerHealthBarUpdate();
         }
-
     }
 
     public void CalculateIncomingDamage(float rawDamage) {
@@ -97,14 +91,19 @@ public class HealthManager : MonoBehaviour {
             statsManager.currentHealth -= damage;
             //Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.currentHp);
 
-            if (statsManager.isPlayer) {        
-                healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
-                healthSlider.value = statsManager.currentHealth;
-
+            if (statsManager.isPlayer) {
+                PlayerHealthBarUpdate();
             }
         }
     }
 
+    void PlayerHealthBarUpdate() {
+        healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
+        healthSlider.value = statsManager.currentHealth;
+    }
+    public void UpdateMaxHp() {
+        statsManager.baseHealth = statsManager.maxHealth + statsManager.extraHealth;
+    }
 
     IEnumerator TakeDamageEffects() {
         //Debug.Log(this.name + "damageEffects");
@@ -137,7 +136,7 @@ public class HealthManager : MonoBehaviour {
         }
 
         if (statsManager.isPlayer) {
-            GetComponent<PlayerController>().StopAllCoroutines();
+            playerController.StopAllCoroutines();
         }
         else {
             enemyController.StopAllCoroutines();
@@ -178,54 +177,29 @@ public class HealthManager : MonoBehaviour {
 
 
     void DeathSequence() {
-        if (!statsManager.isPlayer) { enemySpawner.enemyCount--; }
-        //Debug.Log(this.name + "isDead!");
+        if (statsManager != null) {
+            if (!statsManager.isPlayer) { enemySpawner.enemyCount--; }
+            else { playerController.enabled = false; }
+            //Debug.Log(this.name + "isDead!");
+            if (weapon != null) weapon.gameObject.SetActive(false);
+            
+            Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D col in colliders) {
+                col.gameObject.SetActive(false); col.enabled = false;
+            }
+            statsManager.canMove = false;
+            statsManager.canAttack = false;
+            
+            bodySprite.color = Color.black;
+        }
+        else {
+            Debug.LogWarning(this.name + "StatsManager Couldn't Found");
+        }
+
         GetComponent<DropLootOnDeath>().IfDestroy();
-        DeathEffects();
-        if(statsManager.isPlayer) { playerController.enabled = false; }
-        weapon.enabled = false;
-        statsManager.canMove = false;
-        statsManager.canAttack = false;
+        Destroy(gameObject, 0.5f);
 
     }
-
-    void DeathEffects() {
-        if (statsManager.isPlayer) {
-            //Stop Camera on death area
-            FindAnyObjectByType<CinemachineCamera>().enabled = false;
-        }
-        if (deathSounds.Length > 0 && audioSource != null) {
-            audioSource.PlayOneShot(deathSounds[UnityEngine.Random.Range(0, deathSounds.Length)]);
-        }
-
-        //RedColorBlink
-        bodySprite.color = Color.black;
-        Invoke(nameof(ResetSpriteColor), 0.2f);
-        //Disable Colliders
-        Collider2D[] collider2Ds = GetComponents<Collider2D>();
-        foreach (Collider2D col in collider2Ds) {
-            col.enabled = false;
-        }
-        //DeathSpin
-        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
-        rb2d.linearVelocity = Vector2.up * deathKick;
-        rb2d.freezeRotation = false;
-        rb2d.AddTorque(deathSpin, ForceMode2D.Impulse);
-
-        Invoke(nameof(StopSpin), 2f);
-
-        Invoke(nameof(DestroyPlayer), 1f);
-    }
-    void ResetSpriteColor() {
-        bodySprite.color = Color.white;
-    }
-    void StopSpin() {
-        rb2d.angularVelocity = 0f;
-    }
-    void DestroyPlayer() {
-        Destroy(gameObject);
-    }
-
 
     IEnumerator HitStop() {
         yield return new WaitForSecondsRealtime(0.1f);

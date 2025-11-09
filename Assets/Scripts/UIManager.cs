@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour {
 
         if (tutorialCanvas != null)
             tutorialCanvas.SetActive(true);
-        if (mainCanvas != null) mainCanvas.SetActive(false);
+        //if (mainCanvas != null) mainCanvas.SetActive(false);
 
         TogglePause(false);
     }

@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] float chargeCooldown = 2f;
     [SerializeField] float chargeTime = 2f;
 
+    [SerializeField] bool canDamageOnTouch = false;
+
     StatsManager statsManager;
     Rigidbody2D rb2d;
     Coroutine chargeCoroutine;
@@ -103,6 +105,8 @@ public class EnemyController : MonoBehaviour {
 
     void EnemyMoveBehavior(EnemyType enemyType) {
         switch (enemyType) {
+            case EnemyType.MeleeChaser:
+
             case EnemyType.MeleeWeapon:
                 MeleeEnemyMovement();
                 FlipEnemyFacing();
@@ -117,12 +121,19 @@ public class EnemyController : MonoBehaviour {
         }
 
     }
-    //TODO: Make enemy attack based on meleeAttackSpeed by setting the animation speed.
+    void ChaserMovement() {
+
+            Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
+            Vector2 directionNormalized = toTarget.normalized;
+            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+        
+    }
+
     void MeleeEnemyMovement() {
         if (distanceToPlayer <= statsManager.baseRange) {
             rb2d.linearVelocity = Vector2.zero;
 
-            float attackSpeed = Mathf.Max(0.01f, statsManager.meleeAttackSpeed);
+            float attackSpeed = Mathf.Max(0.01f, statsManager.attackSpeed);
             weaponAnimator.SetFloat("attackSpeed", attackSpeed);
 
             weaponAnimator.SetBool("isAttacking", true);  
@@ -227,7 +238,7 @@ public class EnemyController : MonoBehaviour {
     void EnemyBaseStatImplementation(EnemyType enemyType) {
         switch (enemyType) {
             case EnemyType.MeleeWeapon:
-                statsManager.strength += 5;
+                statsManager.knockBack += 5;
                 break;
             case EnemyType.Ranged:
                 minRange = statsManager.baseRange;
@@ -235,15 +246,15 @@ public class EnemyController : MonoBehaviour {
             case EnemyType.Charger:
                 statsManager.baseAppliedKnockback = 50;
                 rb2d.mass += 10;
-                statsManager.strength += 5;
+                statsManager.knockBack += 5;
                 break;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision != null && collision.gameObject.CompareTag("Player")) {
+        if (collision != null && collision.gameObject.CompareTag("Player") && canDamageOnTouch) {
             collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
-            collision.gameObject.GetComponent<HealthManager>().ApplyKnockback(statsManager.strength, transform);
+            collision.gameObject.GetComponent<HealthManager>().ApplyKnockback(statsManager.knockBack, transform);
         }
     }
 

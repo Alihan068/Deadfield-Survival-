@@ -145,7 +145,7 @@ public class HealthManager : MonoBehaviour {
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
 
-        float knockbackStrCompare = amount - statsManager.strength;
+        float knockbackStrCompare = amount - statsManager.knockBack;
 
         if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
             //Debug.Log(this.name + "hitstop knockback");

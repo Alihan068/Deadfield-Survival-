@@ -310,7 +310,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -1131,7 +1131,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 0.2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5131,6 +5131,7 @@ MonoBehaviour:
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
+  canDamageOnTouch: 0
   characterSprite: {fileID: 838308474925160081}
   weaponAnimator: {fileID: 5799261681604155946}
 --- !u!114 &5364222844849898825
@@ -5194,44 +5195,37 @@ MonoBehaviour:
   triggersHitStop: 1
   moveSpeed: 1
   dashCooldown: 1
-  jumpCooldown: 1
   baseHealth: 100
   currentHealth: 0
   extraHealth: 1
   maxHealth: 100
   baseRange: 4
-  strength: 2
-  intelligence: 2
-  vitality: 5
   armor: 1
   playerSize: 1
   haste: 1
-  armorPen: 1
-  dodgeChance: 1
-  explosionSize: 1
-  explosionDamage: 1
+  attackSpeed: 0.2
+  slowestAttackSPeedPerSecond: 0.01
+  armorPen: 0
+  evasion: 0
+  explosionSize: 0
+  explosionDamage: 0
   baseDamage: 1
-  baseAppliedKnockback: 4
+  knockBack: 0
+  baseAppliedKnockback: 0
   knockbackStagger: 0.15
-  damageReduction: 1
-  stunResistance: 1
-  debufResistance: 1
-  meleeSwipeAngle: 1
-  meleeDamage: 1
-  meleeAttackSpeed: 1
-  parryCooldown: 1
+  damageReduction: 0
+  stunResistance: 0
+  debufResistance: 0
+  parryCooldown: 0
   weaponSize: 1
-  slowestAttackSPeedPerSecond: 5
-  rangedSpeed: 2
-  rangedDamage: 1
   projectileAmount: 1
   weaponBurst: 1
   projectileSpeed: 2
   projectileSize: 1
-  spread: 5
-  burnDamage: 1
-  poisonDamage: 1
-  diseaseDamage: 1
+  spread: 10
+  burnDamage: 0
+  poisonDamage: 0
+  diseaseDamage: 0
 --- !u!70 &7331427947615848190
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -5528,13 +5522,13 @@ MonoBehaviour:
     m_Bits: 64
   ammoPrefab: {fileID: 0}
   weaponDamage: 1
-  weaponRange: 1
-  attackSpeed: 1
-  projectileSpeed: 1
-  armor: 1
-  strength: 1
-  intelligence: 1
-  haste: 1
+  weaponRange: 0
+  attackSpeed: 0
+  projectileSpeed: 0
+  armor: 0
+  strength: 0
+  intelligence: 0
+  haste: 0
   attackSounds: []
   equipSounds: []
 --- !u!61 &3965005176572892787

@@ -20,28 +20,30 @@ public class StatsManager : MonoBehaviour {
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float dashCooldown = 1f;
-    public float jumpCooldown = 1f;
 
     [Header("Base Stats")]
     public float baseHealth = 100f;
     public float currentHealth = 100f;
-    public float extraHealth = 1f;
+    public float extraHealth = 0f;
     public float maxHealth;
     public float baseRange = 1f;
     [Tooltip("Effects Knockback-KnockbackResistance")]
-    public float strength = 5f;
-    public float intelligence = 2f; 
-    public float vitality = 5f;
+
     public float armor = 1f;
     public float playerSize = 1f;
     public float haste = 1f;
+
     [Header("General Offensive")]
+    public float attackSpeed = 1f;
+    public float slowestAttackSPeedPerSecond = 5f;
     public float armorPen = 1f;
-    public float dodgeChance = 1f;
+    public float evasion = 1f;
     public float explosionSize = 1f;
     public float explosionDamage = 1f;
     public float baseDamage = 1f;
+
     [Header("Knockback Attributes")]
+    public float knockBack = 5f;
     public float baseAppliedKnockback = 10f;
     public float knockbackStagger = 0.15f;
 
@@ -51,15 +53,10 @@ public class StatsManager : MonoBehaviour {
     public float debufResistance = 1f;
 
     [Header("Melee Attributes")]
-    public float meleeSwipeAngle = 1f;
-    public float meleeDamage = 1f;
-    public float meleeAttackSpeed = 1f;
     public float parryCooldown = 1f;
     public float weaponSize = 1f;
-    public float slowestAttackSPeedPerSecond = 5f;
+
     [Header("Ranged Attributes")]
-    public float rangedSpeed = 1f;
-    public float rangedDamage = 1f;
     public float projectileAmount = 1f;
     public float weaponBurst = 1f;
     public float projectileSpeed = 1f;
@@ -104,15 +101,7 @@ public class StatsManager : MonoBehaviour {
                 break;
 
             case TargetStat.strength:
-                strength = AdjustStat(strength, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.intelligence:
-                intelligence = AdjustStat(intelligence, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.vitality:
-                vitality = AdjustStat(vitality, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                knockBack = AdjustStat(knockBack, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.armor:
@@ -133,7 +122,7 @@ public class StatsManager : MonoBehaviour {
                 break;
 
             case TargetStat.dodgeChance:
-                dodgeChance = AdjustStat(dodgeChance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                evasion = AdjustStat(evasion, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.explosionSize:
@@ -170,17 +159,8 @@ public class StatsManager : MonoBehaviour {
                 debufResistance = AdjustStat(debufResistance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
-            // Melee Attributes
-            case TargetStat.meleeSwipeAngle:
-                meleeSwipeAngle = AdjustStat(meleeSwipeAngle, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.meleeDamage:
-                meleeDamage = AdjustStat(meleeDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
             case TargetStat.meleeAttackSpeed:
-                meleeAttackSpeed = AdjustStat(meleeAttackSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                attackSpeed = AdjustStat(attackSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.parryCooldown:
@@ -193,15 +173,6 @@ public class StatsManager : MonoBehaviour {
 
             case TargetStat.slowestAttackSPeedPerSecond:
                 slowestAttackSPeedPerSecond = AdjustStat(slowestAttackSPeedPerSecond, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            // Ranged Attributes
-            case TargetStat.rangedSpeed:
-                rangedSpeed = AdjustStat(rangedSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.rangedDamage:
-                rangedDamage = AdjustStat(rangedDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.projectileAmount:

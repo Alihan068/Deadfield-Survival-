@@ -47,7 +47,7 @@ public class PlayerAttack : MonoBehaviour {
                 isAttacking = true;
                 weapon.MultipleAttackAnimation();
                 //Debug.Log("Attacked");
-                yield return new WaitForSeconds(1f / statsManager.meleeAttackSpeed);
+                yield return new WaitForSeconds(1f / statsManager.attackSpeed);
                 isAttacking = false;
             }
             yield return null;

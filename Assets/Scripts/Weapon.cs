@@ -79,7 +79,7 @@ public class Weapon : MonoBehaviour {
                 var main = projectilesParticleSystem.main;
                 main.loop = true;
                 main.startDelay = 0f;
-
+              
                 if (projectilesParticleSystem.isPlaying) {
                     projectilesParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 }
@@ -122,7 +122,7 @@ public class Weapon : MonoBehaviour {
 
         while (isAttackingRanged) {
             PlayWeaponAttackSound();
-            yield return new WaitForSeconds(1f / statsManager.rangedSpeed);
+            yield return new WaitForSeconds(1f / statsManager.attackSpeed);
         }
 
         isCoroutineRuning = false;
@@ -132,24 +132,20 @@ public class Weapon : MonoBehaviour {
         //Debug.Log(this.name + " active");
         statsManager.baseDamage += weaponDamage;
         statsManager.baseRange += weaponRange;
-        statsManager.meleeAttackSpeed += attackSpeed;
-        statsManager.rangedSpeed += attackSpeed;
+        statsManager.attackSpeed += attackSpeed;
         statsManager.projectileSpeed += projectileSpeed;
         statsManager.armor += armor;
-        statsManager.strength += strength;
-        statsManager.intelligence += intelligence;
+        statsManager.knockBack += strength;
         statsManager.haste += haste;
     }
 
     void TakeBaseStats() {
         statsManager.baseDamage -= weaponDamage;
         statsManager.baseRange -= weaponRange;
-        statsManager.meleeAttackSpeed -= attackSpeed;
-        statsManager.rangedSpeed -= attackSpeed;
+        statsManager.attackSpeed -= attackSpeed;
         statsManager.projectileSpeed -= projectileSpeed;
         statsManager.armor -= armor;
-        statsManager.strength -= strength;
-        statsManager.intelligence -= intelligence;
+        statsManager.knockBack -= strength;
     }
 
     void PlayWeaponAttackSound() {
@@ -227,8 +223,8 @@ public class Weapon : MonoBehaviour {
         CustomTime enemyCustomTime = collision.GetComponent<CustomTime>();
 
         if (enemyHealthManager != null) {
-            enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage + statsManager.meleeDamage);
-            enemyHealthManager.ApplyKnockback(statsManager.strength, transform);
+            enemyHealthManager.CalculateIncomingDamage(statsManager.baseDamage + statsManager.baseDamage);
+            enemyHealthManager.ApplyKnockback(statsManager.knockBack, transform);
         }
 
 

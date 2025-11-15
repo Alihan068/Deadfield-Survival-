@@ -7,7 +7,7 @@ public class HitStopManager : MonoBehaviour {
 
     [Header("Hit Stop Settings")]
     [SerializeField] float baseFreezeTime = 0.05f;
-    [SerializeField] float damageMultiplier = 0.01f; // Additional freeze time per damage point
+    //[SerializeField] float damageMultiplier = 0.01f; // Additional freeze time per damage point
     [SerializeField] float maxFreezeTime = 0.3f;
 
     private Coroutine hitStopCoroutine;

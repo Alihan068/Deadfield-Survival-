@@ -23,7 +23,6 @@ public class RangedParticleAttack : MonoBehaviour {
         if (particleSys == null) return;  
         emissionModule.rateOverTime = statsManager.attackSpeed;
         mainModule.startSpeedMultiplier = statsManager.projectileSpeed;
-        mainModule.startSizeMultiplier = statsManager.projectileSize;
         shapeModule.randomDirectionAmount = statsManager.spread / 100;
 
     }

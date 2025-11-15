@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel;
 using TMPro;
 using Unity.Cinemachine;
@@ -25,6 +25,8 @@ public class HealthManager : MonoBehaviour {
 
     [SerializeField] Slider healthSlider;
     [SerializeField] TextMeshProUGUI healthText;
+
+    DifficuıltyManager difficuıltyManager;
     //[SerializeField] Image healthFill;
 
     AudioSource audioSource;
@@ -53,6 +55,8 @@ public class HealthManager : MonoBehaviour {
             playerController = GetComponent<PlayerController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
+        } else {
+            statsManager.maxHealth = statsManager.maxHealth * difficuıltyManager.enemyHealthMultiplier; 
         }
 
     }
@@ -102,7 +106,7 @@ public class HealthManager : MonoBehaviour {
         healthSlider.value = statsManager.currentHealth;
     }
     public void UpdateMaxHp() {
-        statsManager.baseHealth = statsManager.maxHealth + statsManager.extraHealth;
+        statsManager.baseMaxHealth = statsManager.maxHealth + statsManager.extraHealth;
     }
 
     IEnumerator TakeDamageEffects() {

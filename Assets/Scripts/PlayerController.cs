@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour {
 
     public bool canAttack = true;
     [SerializeField] bool isDashing = true;
-    bool playerCollision = true;
 
     public Weapon weapon;
 
@@ -82,7 +81,7 @@ public class PlayerController : MonoBehaviour {
         if (vector.sqrMagnitude > 1f) {
             vector.Normalize();
         }
-        vector *= statsManager.moveSpeed;
+        vector *= statsManager.baseSpeed;
 
         rb2d.linearVelocity = vector;
 
@@ -119,7 +118,7 @@ public class PlayerController : MonoBehaviour {
         //Debug.Log("DashCoroutine");
         statsManager.canMove = false;
         isDashing = true;
-        playerCollision = false;
+        //playerCollision = false;
         currentDashTime = startDashTime; // Reset the dash timer.
 
         while (currentDashTime > 0f) {

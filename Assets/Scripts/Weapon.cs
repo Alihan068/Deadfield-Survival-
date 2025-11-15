@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour {
 
     [SerializeField] float armor = 1f;
     [SerializeField] float strength = 1f;
-    [SerializeField] float intelligence = 1f;
+    //[SerializeField] float intelligence = 1f;
     [SerializeField] float haste = 1f;
 
     int animIndex = 1;

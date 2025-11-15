@@ -20,15 +20,12 @@ public enum TargetStat {
     maxHealth,
     baseRange,
     strength,
-    intelligence,
-    vitality,
     armor,
     playerSize,
     haste,
 
     // General Offensive
-    armorPen,
-    dodgeChance,
+    evasion,
     explosionSize,
     explosionDamage,
     baseDamage,
@@ -44,25 +41,26 @@ public enum TargetStat {
 
     // Melee Attributes
     meleeSwipeAngle,
-    meleeDamage,
-    meleeAttackSpeed,
+    attackSpeed,
     parryCooldown,
-    weaponSize,
+    size,
     slowestAttackSPeedPerSecond,
 
     // Ranged Attributes
-    rangedSpeed,
-    rangedDamage,
     projectileAmount,
     weaponBurst,
     projectileSpeed,
-    projectileSize,
     spread,
 
     // DOT Attributes
     burnDamage,
     poisonDamage,
-    diseaseDamage
+    diseaseDamage,
+
+    //Enemy Difficulity Attributes
+    enemyDamageMultiplier,
+    enemyHealthMultiplier,
+    enemySpeedMultiplier,
 }
 
 

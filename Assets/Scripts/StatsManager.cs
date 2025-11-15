@@ -7,6 +7,8 @@ using static UnityEngine.ParticleSystem;
 
 public class StatsManager : MonoBehaviour {
 
+    DifficuıltyManager difficultyManager;
+
     public bool isPlayer;
     //public int playerIndex = 0;
     public bool canCollectItems = false;
@@ -18,28 +20,24 @@ public class StatsManager : MonoBehaviour {
     public bool triggersHitStop = false;
 
     [Header("Movement")]
-    public float moveSpeed = 5f;
+    public float baseSpeed = 5f;
     public float dashCooldown = 1f;
 
     [Header("Base Stats")]
-    public float baseHealth = 100f;
-    public float currentHealth = 100f;
+    public float baseMaxHealth = 100f;
+    [HideInInspector] public float currentHealth = 100f;
     public float extraHealth = 0f;
-    public float maxHealth;
+    [HideInInspector] public float maxHealth;
     public float baseRange = 1f;
     [Tooltip("Effects Knockback-KnockbackResistance")]
-
-    public float armor = 1f;
     public float playerSize = 1f;
     public float haste = 1f;
 
     [Header("General Offensive")]
     public float attackSpeed = 1f;
     public float slowestAttackSPeedPerSecond = 5f;
-    public float armorPen = 1f;
     public float evasion = 1f;
-    public float explosionSize = 1f;
-    public float explosionDamage = 1f;
+    public float size = 1f;
     public float baseDamage = 1f;
 
     [Header("Knockback Attributes")]
@@ -47,20 +45,16 @@ public class StatsManager : MonoBehaviour {
     public float baseAppliedKnockback = 10f;
     public float knockbackStagger = 0.15f;
 
-    [Header("General Defensive")]
+    [Header("Defensive")]
+    public float armor = 1f;
     public float damageReduction = 1f;
     public float stunResistance = 1f;
     public float debufResistance = 1f;
-
-    [Header("Melee Attributes")]
     public float parryCooldown = 1f;
-    public float weaponSize = 1f;
 
     [Header("Ranged Attributes")]
     public float projectileAmount = 1f;
-    public float weaponBurst = 1f;
     public float projectileSpeed = 1f;
-    public float projectileSize = 1f;
     public float spread = 1f;
 
     [Header("DOT Attributes")]
@@ -68,8 +62,14 @@ public class StatsManager : MonoBehaviour {
     public float poisonDamage = 1f;
     public float diseaseDamage = 1f;
 
+    void Awake() {
+        difficultyManager = FindFirstObjectByType<DifficuıltyManager>();
+    }
+
     private float AdjustStat(float currentValue, float value, bool isPercentage, bool ifIncrease) {
         float modifier = ifIncrease ? 1f : -1f;
+
+
 
         if (isPercentage) {
             // Mevcut değerin yüzdesi kadar artış veya azalış uygular
@@ -116,21 +116,12 @@ public class StatsManager : MonoBehaviour {
                 haste = AdjustStat(haste, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
-            // General Offensive
-            case TargetStat.armorPen:
-                armorPen = AdjustStat(armorPen, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.dodgeChance:
+            case TargetStat.evasion:
                 evasion = AdjustStat(evasion, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.explosionSize:
-                explosionSize = AdjustStat(explosionSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.explosionDamage:
-                explosionDamage = AdjustStat(explosionDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                size = AdjustStat(size, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.baseDamage:
@@ -159,16 +150,12 @@ public class StatsManager : MonoBehaviour {
                 debufResistance = AdjustStat(debufResistance, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
-            case TargetStat.meleeAttackSpeed:
+            case TargetStat.attackSpeed:
                 attackSpeed = AdjustStat(attackSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.parryCooldown:
                 parryCooldown = AdjustStat(parryCooldown, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.weaponSize:
-                weaponSize = AdjustStat(weaponSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.slowestAttackSPeedPerSecond:
@@ -179,16 +166,8 @@ public class StatsManager : MonoBehaviour {
                 projectileAmount = AdjustStat(projectileAmount, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
-            case TargetStat.weaponBurst:
-                weaponBurst = AdjustStat(weaponBurst, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
             case TargetStat.projectileSpeed:
                 projectileSpeed = AdjustStat(projectileSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                break;
-
-            case TargetStat.projectileSize:
-                projectileSize = AdjustStat(projectileSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.spread:
@@ -207,6 +186,17 @@ public class StatsManager : MonoBehaviour {
             case TargetStat.diseaseDamage:
                 diseaseDamage = AdjustStat(diseaseDamage, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
+
+            case TargetStat.enemyDamageMultiplier:
+                difficultyManager.enemyDamageMultiplier = AdjustStat(difficultyManager.enemyDamageMultiplier, effect.effectValue, false, effect.ifIncrease);
+                break;
+            case TargetStat.enemyHealthMultiplier:
+                difficultyManager.enemyHealthMultiplier = AdjustStat(difficultyManager.enemyHealthMultiplier, effect.effectValue, false, effect.ifIncrease);
+                break;
+            case TargetStat.enemySpeedMultiplier:
+                difficultyManager.enemySpeedMultiplier = AdjustStat(difficultyManager.enemySpeedMultiplier, effect.effectValue, false, effect.ifIncrease);
+                break;
+
         }
     }
 

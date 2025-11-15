@@ -125,7 +125,7 @@ public class EnemyController : MonoBehaviour {
 
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+            rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
         
     }
 
@@ -142,7 +142,7 @@ public class EnemyController : MonoBehaviour {
             weaponAnimator.SetBool("isAttacking", false);
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+            rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
         }
     }
 
@@ -203,7 +203,7 @@ public class EnemyController : MonoBehaviour {
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return null;
         //Debug.Log("Charge!");
-        rb2d.linearVelocity = (direction.normalized * statsManager.moveSpeed * chargeSpeed);
+        rb2d.linearVelocity = (direction.normalized * statsManager.baseSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
         rb2d.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(chargeCooldown);
@@ -225,14 +225,14 @@ public class EnemyController : MonoBehaviour {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
         //rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = directionNormalized * statsManager.moveSpeed;
+        rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
     }
 
     void RunFromTarget(Transform target) {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
         //rb2d.MovePosition(rb2d.position + -directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = -directionNormalized * statsManager.moveSpeed;
+        rb2d.linearVelocity = -directionNormalized * statsManager.baseSpeed;
     }
 
     void EnemyBaseStatImplementation(EnemyType enemyType) {

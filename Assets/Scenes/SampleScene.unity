@@ -1426,8 +1426,9 @@ GameObject:
   m_Component:
   - component: {fileID: 222774518}
   - component: {fileID: 222774517}
+  - component: {fileID: 222774519}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: EnemyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1450,9 +1451,14 @@ MonoBehaviour:
   minSpawnDistance: 10
   maxSpawnDistance: 15
   spawnDelay: 1
-  spawnCount: 30
-  enemyCountText: {fileID: 100169260}
   maxEnemyCount: 50
+  mapBounds: {fileID: 0}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  wallCheckRadius: 1
+  maxSpawnTries: 15
+  enemyCountText: {fileID: 100169260}
   enemyCount: 0
   pauseEnemySpawn: 0
 --- !u!4 &222774518
@@ -1470,6 +1476,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &222774519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222774516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218ce8935b6667342addb0dfb375b280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: "Assembly-CSharp::Difficu\u0131ltyManager"
+  enemyHealthMultiplier: 1
+  enemyDamageMultiplier: 1
+  enemySpeedMultiplier: 1
+  enemyArmodMultiplier: 1
 --- !u!1 &229692738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4035,7 +4057,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitStopManager
   baseFreezeTime: 0.05
-  damageMultiplier: 0
   maxFreezeTime: 0.3
 --- !u!4 &1020281752
 Transform:

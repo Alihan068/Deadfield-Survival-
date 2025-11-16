@@ -12,19 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cbd4cbe5aebe642be8b5e30f89fbe1, type: 3}
   m_Name: Pizza
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItemSO
-  itemRarity: 2
+  itemRarity: 3
   itemIcon: {fileID: 0}
-  itemName: 
+  description: 
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  baseDropWeight: 1
+  generateDefaultPrefab: 1
+  pickupSfx: {fileID: 0}
   itemEffects:
   - targetStat: 3
     effectValue: 5
     ifIncrease: 1
     ifPercentage: 0
+    customLabel: 
   - targetStat: 7
-    effectValue: 3
+    effectValue: 10
     ifIncrease: 1
     ifPercentage: 0
+    customLabel: 
   - targetStat: 21
-    effectValue: 3
+    effectValue: 5
     ifIncrease: 1
-    ifPercentage: 0
+    ifPercentage: 1
+    customLabel: 

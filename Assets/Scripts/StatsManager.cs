@@ -3,6 +3,7 @@ using System.Drawing;
 using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static UnityEngine.ParticleSystem;
 
 public class StatsManager : MonoBehaviour {
@@ -10,7 +11,6 @@ public class StatsManager : MonoBehaviour {
     DifficulityManager difficultyManager;
 
     public bool isPlayer;
-    //public int playerIndex = 0;
     public bool canCollectItems = false;
     public bool canMove = true;
     public bool canBeDamaged = true;
@@ -29,7 +29,7 @@ public class StatsManager : MonoBehaviour {
     public float extraHealth = 0f;
     [HideInInspector] public float maxHealth;
     public float baseRange = 1f;
-    [Tooltip("Effects Knockback-KnockbackResistance")]
+    [Tooltip("Affects knockback-related calculations.")]
     public float playerSize = 1f;
     public float haste = 1f;
     public float xpMultiplier = 1f;
@@ -37,8 +37,12 @@ public class StatsManager : MonoBehaviour {
     [Header("General Offensive")]
     public float attackSpeed = 1f;
     public float slowestAttackSPeedPerSecond = 5f;
-    public float evasion = 1f;
-    public float size = 1f;
+    public float evasion = 0f;
+
+    [FormerlySerializedAs("size")]
+    [Tooltip("Global/effect size multiplier for weapons, projectiles, AoE, etc.")]
+    public float effectSize = 1f;
+
     public float baseDamage = 1f;
 
     [Header("Knockback Attributes")]
@@ -47,16 +51,16 @@ public class StatsManager : MonoBehaviour {
     public float knockbackStagger = 0.15f;
 
     [Header("Defensive")]
-    public float armor = 1f;
-    public float damageReduction = 1f;
-    public float stunResistance = 1f;
-    public float debufResistance = 1f;
-    public float parryCooldown = 1f;
+    public float armor = 5f;
+    public float damageReduction = 0f;
+    public float stunResistance = 0f;
+    public float debufResistance = 0f;
+    public float parryCooldown = 3f;
 
     [Header("Ranged Attributes")]
     public float projectileAmount = 1f;
     public float projectileSpeed = 1f;
-    public float spread = 1f;
+    public float spread = 0f;
 
     [Header("DOT Attributes")]
     public float burnDamage = 1f;
@@ -71,11 +75,9 @@ public class StatsManager : MonoBehaviour {
         float modifier = ifIncrease ? 1f : -1f;
 
         if (isPercentage) {
-            // Apply increase/decrease as a percentage of the current value
             return currentValue * (1f + modifier * (value / 100f));
         }
         else {
-            // Apply a flat increase/decrease
             return currentValue + (modifier * value);
         }
     }
@@ -149,6 +151,11 @@ public class StatsManager : MonoBehaviour {
                 baseDamage = Mathf.Max(0f, baseDamage);
                 break;
 
+            case TargetStat.size:
+                effectSize = AdjustStat(effectSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                effectSize = Mathf.Max(0f, effectSize);
+                break;
+
             // Knockback Attributes
             case TargetStat.baseAppliedKnockback:
                 baseAppliedKnockback = AdjustStat(baseAppliedKnockback, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
@@ -178,7 +185,6 @@ public class StatsManager : MonoBehaviour {
 
             case TargetStat.attackSpeed:
                 attackSpeed = AdjustStat(attackSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
-                // Attacks per second must not be 0 or negative
                 attackSpeed = Mathf.Max(0.01f, attackSpeed);
                 break;
 
@@ -260,7 +266,6 @@ public class StatsManager : MonoBehaviour {
             var healthManager = GetComponent<HealthManager>();
             if (healthManager != null) {
                 healthManager.UpdateMaxHp();
-                // Ensure currentHealth does not exceed maxHealth after max updates
                 if (maxHealth > 0f) {
                     currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
                 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,16 +7,15 @@ using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour {
     [Header("Pickup Popup")]
-    [SerializeField] private GameObject popupRoot;          // Parent panel
-    [SerializeField] private Image popupIcon;               // Item image
-    [SerializeField] private TextMeshProUGUI popupText;     // Description
+    [SerializeField] private GameObject popupRoot;
+    [SerializeField] private Image popupIcon;
+    [SerializeField] private TextMeshProUGUI popupText;
     [SerializeField] private float popupDuration = 1.5f;
 
     [Header("Pause/Tutorial")]
     [SerializeField] private GameObject tutorialCanvas;
     [SerializeField] private GameObject mainCanvas;
     [SerializeField] private InputActionReference pauseAction;
-
 
     private Coroutine popupRoutine;
     private bool gameStarted = false;
@@ -28,7 +27,6 @@ public class UIManager : MonoBehaviour {
 
         if (tutorialCanvas != null)
             tutorialCanvas.SetActive(true);
-        //if (mainCanvas != null) mainCanvas.SetActive(false);
 
         TogglePause(false);
     }
@@ -52,8 +50,8 @@ public class UIManager : MonoBehaviour {
             gameStarted = true;
             if (tutorialCanvas != null) {
                 tutorialCanvas.SetActive(false);
-                if (mainCanvas!= null && !mainCanvas.activeInHierarchy)
-                mainCanvas.SetActive(true);
+                if (mainCanvas != null && !mainCanvas.activeInHierarchy)
+                    mainCanvas.SetActive(true);
             }
 
             TogglePause(true);
@@ -77,7 +75,8 @@ public class UIManager : MonoBehaviour {
         if (itemSO == null || itemSO.itemEffects == null || itemSO.itemEffects.Count == 0)
             return;
 
-        string title = string.IsNullOrEmpty(itemSO.itemName) ? itemSO.name : itemSO.itemName;
+        // Artık isim direkt ScriptableObject adından geliyor
+        string title = itemSO.name;
 
         List<string> parts = new List<string>();
         foreach (var effect in itemSO.itemEffects) {
@@ -88,7 +87,11 @@ public class UIManager : MonoBehaviour {
                 ? (effect.effectValue.ToString("0") + "%")
                 : effect.effectValue.ToString("0.##");
 
-            parts.Add($"{sign}{value} {effect.targetStat}");
+            string statLabel = string.IsNullOrEmpty(effect.customLabel)
+                ? effect.targetStat.ToString()
+                : effect.customLabel;
+
+            parts.Add($"{sign}{value} {statLabel}");
         }
 
         string body = string.Join(", ", parts);

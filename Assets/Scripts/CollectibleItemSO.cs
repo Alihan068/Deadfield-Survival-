@@ -1,7 +1,6 @@
-using System.Collections;
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum ItemRarity {
     common,
@@ -44,7 +43,7 @@ public enum TargetStat {
     meleeSwipeAngle,
     attackSpeed,
     parryCooldown,
-    size,
+    size,                     // Global / effect size (StatsManager.effectSize)
     slowestAttackSPeedPerSecond,
 
     // Ranged Attributes
@@ -58,12 +57,11 @@ public enum TargetStat {
     poisonDamage,
     diseaseDamage,
 
-    //Enemy Difficulity Attributes
+    // Enemy Difficulty Attributes
     enemyDamageMultiplier,
     enemyHealthMultiplier,
     enemySpeedMultiplier,
 }
-
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create ItemSO")]
 public class CollectibleItemSO : ScriptableObject {
@@ -71,7 +69,21 @@ public class CollectibleItemSO : ScriptableObject {
 
     [Header("Visuals")]
     public Sprite itemIcon;
-    public string itemName;
+    [TextArea]
+    public string description;
+    [Tooltip("Default color for rarity-based visuals (particles, outline, etc.)")]
+    public Color rarityColor = Color.white;
+
+    [Header("Loot Defaults")]
+    [Tooltip("Base weight for this item when added to loot tables.")]
+    public float baseDropWeight = 1f;
+
+    [Tooltip("If false, the ItemPrefabGenerator will skip prefab generation for this item.")]
+    public bool generateDefaultPrefab = true;
+
+    [Header("Audio")]
+    [Tooltip("Optional pickup SFX played when this item is collected.")]
+    public AudioClip pickupSfx;
 
     [Serializable]
     public class ItemEffect {
@@ -79,8 +91,25 @@ public class CollectibleItemSO : ScriptableObject {
         public float effectValue;
         public bool ifIncrease = true;
         public bool ifPercentage = false;
+
+        [Tooltip("Optional label shown in UI instead of raw TargetStat name. Leave empty to use enum name.")]
+        public string customLabel;
     }
 
     public List<ItemEffect> itemEffects = new List<ItemEffect>();
-}
 
+    private void OnValidate() {
+        if (baseDropWeight < 0f)
+            baseDropWeight = 0f;
+
+        if (itemEffects != null) {
+            foreach (var effect in itemEffects) {
+                if (effect == null) continue;
+
+                if (effect.ifPercentage) {
+                    effect.effectValue = Mathf.Clamp(effect.effectValue, -1000f, 1000f);
+                }
+            }
+        }
+    }
+}

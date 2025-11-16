@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItemSO
   itemRarity: 0
   itemIcon: {fileID: -1824137744, guid: b96cafd382b4e69449f99c4357080573, type: 3}
-  itemName: Dagger
+  description: 
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  baseDropWeight: 1
+  generateDefaultPrefab: 1
+  pickupSfx: {fileID: 0}
   itemEffects:
-  - targetStat: 22
+  - targetStat: 19
     effectValue: 5
     ifIncrease: 1
     ifPercentage: 1
+    customLabel: 

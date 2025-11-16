@@ -12,21 +12,27 @@ public class EnemySpawner : MonoBehaviour {
     [SerializeField] int maxEnemyCount = 50;
 
     [Header("Map & Collision")]
-    [SerializeField] Collider2D mapBounds;          // Haritayı kapsayan Box/Composite collider (isTrigger olabilir)
-    [SerializeField] LayerMask wallMask;            // Katı duvar layer’ı
-    [SerializeField] float wallCheckRadius = 1f;    // Enemy boyuna göre ayarla
-    [SerializeField] int maxSpawnTries = 15;        // Sonsuz döngüye girmesin
+    [SerializeField] Collider2D mapBounds;
+    [SerializeField] LayerMask wallMask;
+    [SerializeField] float wallCheckRadius = 1f;
+    [SerializeField] int maxSpawnTries = 15;
 
     [Header("UI")]
     [SerializeField] TextMeshProUGUI enemyCountText;
 
     Transform target;
-    public float enemyCount = 0f;
+    public int enemyCount = 0;
     public bool pauseEnemySpawn = false;
+
+    Coroutine spawnCoroutine;
 
     void Start() {
         target = FindFirstObjectByType<PlayerController>().transform;
-        StartCoroutine(SpawnEnemyAtRandomPos());
+
+        if (spawnCoroutine == null) {
+            spawnCoroutine = StartCoroutine(SpawnEnemyAtRandomPos());
+        }
+
         if (enemyCountText != null)
             enemyCountText.text = ": " + enemyCount;
     }
@@ -37,7 +43,13 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     IEnumerator SpawnEnemyAtRandomPos() {
-        while (!pauseEnemySpawn && enemyCount < maxEnemyCount) {
+        var wait = new WaitForSeconds(spawnDelay);
+
+        while (true) {
+            if (pauseEnemySpawn || enemyCount >= maxEnemyCount || EnemyPrefabs == null || EnemyPrefabs.Length == 0) {
+                yield return wait;
+                continue;
+            }
 
             Vector2 spawnPos;
             bool found = TryGetValidSpawnPosition(out spawnPos);
@@ -51,7 +63,7 @@ public class EnemySpawner : MonoBehaviour {
                 enemyCount++;
             }
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return wait;
         }
     }
 
@@ -74,7 +86,7 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     bool IsInsideMap(Vector2 pos) {
-        if (mapBounds == null) return true;  // atanmadıysa kontrol etme
+        if (mapBounds == null) return true;
         return mapBounds.OverlapPoint(pos);
     }
 

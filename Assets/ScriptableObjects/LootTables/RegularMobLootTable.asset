@@ -15,17 +15,28 @@ MonoBehaviour:
   frequency: 1
   entries:
   - Rarity: 0
-    collectibleItem: []
+    collectibleItem:
+    - {fileID: 1380223013823789291, guid: 933a470deb40069409ea6d34c4196d23, type: 3}
+    - {fileID: 5610407214207721628, guid: a6d66adf9f92ea74eb4e31cdd7779c00, type: 3}
+    - {fileID: 2646500142450838466, guid: bd519e763f9c5bb49a1886364512a6dc, type: 3}
+    - {fileID: 4705406120770355964, guid: 4b1889893e449d84f81dd6f1bda214f7, type: 3}
     weight: 50
   - Rarity: 1
-    collectibleItem: []
+    collectibleItem:
+    - {fileID: 5540976022150966964, guid: 5281e977a27e3e24c8237abd4089a4f2, type: 3}
+    - {fileID: 3632380881306029502, guid: 1aab4ebfa7ab0474d91c747827364a7d, type: 3}
     weight: 34.5
   - Rarity: 2
-    collectibleItem: []
+    collectibleItem:
+    - {fileID: 1858246297839374995, guid: 160e68fca032abd4984b6d389eabce0c, type: 3}
+    - {fileID: 6717776314280838867, guid: cd5bb66bfd7187b43a85231b62c730e9, type: 3}
     weight: 10
   - Rarity: 3
-    collectibleItem: []
+    collectibleItem:
+    - {fileID: 5231584095822210946, guid: e8a2f5e6244536547b407c858b6f0f86, type: 3}
+    - {fileID: 4645577912167815821, guid: 306cd2fb6988e1b43ae2ac7cb8158a3a, type: 3}
     weight: 5
   - Rarity: 4
-    collectibleItem: []
+    collectibleItem:
+    - {fileID: 2743022089906329784, guid: 2e20d961e963ca34d9ec6cd0a8bc0407, type: 3}
     weight: 0.5

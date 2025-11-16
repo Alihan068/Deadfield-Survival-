@@ -50,10 +50,14 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
     public bool destroyAfterOpen = false;
     public float destroyDelay = 0.5f;
 
-    private bool isOpened = false;
-    private DifficulityManager difficulityManager;
+    [Header("Spawn Timing")]
+    [Tooltip("Delay between each item dropping out of the chest.")]
+    public float dropInterval = 0.3f;
 
-    private void Awake() {
+     bool isOpened = false;
+     DifficulityManager difficulityManager;
+
+     void Awake() {
         difficulityManager = FindFirstObjectByType<DifficulityManager>();
 
         if (chestSpriteRenderer == null)
@@ -72,7 +76,9 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
 
         isOpened = true;
 
-        TryDropLoot();
+        // Spawn loot with delay between items
+        StartCoroutine(TryDropLootWithDelay());
+
         UpdateVisualOnOpen();
         ApplyOpeningEffects();
         HandlePostOpenLifecycle();
@@ -93,7 +99,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         // FX or SFX can be added here in future
     }
 
-    private void UpdateVisualOnOpen() {
+     void UpdateVisualOnOpen() {
         if (chestSpriteRenderer != null && openedSprite != null)
             chestSpriteRenderer.sprite = openedSprite;
 
@@ -101,55 +107,60 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
             interactionCollider.enabled = false;
     }
 
-    private void HandlePostOpenLifecycle() {
+     void HandlePostOpenLifecycle() {
         if (destroyAfterOpen)
             Destroy(gameObject, destroyDelay);
     }
 
-    private void TryDropLoot() {
+     System.Collections.IEnumerator TryDropLootWithDelay() {
         List<WeightedObject> activeList = GetActiveWeightedList();
         if (activeList == null || activeList.Count == 0)
-            return;
+            yield break;
 
         float effectiveFrequency = GetEffectiveFrequency();
         if (effectiveFrequency <= 0f)
-            return;
+            yield break;
 
         if (Random.value > effectiveFrequency)
-            return;
+            yield break;
 
         int dropsToSpawn = GetDropCount();
         if (dropsToSpawn <= 0)
-            return;
+            yield break;
 
         for (int i = 0; i < dropsToSpawn; i++) {
             float totalWeight = CalculateTotalWeight(activeList);
             if (totalWeight <= 0f)
-                return;
+                yield break;
 
             if (!TryGetRandomWeightedObject(activeList, totalWeight, out WeightedObject selectedEntry))
-                return;
+                yield break;
 
             GameObject prefab = selectedEntry.GetRandomPrefab();
             if (prefab == null)
                 continue;
 
             Vector3 spawnPos = GetSpawnPosition();
-            GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+            Quaternion spawnRot = Quaternion.identity;
 
-            if (usePhysicsImpulse)
+            GameObject instance = SpawnLootObject(prefab, spawnPos, spawnRot);
+            if (usePhysicsImpulse) {
                 ApplyImpulse(instance);
+            }
+
+            if (dropInterval > 0f)
+                yield return new WaitForSeconds(dropInterval);
         }
     }
 
-    private List<WeightedObject> GetActiveWeightedList() {
+     List<WeightedObject> GetActiveWeightedList() {
         if (lootTable != null && lootTable.entries != null && lootTable.entries.Count > 0)
             return lootTable.entries;
 
         return weightedObjectList;
     }
 
-    private float GetEffectiveFrequency() {
+     float GetEffectiveFrequency() {
         float baseFreq = lootTable != null ? lootTable.frequency : frequency;
         baseFreq = Mathf.Clamp01(baseFreq);
 
@@ -164,7 +175,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         return Mathf.Clamp01(modified);
     }
 
-    private int GetDropCount() {
+     int GetDropCount() {
         if (dropCountWeights == null || dropCountWeights.Count == 0) {
             if (maxDrops < minDrops)
                 maxDrops = minDrops;
@@ -189,14 +200,15 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
                 continue;
 
             cumulative += entry.weight;
-            if (pick <= cumulative)
+            if (pick <= cumulative) {
                 return entry.count;
+            }
         }
 
         return dropCountWeights[dropCountWeights.Count - 1].count;
     }
 
-    private float CalculateTotalWeight(List<WeightedObject> list) {
+     float CalculateTotalWeight(List<WeightedObject> list) {
         float sum = 0f;
 
         for (int i = 0; i < list.Count; i++) {
@@ -207,8 +219,9 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
 
             float w = Mathf.Max(0f, entry.weight);
 
-            if (useRarityWeightMultipliers)
+            if (useRarityWeightMultipliers) {
                 w *= GetRarityMultiplier(entry.Rarity);
+            }
 
             sum += w;
         }
@@ -216,7 +229,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         return sum;
     }
 
-    private bool TryGetRandomWeightedObject(List<WeightedObject> list, float totalWeight, out WeightedObject selected) {
+     bool TryGetRandomWeightedObject(List<WeightedObject> list, float totalWeight, out WeightedObject selected) {
         float pick = Random.Range(0f, totalWeight);
         float cumulative = 0f;
 
@@ -227,9 +240,9 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
                 continue;
 
             float w = Mathf.Max(0f, entry.weight);
-
-            if (useRarityWeightMultipliers)
+            if (useRarityWeightMultipliers) {
                 w *= GetRarityMultiplier(entry.Rarity);
+            }
 
             if (w <= 0f)
                 continue;
@@ -245,7 +258,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         return false;
     }
 
-    private float GetRarityMultiplier(ItemRarity rarity) {
+     float GetRarityMultiplier(ItemRarity rarity) {
         if (!useRarityWeightMultipliers || rarityWeightMultipliers == null || rarityWeightMultipliers.Count == 0)
             return 1f;
 
@@ -259,7 +272,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         return 1f;
     }
 
-    private Vector3 GetSpawnPosition() {
+     Vector3 GetSpawnPosition() {
         if (!useRandomSpread || dropRadius <= 0f)
             return transform.position;
 
@@ -267,7 +280,14 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         return transform.position + (Vector3)offset;
     }
 
-    private void ApplyImpulse(GameObject instance) {
+     GameObject SpawnLootObject(GameObject prefab, Vector3 position, Quaternion rotation) {
+        if (prefab == null)
+            return null;
+
+        return Instantiate(prefab, position, rotation);
+    }
+
+     void ApplyImpulse(GameObject instance) {
         if (instance == null)
             return;
 
@@ -282,7 +302,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
         rb2D.AddForce(dir * impulseForce, ForceMode2D.Impulse);
     }
 
-    private void OnValidate() {
+     void OnValidate() {
         frequency = Mathf.Clamp01(frequency);
 
         if (minDrops < 0)
@@ -319,7 +339,7 @@ public class ChestLootOnOpen : MonoBehaviour, IInteractable {
     }
 
     // Temporary direct input (test only). Remove when PlayerInteractor is active.
-    private void OnTriggerStay2D(Collider2D other) {
+     void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)) {
             OpenChest();
         }

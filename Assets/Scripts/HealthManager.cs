@@ -33,7 +33,7 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] AudioClip[] takeDamageSounds;
     [SerializeField] AudioClip[] deathSounds;
 
-    private void OnEnable() {
+     void OnEnable() {
         statsManager = GetComponent<StatsManager>();
         weapon = GetComponentInChildren<Weapon>();
         audioSource = GetComponent<AudioSource>();
@@ -60,7 +60,7 @@ public class HealthManager : MonoBehaviour {
             customTime = GetComponent<CustomTime>();
         }
     }
-    private void Update() {
+     void Update() {
 
         if (statsManager.isPlayer) {
             PlayerHealthBarUpdate();

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4645577912167815821
+--- !u!1 &7739155884169300192
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1958961802510884029}
-  - component: {fileID: 6665605307078322202}
-  - component: {fileID: 1990092378972508163}
-  - component: {fileID: 6728502334082785015}
-  - component: {fileID: 3441781254749006435}
+  - component: {fileID: 6075601602479468418}
+  - component: {fileID: 7181972553973655393}
+  - component: {fileID: 2363727036041492371}
+  - component: {fileID: 126568998180477411}
+  - component: {fileID: 2140945723420919552}
   m_Layer: 9
   m_Name: epic_Item_Ruby
   m_TagString: Untagged
@@ -20,29 +20,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1958961802510884029
+--- !u!4 &6075601602479468418
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645577912167815821}
+  m_GameObject: {fileID: 7739155884169300192}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4335091303745224772}
+  - {fileID: 5631239376388745105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6665605307078322202
+--- !u!212 &7181972553973655393
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645577912167815821}
+  m_GameObject: {fileID: 7739155884169300192}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -94,13 +94,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1990092378972508163
+--- !u!61 &2363727036041492371
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645577912167815821}
+  m_GameObject: {fileID: 7739155884169300192}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -140,14 +140,14 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!50 &6728502334082785015
+--- !u!50 &126568998180477411
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645577912167815821}
+  m_GameObject: {fileID: 7739155884169300192}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -167,26 +167,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3441781254749006435
+--- !u!114 &2140945723420919552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645577912167815821}
+  m_GameObject: {fileID: 7739155884169300192}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 264ff829d0e307642b812c8ea18a9e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
   itemSO: {fileID: 11400000, guid: a0d48ec87fa66e7488ce0f4e7eb081da, type: 2}
---- !u!1001 &694805085063112867
+--- !u!1001 &8911226703869316982
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1958961802510884029}
+    m_TransformParent: {fileID: 6075601602479468418}
     m_Modifications:
     - target: {fileID: 3858783446869272807, guid: e5ffdb7ed4692b246abe7c7f6774da3e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -232,13 +232,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShineParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 5395667326707731302, guid: e5ffdb7ed4692b246abe7c7f6774da3e, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5ffdb7ed4692b246abe7c7f6774da3e, type: 3}
---- !u!4 &4335091303745224772 stripped
+--- !u!4 &5631239376388745105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3858783446869272807, guid: e5ffdb7ed4692b246abe7c7f6774da3e, type: 3}
-  m_PrefabInstance: {fileID: 694805085063112867}
+  m_PrefabInstance: {fileID: 8911226703869316982}
   m_PrefabAsset: {fileID: 0}

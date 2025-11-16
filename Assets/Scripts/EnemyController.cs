@@ -250,14 +250,14 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+     void OnCollisionEnter2D(Collision2D collision) {
         if (collision != null && collision.gameObject.CompareTag("Player") && canDamageOnTouch) {
             collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
             collision.gameObject.GetComponent<HealthManager>().ApplyKnockback(statsManager.knockBack, transform);
         }
     }
 
-    //private void OnDrawGizmos() {
+    // void OnDrawGizmos() {
     //    Gizmos.color = Color.yellow;
     //    Gizmos.DrawWireSphere(this.transform.position, statsManager.baseRange);
     //}

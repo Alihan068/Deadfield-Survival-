@@ -663,7 +663,7 @@ MonoBehaviour:
   chargeSpeed: 2
   chargeCooldown: 1
   chargeTime: 2
-  canDamageOnTouch: 0
+  canDamageOnTouch: 1
   characterSprite: {fileID: 6282207474666347761}
   weaponAnimator: {fileID: 974074049334810001}
 --- !u!114 &2007725369526588859

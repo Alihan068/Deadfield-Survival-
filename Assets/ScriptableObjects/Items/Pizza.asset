@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pizza
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItemSO
   itemRarity: 3
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: c5efe437a3425564a9021a187d541e46, type: 3}
   description: 
   rarityColor: {r: 1, g: 1, b: 1, a: 1}
   baseDropWeight: 1

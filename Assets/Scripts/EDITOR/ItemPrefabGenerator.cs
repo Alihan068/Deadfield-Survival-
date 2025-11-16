@@ -1,29 +1,25 @@
-﻿// This editor tool generates item prefabs from CollectibleItemSO assets.
-// It organizes prefabs into rarity-based subfolders, avoids duplicates,
-// and configures basic physics and visual settings.
-
-using System.IO;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 public class ItemPrefabGenerator : EditorWindow {
-    [SerializeField] private DefaultAsset itemSOFolder;
-    [SerializeField] private DefaultAsset outputFolder;
-    [SerializeField] private GameObject basePrefab;
-    [SerializeField] private GameObject shineParticlePrefab;
+    [SerializeField]  DefaultAsset itemSOFolder;
+    [SerializeField]  DefaultAsset outputFolder;
+    [SerializeField]  GameObject basePrefab;
+    [SerializeField]  GameObject shineParticlePrefab;
 
     // Physics layer used by interactable items
-    private const string ItemLayerName = "Interactable";
+     const string ItemLayerName = "Interactable";
 
     // Sorting layer used by item sprites
-    private const string ItemSortingLayerName = "Items";
+     const string ItemSortingLayerName = "Items";
 
     [MenuItem("Tools/Item Prefab Generator")]
     public static void OpenWindow() {
         GetWindow<ItemPrefabGenerator>("Item Prefab Generator");
     }
 
-    private void OnGUI() {
+     void OnGUI() {
         EditorGUILayout.LabelField("Source and Output", EditorStyles.boldLabel);
         itemSOFolder = (DefaultAsset)EditorGUILayout.ObjectField("Item SO Folder", itemSOFolder, typeof(DefaultAsset), false);
         outputFolder = (DefaultAsset)EditorGUILayout.ObjectField("Output Prefab Folder", outputFolder, typeof(DefaultAsset), false);
@@ -41,7 +37,7 @@ public class ItemPrefabGenerator : EditorWindow {
         GUI.enabled = true;
     }
 
-    private void GeneratePrefabs() {
+     void GeneratePrefabs() {
         string soFolderPath = AssetDatabase.GetAssetPath(itemSOFolder);
         string outFolderPath = AssetDatabase.GetAssetPath(outputFolder);
 
@@ -70,7 +66,7 @@ public class ItemPrefabGenerator : EditorWindow {
         Debug.Log("Item prefab generation completed.");
     }
 
-    private void CreateItemPrefab(CollectibleItemSO itemSO, string rootOutputPath) {
+     void CreateItemPrefab(CollectibleItemSO itemSO, string rootOutputPath) {
         // Ensure rarity-based subfolder exists
         string rarityFolderPath = EnsureRaritySubfolder(rootOutputPath, itemSO.itemRarity);
 
@@ -124,6 +120,13 @@ public class ItemPrefabGenerator : EditorWindow {
             shineInstance.transform.localPosition = Vector3.zero;
             shineInstance.transform.localRotation = Quaternion.identity;
             shineInstance.transform.localScale = Vector3.one;
+
+            // Force shine particle color based on item rarity
+            var shinePs = shineInstance.GetComponent<ParticleSystem>();
+            if (shinePs != null) {
+                var main = shinePs.main;
+                main.startColor = GetRarityColorForItem(itemSO);
+            }
         }
 
         // Ensure CollectibleItem exists and bind SO
@@ -132,6 +135,9 @@ public class ItemPrefabGenerator : EditorWindow {
             collectible = go.AddComponent<CollectibleItem>();
 
         collectible.ItemSO = itemSO;
+
+        // Also enforce correct color on any particle under the root
+        ApplyRarityColorToParticles(go, itemSO);
 
         // Apply physics layer for interactables
         int itemLayer = LayerMask.NameToLayer(ItemLayerName);
@@ -153,12 +159,43 @@ public class ItemPrefabGenerator : EditorWindow {
         DestroyImmediate(go);
     }
 
-    private string GetItemName(CollectibleItemSO itemSO) {
+     void ApplyRarityColorToParticles(GameObject root, CollectibleItemSO itemSO) {
+        if (root == null || itemSO == null) return;
+
+        ParticleSystem ps = root.GetComponentInChildren<ParticleSystem>();
+        if (ps == null) return;
+
+        var main = ps.main;
+        main.startColor = GetRarityColorForItem(itemSO);
+    }
+
+     Color GetRarityColorForItem(CollectibleItemSO so) {
+        if (so == null)
+            return Color.white;
+
+        // If SO has a custom color set, use it
+        if (so.rarityColor.a > 0f)
+            return so.rarityColor;
+
+        // Fallback to default mapping (mirrors CollectibleItem.GetDefaultRarityColor)
+        switch (so.itemRarity) {
+            case ItemRarity.common: return Color.white;
+            case ItemRarity.uncommon: return new Color(0.4f, 1f, 0.4f);
+            case ItemRarity.rare: return Color.cyan;
+            case ItemRarity.epic: return new Color(0.7f, 0.3f, 1f);
+            case ItemRarity.legendary: return new Color(1f, 0.5f, 0f);
+            case ItemRarity.mythic: return Color.magenta;
+            case ItemRarity.unique: return Color.red;
+            default: return Color.gray;
+        }
+    }
+
+     string GetItemName(CollectibleItemSO itemSO) {
         string cleanName = itemSO.name.Replace(" ", "");
         return $"{itemSO.itemRarity}_Item_{cleanName}";
     }
 
-    private string EnsureRaritySubfolder(string rootOutputPath, ItemRarity rarity) {
+     string EnsureRaritySubfolder(string rootOutputPath, ItemRarity rarity) {
         rootOutputPath = rootOutputPath.Replace("\\", "/");
         string rarityFolderName = rarity.ToString();
         string rarityFolderPath = Path.Combine(rootOutputPath, rarityFolderName).Replace("\\", "/");
@@ -170,7 +207,7 @@ public class ItemPrefabGenerator : EditorWindow {
         return rarityFolderPath;
     }
 
-    private bool PrefabAlreadyExists(string rarityFolderPath, CollectibleItemSO itemSO) {
+     bool PrefabAlreadyExists(string rarityFolderPath, CollectibleItemSO itemSO) {
         string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { rarityFolderPath });
 
         foreach (string guid in prefabGuids) {

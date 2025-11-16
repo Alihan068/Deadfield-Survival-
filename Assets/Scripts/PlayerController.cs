@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
         isDashing = false;        
     }
 
-    private void OnDrawGizmos() {
+     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         if (statsManager != null) {
             Gizmos.DrawWireSphere(transform.position, statsManager.baseRange);

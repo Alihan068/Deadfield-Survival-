@@ -355,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 4483519715111807543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.83, y: 1.44, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -380,7 +380,7 @@ MonoBehaviour:
   chargeSpeed: 3.5
   chargeCooldown: 1
   chargeTime: 1.5
-  canDamageOnTouch: 0
+  canDamageOnTouch: 1
   characterSprite: {fileID: 5305484925875630483}
   weaponAnimator: {fileID: 7042469461478051067}
 --- !u!114 &6389128907580676326
@@ -482,14 +482,7 @@ MonoBehaviour:
   guaranteedPrefabs: []
   lootTable: {fileID: 11400000, guid: 8951f3c4271b15248a8fd10ce3e6b4bf, type: 2}
   frequency: 1
-  weightedObjectList:
-  - Rarity: 0
-    collectibleItem: []
-    weight: 60
-  - Rarity: 1
-    collectibleItem:
-    - {fileID: 1864176695898375068, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
-    weight: 40
+  weightedObjectList: []
   minDrops: 1
   maxDrops: 1
   dropCountWeights: []

@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    private void OnDisable() {
+     void OnDisable() {
         if (attackCoroutine != null) {
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos() {
+     void OnDrawGizmos() {
         Gizmos.color = Color.blue;
         if (statsManager != null) {
             Gizmos.DrawWireSphere(weapon.transform.position, statsManager.baseRange);

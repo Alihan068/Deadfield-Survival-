@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using static UnityEngine.ParticleSystem;
 
 public class StatsManager : MonoBehaviour {
-
+    //TODO: Make stats unused stats useful. Balance existing stats
     DifficulityManager difficultyManager;
 
     public bool isPlayer;
@@ -71,7 +71,7 @@ public class StatsManager : MonoBehaviour {
         difficultyManager = FindFirstObjectByType<DifficulityManager>();
     }
 
-    private float AdjustStat(float currentValue, float value, bool isPercentage, bool ifIncrease) {
+     float AdjustStat(float currentValue, float value, bool isPercentage, bool ifIncrease) {
         float modifier = ifIncrease ? 1f : -1f;
 
         if (isPercentage) {
@@ -87,7 +87,6 @@ public class StatsManager : MonoBehaviour {
         bool touchedHealth = false;
 
         switch (effect.targetStat) {
-            // Base Stats
             case TargetStat.currentHealth:
                 currentHealth = AdjustStat(currentHealth, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 if (maxHealth > 0f) {

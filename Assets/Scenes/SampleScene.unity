@@ -1447,6 +1447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   EnemyPrefabs:
+  - {fileID: 4483519715111807543, guid: 13e9b3ea8ca265f4199896ca6677e260, type: 3}
+  - {fileID: 3228312248860382617, guid: a53e9ea83e2b078438afe6432dbdc21a, type: 3}
   - {fileID: 5798170528766396109, guid: 48970df46ea7db8469d2f314a85135c2, type: 3}
   minSpawnDistance: 5
   maxSpawnDistance: 10
@@ -32829,10 +32831,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 125125617335920664, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
-      propertyPath: m_Volume
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: m_Name
       value: Player
@@ -32901,14 +32899,6 @@ PrefabInstance:
     - target: {fileID: 1864176695898375068, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
       propertyPath: m_Name
       value: BasicLootChest
-      objectReference: {fileID: 0}
-    - target: {fileID: 8159794753438268292, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8159794753438268292, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
-      propertyPath: m_Size.y
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9144411448007007596, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
       propertyPath: m_LocalPosition.x

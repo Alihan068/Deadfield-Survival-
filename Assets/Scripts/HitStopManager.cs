@@ -3,14 +3,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitStopManager : MonoBehaviour {
-    public static HitStopManager Instance { get; private set; }
+    public static HitStopManager Instance { get;  set; }
 
     [Header("Hit Stop Settings")]
     [SerializeField] float baseFreezeTime = 0.05f;
     //[SerializeField] float damageMultiplier = 0.01f; // Additional freeze time per damage point
     [SerializeField] float maxFreezeTime = 0.3f;
 
-    private Coroutine hitStopCoroutine;
+     Coroutine hitStopCoroutine;
 
     void Awake() {
         if (Instance == null) {

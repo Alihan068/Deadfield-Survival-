@@ -45,7 +45,7 @@ public class RangedParticleAttack : MonoBehaviour {
     }
 
 
-    private void OnParticleCollision(GameObject other) {
+     void OnParticleCollision(GameObject other) {
         Debug.Log("HIT! " + other.name);
         if (other == null || other.layer == this.gameObject.layer) {
     #if UNITY_EDITOR

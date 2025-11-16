@@ -39,7 +39,7 @@ public class LootDropOnDeath : MonoBehaviour {
     public bool useLuckFrequencyModifier = true;
     public float luckFrequencyFactor = 0.01f;
 
-    private DifficulityManager difficultyManager;
+     DifficulityManager difficultyManager;
 
     void Awake() {
         difficultyManager = FindFirstObjectByType<DifficulityManager>();
@@ -50,7 +50,7 @@ public class LootDropOnDeath : MonoBehaviour {
         TryDropLoot();
     }
 
-    private void SpawnGuaranteedDrops() {
+     void SpawnGuaranteedDrops() {
         if (guaranteedPrefabs == null || guaranteedPrefabs.Count == 0)
             return;
 
@@ -67,7 +67,7 @@ public class LootDropOnDeath : MonoBehaviour {
         }
     }
 
-    private void TryDropLoot() {
+     void TryDropLoot() {
         var activeList = GetActiveWeightedList();
         if (activeList == null || activeList.Count == 0)
             return;
@@ -101,14 +101,14 @@ public class LootDropOnDeath : MonoBehaviour {
         }
     }
 
-    private List<WeightedObject> GetActiveWeightedList() {
+     List<WeightedObject> GetActiveWeightedList() {
         if (lootTable != null && lootTable.entries != null && lootTable.entries.Count > 0)
             return lootTable.entries;
 
         return weightedObjectList;
     }
 
-    private float GetEffectiveFrequency() {
+     float GetEffectiveFrequency() {
         float baseFreq = lootTable != null ? lootTable.frequency : frequency;
         baseFreq = Mathf.Clamp01(baseFreq);
 
@@ -125,7 +125,7 @@ public class LootDropOnDeath : MonoBehaviour {
     }
 
 
-    private int GetDropCount() {
+     int GetDropCount() {
         if (dropCountWeights == null || dropCountWeights.Count == 0) {
             if (maxDrops < minDrops)
                 maxDrops = minDrops;
@@ -156,7 +156,7 @@ public class LootDropOnDeath : MonoBehaviour {
         return dropCountWeights[dropCountWeights.Count - 1].count;
     }
 
-    private float CalculateTotalWeight(List<WeightedObject> list) {
+     float CalculateTotalWeight(List<WeightedObject> list) {
         float sum = 0f;
 
         foreach (var entry in list) {
@@ -173,7 +173,7 @@ public class LootDropOnDeath : MonoBehaviour {
         return sum;
     }
 
-    private bool TryGetRandomWeightedObject(List<WeightedObject> list, float totalWeight, out WeightedObject selected) {
+     bool TryGetRandomWeightedObject(List<WeightedObject> list, float totalWeight, out WeightedObject selected) {
         float pick = Random.Range(0f, totalWeight);
         float cumulative = 0f;
 
@@ -199,7 +199,7 @@ public class LootDropOnDeath : MonoBehaviour {
         return false;
     }
 
-    private float GetRarityMultiplier(ItemRarity rarity) {
+     float GetRarityMultiplier(ItemRarity rarity) {
         if (!useRarityWeightMultipliers || rarityWeightMultipliers == null)
             return 1f;
 
@@ -211,7 +211,7 @@ public class LootDropOnDeath : MonoBehaviour {
         return 1f;
     }
 
-    private Vector3 GetSpawnPosition() {
+     Vector3 GetSpawnPosition() {
         if (!useRandomSpread || dropRadius <= 0f)
             return transform.position;
 
@@ -219,7 +219,7 @@ public class LootDropOnDeath : MonoBehaviour {
         return transform.position + (Vector3)offset;
     }
 
-    private void ApplyImpulse(GameObject instance) {
+     void ApplyImpulse(GameObject instance) {
         if (instance == null)
             return;
 
@@ -234,7 +234,7 @@ public class LootDropOnDeath : MonoBehaviour {
         rb.AddForce(dir * impulseForce, ForceMode2D.Impulse);
     }
 
-    private void OnValidate() {
+     void OnValidate() {
         frequency = Mathf.Clamp01(frequency);
 
         if (minDrops < 0)

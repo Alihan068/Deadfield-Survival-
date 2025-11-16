@@ -2,18 +2,18 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class CollectibleItem : MonoBehaviour, IInteractable {
-    [SerializeField] private CollectibleItemSO itemSO;
+    [SerializeField]  CollectibleItemSO itemSO;
 
     public CollectibleItemSO ItemSO {
         get => itemSO;
         set => itemSO = value;
     }
 
-    private ParticleSystem particleSys;
-    private UIManager uiManager;
-    private AudioSource audioSource;
+     ParticleSystem particleSys;
+     UIManager uiManager;
+     AudioSource audioSource;
 
-    private void OnEnable() {
+     void OnEnable() {
         // Search also in children, so ShineParticle child is found
         particleSys = GetComponentInChildren<ParticleSystem>();
         uiManager = FindFirstObjectByType<UIManager>();
@@ -42,7 +42,7 @@ public class CollectibleItem : MonoBehaviour, IInteractable {
         return transform.position;
     }
 
-    private void ApplyEffects(StatsManager statsManager) {
+     void ApplyEffects(StatsManager statsManager) {
         if (itemSO == null) return;
 
         foreach (var effect in itemSO.itemEffects) {
@@ -51,12 +51,12 @@ public class CollectibleItem : MonoBehaviour, IInteractable {
         }
     }
 
-    private void PlayPickupUI() {
+     void PlayPickupUI() {
         if (uiManager != null)
             uiManager.ShowItemPickup(itemSO);
     }
 
-    private void PlayPickupSfx() {
+     void PlayPickupSfx() {
         if (itemSO.pickupSfx == null)
             return;
 
@@ -66,7 +66,7 @@ public class CollectibleItem : MonoBehaviour, IInteractable {
         audioSource.PlayOneShot(itemSO.pickupSfx);
     }
 
-    private void ApplyRarityVisual(CollectibleItemSO so) {
+     void ApplyRarityVisual(CollectibleItemSO so) {
         if (particleSys == null) return;
 
         Color rarityColor = so.rarityColor.a > 0f
@@ -77,7 +77,7 @@ public class CollectibleItem : MonoBehaviour, IInteractable {
         main.startColor = rarityColor;
     }
 
-    private Color GetDefaultRarityColor(ItemRarity rarity) {
+     Color GetDefaultRarityColor(ItemRarity rarity) {
         switch (rarity) {
             case ItemRarity.common: return Color.white;
             case ItemRarity.uncommon: return new Color(0.4f, 1f, 0.4f);

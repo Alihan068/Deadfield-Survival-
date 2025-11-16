@@ -7,21 +7,21 @@ using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour {
     [Header("Pickup Popup")]
-    [SerializeField] private GameObject popupRoot;
-    [SerializeField] private Image popupIcon;
-    [SerializeField] private TextMeshProUGUI popupText;
-    [SerializeField] private float popupDuration = 1.5f;
+    [SerializeField]  GameObject popupRoot;
+    [SerializeField]  Image popupIcon;
+    [SerializeField]  TextMeshProUGUI popupText;
+    [SerializeField]  float popupDuration = 1.5f;
 
     [Header("Pause/Tutorial")]
-    [SerializeField] private GameObject tutorialCanvas;
-    [SerializeField] private GameObject mainCanvas;
-    [SerializeField] private InputActionReference pauseAction;
+    [SerializeField]  GameObject tutorialCanvas;
+    [SerializeField]  GameObject mainCanvas;
+    [SerializeField]  InputActionReference pauseAction;
 
-    private Coroutine popupRoutine;
-    private bool gameStarted = false;
-    private bool isPaused = false;
+     Coroutine popupRoutine;
+     bool gameStarted = false;
+     bool isPaused = false;
 
-    private void Awake() {
+     void Awake() {
         if (popupRoot != null)
             popupRoot.SetActive(false);
 
@@ -31,21 +31,21 @@ public class UIManager : MonoBehaviour {
         TogglePause(false);
     }
 
-    private void OnEnable() {
+     void OnEnable() {
         if (pauseAction != null) {
             pauseAction.action.Enable();
             pauseAction.action.performed += OnPausePerformed;
         }
     }
 
-    private void OnDisable() {
+     void OnDisable() {
         if (pauseAction != null) {
             pauseAction.action.performed -= OnPausePerformed;
             pauseAction.action.Disable();
         }
     }
 
-    private void OnPausePerformed(InputAction.CallbackContext context) {
+     void OnPausePerformed(InputAction.CallbackContext context) {
         if (!gameStarted) {
             gameStarted = true;
             if (tutorialCanvas != null) {
@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour {
         popupRoutine = StartCoroutine(HidePickupPopup());
     }
 
-    private IEnumerator HidePickupPopup() {
+     IEnumerator HidePickupPopup() {
         yield return new WaitForSeconds(popupDuration);
         popupRoot.SetActive(false);
         popupRoutine = null;

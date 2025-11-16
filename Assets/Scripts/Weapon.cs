@@ -198,7 +198,7 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    private void OnDisable() {
+     void OnDisable() {
         if (isCoroutineRuning && coroutine != null) {
             StopCoroutine(coroutine);
             coroutine = null;
@@ -217,7 +217,7 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("Weapon")) return;
 
         HealthManager enemyHealthManager = collision.GetComponent<HealthManager>();

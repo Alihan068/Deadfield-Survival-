@@ -1,18 +1,26 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteractor : MonoBehaviour {
     [Header("Interaction Settings")]
-    [SerializeField] private float interactRadius = 2f;
-    [SerializeField] private LayerMask interactableMask;
+    [SerializeField]  float interactRadius = 2f;
+    [SerializeField]  LayerMask interactableMask;
+
+    [Header("Interaction Cooldown")]
+    [SerializeField]  float interactionCooldown = 0.1f;
 
     // Preallocated buffer to avoid GC allocations
-    private readonly Collider2D[] _overlapResults = new Collider2D[16];
+     readonly Collider2D[] _overlapResults = new Collider2D[16];
 
-    private Transform _origin;
-    private ContactFilter2D _contactFilter;
+     Transform _origin;
+     ContactFilter2D _contactFilter;
 
-    private void Awake() {
+    // Cooldown state
+     bool interactionLocked = false;
+     Coroutine interactionCooldownCoroutine;
+
+     void Awake() {
         _origin = transform;
 
         // Contact filter setup for OverlapCircle
@@ -23,7 +31,7 @@ public class PlayerInteractor : MonoBehaviour {
         };
     }
 
-    private void OnValidate() {
+     void OnValidate() {
         // Keep contact filter in sync when mask changes in inspector
         _contactFilter = new ContactFilter2D {
             useLayerMask = true,
@@ -33,17 +41,28 @@ public class PlayerInteractor : MonoBehaviour {
     }
 
     // Input System callback for "Interact" action
-    private void OnInteract(InputValue value) {
+     void OnInteract(InputValue value) {
         if (value.Get<float>() < 1f)
             return;
 
         TryInteract();
     }
 
-    private void TryInteract() {
+     void TryInteract() {
+        // Global interaction cooldown to prevent multiple interactables firing in the same press
+        if (interactionLocked)
+            return;
+
+        interactionLocked = true;
+
+        if (interactionCooldownCoroutine != null) {
+            StopCoroutine(interactionCooldownCoroutine);
+        }
+        interactionCooldownCoroutine = StartCoroutine(InteractionCooldownRoutine());
+
         Vector2 center = _origin.position;
 
-        // New API: OverlapCircle with ContactFilter2D instead of OverlapCircleNonAlloc
+        // OverlapCircle with ContactFilter2D
         int hitCount = Physics2D.OverlapCircle(
             center,
             interactRadius,
@@ -84,7 +103,13 @@ public class PlayerInteractor : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmosSelected() {
+     IEnumerator InteractionCooldownRoutine() {
+        yield return new WaitForSeconds(interactionCooldown);
+        interactionLocked = false;
+        interactionCooldownCoroutine = null;
+    }
+
+     void OnDrawGizmosSelected() {
         if (_origin == null)
             _origin = transform;
 

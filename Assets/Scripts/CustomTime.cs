@@ -11,21 +11,21 @@ public class CustomTime : MonoBehaviour {
     // For physics-based movement
     public float FixedDeltaTime => Time.fixedDeltaTime * timeScale;
 
-    private Rigidbody2D rb2d;
-    private Animator[] animators;
-    private Vector2 savedVelocity;
-    private float savedAngularVelocity;
-    private RigidbodyConstraints2D savedConstraints;
-    private bool wasFrozen = false;
+     Rigidbody2D rb2d;
+     Animator[] animators;
+     Vector2 savedVelocity;
+     float savedAngularVelocity;
+     RigidbodyConstraints2D savedConstraints;
+     bool wasFrozen = false;
 
 
     // Store pending knockback to apply after unfreeze
-    private float pendingKnockback = 0;
+     float pendingKnockback = 0;
     Vector2 pendingDirection = Vector2.zero;
-    private bool hasPendingKnockback = false;
+     bool hasPendingKnockback = false;
 
     // Reference to enemy controller if this is an enemy
-    private EnemyController enemyController;
+     EnemyController enemyController;
     HealthManager healthManager;
     StatsManager statsManager;
 
@@ -41,7 +41,7 @@ public class CustomTime : MonoBehaviour {
         }
 
     }
-    private void OnEnable() {
+     void OnEnable() {
         statsManager = GetComponent<StatsManager>();
 
         if (!statsManager.isPlayer) {

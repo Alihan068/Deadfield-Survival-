@@ -98,7 +98,7 @@ public class CollectibleItemSO : ScriptableObject {
 
     public List<ItemEffect> itemEffects = new List<ItemEffect>();
 
-    private void OnValidate() {
+     void OnValidate() {
         if (baseDropWeight < 0f)
             baseDropWeight = 0f;
 

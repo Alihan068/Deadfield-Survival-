@@ -20,7 +20,7 @@ public class StatsManager : MonoBehaviour {
     public bool triggersHitStop = false;
 
     [Header("Movement")]
-    public float baseSpeed = 5f;
+    public float baseSpeed = 1f;
     public float dashCooldown = 1f;
 
     [Header("Base Stats")]
@@ -32,6 +32,7 @@ public class StatsManager : MonoBehaviour {
     [Tooltip("Effects Knockback-KnockbackResistance")]
     public float playerSize = 1f;
     public float haste = 1f;
+    public float xpMultiplier = 1f;
 
     [Header("General Offensive")]
     public float attackSpeed = 1f;
@@ -120,8 +121,8 @@ public class StatsManager : MonoBehaviour {
                 evasion = AdjustStat(evasion, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
-            case TargetStat.explosionSize:
-                size = AdjustStat(size, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+            case TargetStat.xpMultiplier:
+                size = AdjustStat(xpMultiplier, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 break;
 
             case TargetStat.baseDamage:

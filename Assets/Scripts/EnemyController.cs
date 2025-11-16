@@ -67,7 +67,6 @@ public class EnemyController : MonoBehaviour {
         attackAnimHash = Animator.StringToHash(attackAnimName);
 
         enemySpawner = FindFirstObjectByType<EnemySpawner>();
-        enemySpawner.enemyCount++;
 
         audioSource = GetComponent<AudioSource>();
     }

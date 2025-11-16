@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 public enum ItemRarity {
     common,
-    //uncommon,
+    uncommon,
     rare,
-    //epic,
+    epic,
     legendary,
-    //mythic,
+    mythic,
     unique,
 }
 
@@ -26,7 +26,7 @@ public enum TargetStat {
 
     // General Offensive
     evasion,
-    explosionSize,
+    xpMultiplier,
     explosionDamage,
     baseDamage,
 

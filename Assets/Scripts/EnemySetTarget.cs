@@ -10,7 +10,7 @@ public class EnemySetTarget : MonoBehaviour {
         rangedParticle = GetComponentInChildren<RangedParticleAttack>();
         player = FindFirstObjectByType<PlayerController>();
         target = player.transform;
-        Debug.Log(target.transform);
+        //Debug.Log(target.transform);
     }
 
     // Update is called once per frame

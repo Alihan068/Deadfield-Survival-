@@ -26,7 +26,7 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] Slider healthSlider;
     [SerializeField] TextMeshProUGUI healthText;
 
-    DifficuıltyManager difficuıltyManager;
+    DifficuıltyManager difficulityManager;
     //[SerializeField] Image healthFill;
 
     AudioSource audioSource;
@@ -42,23 +42,23 @@ public class HealthManager : MonoBehaviour {
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
             enemySpawner = FindFirstObjectByType<EnemySpawner>();
+            difficulityManager = FindFirstObjectByType<DifficuıltyManager>();
+            statsManager.maxHealth = statsManager.maxHealth * difficulityManager.enemyHealthMultiplier;
         }
+        statsManager.currentHealth = statsManager.maxHealth;
     }
 
     void Start() {
         statsManager = GetComponent<StatsManager>();
         UpdateMaxHp();
-        statsManager.currentHealth = statsManager.maxHealth;
+        // statsManager.currentHealth = statsManager.maxHealth;
 
         if (statsManager.isPlayer) {
             PlayerHealthBarUpdate();
             playerController = GetComponent<PlayerController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
-        } else {
-            statsManager.maxHealth = statsManager.maxHealth * difficuıltyManager.enemyHealthMultiplier; 
         }
-
     }
     private void Update() {
 
@@ -105,10 +105,10 @@ public class HealthManager : MonoBehaviour {
         healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
         healthSlider.value = statsManager.currentHealth;
     }
-    public void UpdateMaxHp() {
-        statsManager.baseMaxHealth = statsManager.maxHealth + statsManager.extraHealth;
-    }
 
+    public void UpdateMaxHp() {
+        statsManager.maxHealth = statsManager.baseMaxHealth + statsManager.extraHealth;
+    }
     IEnumerator TakeDamageEffects() {
         //Debug.Log(this.name + "damageEffects");
         if (takeDamageSounds.Length > 0 && audioSource != null) {
@@ -145,6 +145,7 @@ public class HealthManager : MonoBehaviour {
         else {
             enemyController.StopAllCoroutines();
         }
+
         rb2d.linearVelocity = Vector2.zero;
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
@@ -158,11 +159,20 @@ public class HealthManager : MonoBehaviour {
         else {
             //Debug.Log(this.name + "Non hitstop knockback");
             StartCoroutine(KnockbackPause());
-            rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(0, Mathf.Clamp(knockbackStrCompare, 0, 10))
-                    + statsManager.baseAppliedKnockback * knockbackDirection, ForceMode2D.Impulse);
+
+            // Use the difference (amount - resistance) as the baseValue for the logarithmic scale
+            float clampedKnockback = Mathf.Clamp(knockbackStrCompare, 0f, 10f);
+            float scaledExtraKnockback = GeneralCalculations.LogarithmicScale(clampedKnockback, 10f);
+
+            // Base knockback + logarithmically scaled bonus
+            rb2d.AddForce(
+                knockbackDirection * (scaledExtraKnockback + statsManager.baseAppliedKnockback),
+                ForceMode2D.Impulse
+            );
         }
+
         //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
-        //rb2d.AddForce(knockbackDirection * GeneralCalculations.LogarithmicScale(knockbackStrCompare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
+        //rb2d.AddForce(knockbackDirection * GeneralCalculations...Compare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
 
         //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
     }
@@ -200,7 +210,7 @@ public class HealthManager : MonoBehaviour {
             Debug.LogWarning(this.name + "StatsManager Couldn't Found");
         }
 
-        GetComponent<DropLootOnDeath>().IfDestroy();
+        GetComponent<SpawnChestOnDeath>().IfDestroy();
         Destroy(gameObject, 0.5f);
 
     }

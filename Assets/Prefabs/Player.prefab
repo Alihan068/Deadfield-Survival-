@@ -169,41 +169,30 @@ MonoBehaviour:
   isUnstoppable: 0
   isKnocked: 0
   triggersHitStop: 1
-  moveSpeed: 2
+  baseSpeed: 2
   dashCooldown: 1
-  jumpCooldown: 1
+  baseMaxHealth: 100
   currentHealth: 0
   extraHealth: 10
   maxHealth: 100
   baseRange: 1
-  strength: 50
-  intelligence: 2
-  vitality: 5
-  armor: 1
   playerSize: 1
   haste: 1
-  armorPen: 1
-  dodgeChance: 1
-  explosionSize: 1
-  explosionDamage: 1
+  attackSpeed: 1
+  slowestAttackSPeedPerSecond: 5
+  evasion: 1
+  size: 1
   baseDamage: 30
+  knockBack: 5
   baseAppliedKnockback: 4
   knockbackStagger: 0.15
+  armor: 1
   damageReduction: 1
   stunResistance: 1
   debufResistance: 1
-  meleeSwipeAngle: 1
-  meleeDamage: 1
-  meleeAttackSpeed: 1
   parryCooldown: 1
-  weaponSize: 1
-  slowestAttackSPeedPerSecond: 5
-  rangedSpeed: 1
-  rangedDamage: 1
   projectileAmount: 1
-  weaponBurst: 1
   projectileSpeed: 1
-  projectileSize: 1
   spread: 1
   burnDamage: 1
   poisonDamage: 1
@@ -469,7 +458,6 @@ MonoBehaviour:
   projectileSpeed: 3
   armor: 1
   strength: 1
-  intelligence: 1
   haste: 1
   attackSounds:
   - {fileID: 8300000, guid: 7d116fefccf924a4fa763e8afcbdcb17, type: 3}
@@ -5720,7 +5708,6 @@ MonoBehaviour:
   projectileSpeed: 1
   armor: 1
   strength: 1
-  intelligence: 1
   haste: 1
   attackSounds:
   - {fileID: 8300000, guid: 9cfa0486e93148d4db119bdba989ec12, type: 3}

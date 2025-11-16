@@ -7,4 +7,5 @@ public class DifficuıltyManager : MonoBehaviour
     public float enemySpeedMultiplier = 1.0f;
     public float enemyArmodMultiplier = 1.0f;
    
+    public float playerLuck = 1.0f;
 }

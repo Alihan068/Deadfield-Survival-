@@ -89,22 +89,29 @@ public class CustomTime : MonoBehaviour {
                 rb2d.linearVelocity = Vector2.zero;
                 rb2d.angularVelocity = 0f;
 
-                rb2d.AddForce(pendingDirection * GeneralCalculations.LogarithmicScale(0, pendingKnockback)
-                    + statsManager.baseAppliedKnockback * pendingDirection, ForceMode2D.Impulse);
+                // Same logarithmic handling as in HealthManager
+                float clampedPendingKnockback = Mathf.Clamp(pendingKnockback, 0f, 10f);
+                float scaledExtraPendingKnockback = GeneralCalculations.LogarithmicScale(clampedPendingKnockback, 10f);
+
+                rb2d.AddForce(
+                    pendingDirection * (scaledExtraPendingKnockback + statsManager.baseAppliedKnockback),
+                    ForceMode2D.Impulse
+                );
 
                 //rb2d.linearVelocity = pendingKnockback; // Set velocity directly
 
                 if (healthManager.knockbackCoroutine != null) {
                     StopCoroutine(healthManager.knockbackCoroutine);
                 }
-                healthManager.knockbackCoroutine = StartCoroutine(healthManager.KnockbackPause());
+                healthManager.knockbackCoroutine = healthManager.StartCoroutine(healthManager.KnockbackPause());
 
-                pendingKnockback = 0f;
+                // Clear pending knockback
+                pendingKnockback = 0;
                 pendingDirection = Vector2.zero;
                 hasPendingKnockback = false;
             }
             else {
-                // No knockback, restore saved velocity
+                // Restore saved velocity if there is no pending knockback
                 rb2d.linearVelocity = savedVelocity;
                 rb2d.angularVelocity = savedAngularVelocity;
             }

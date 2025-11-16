@@ -20,7 +20,7 @@ public static class GeneralCalculations{
             return baseValue;
 
         float scaled = maxLimit * (1f - Mathf.Exp(-baseValue / maxLimit));
-        Debug.Log(1 + ((scaled) / 100));
+        //Debug.Log(1 + ((scaled) / 100));
         return 1 + ((scaled) / 100);
     }
 }

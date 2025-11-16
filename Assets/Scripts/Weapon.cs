@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum WeaponType {
@@ -151,7 +152,7 @@ public class Weapon : MonoBehaviour {
     void PlayWeaponAttackSound() {
         if (attackSounds.Length > 0 && audioSource != null) {
             AudioClip clip = attackSounds[Random.Range(0, attackSounds.Length)];
-            if (clip != null) {
+            if (clip != null && audioSource.enabled) {
                 audioSource.PlayOneShot(clip);
             }
         }

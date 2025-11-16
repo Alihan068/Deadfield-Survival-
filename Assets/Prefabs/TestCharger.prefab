@@ -331,7 +331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3704783428534497577}
   - component: {fileID: 4072885690011270209}
-  - component: {fileID: 2732188594895348259}
   - component: {fileID: 6389128907580676326}
   - component: {fileID: 7370764666283399509}
   - component: {fileID: 8431421342939060964}
@@ -339,6 +338,7 @@ GameObject:
   - component: {fileID: 916888310564293318}
   - component: {fileID: 6181032886201425623}
   - component: {fileID: 3343083325484547124}
+  - component: {fileID: 5957257558158349519}
   m_Layer: 7
   m_Name: TestCharger
   m_TagString: Untagged
@@ -383,39 +383,6 @@ MonoBehaviour:
   canDamageOnTouch: 0
   characterSprite: {fileID: 5305484925875630483}
   weaponAnimator: {fileID: 7042469461478051067}
---- !u!114 &2732188594895348259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4483519715111807543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ad974ee3b852314d9a7694231a5d8a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DropLootOnDeath
-  frequency: 0.5
-  weightedObjectList:
-  - Rarity: 0
-    collectibleItem:
-    - {fileID: 3691913859926390162, guid: e82f1f536ead60844946392c77d5efaf, type: 3}
-    - {fileID: 8166104013971958066, guid: 7758672418d044349bc1e8af8e5bbaac, type: 3}
-    weight: 60
-  - Rarity: 1
-    collectibleItem:
-    - {fileID: 6724307884660093185, guid: d83bdc26921490d4ea3600995b3aa047, type: 3}
-    - {fileID: 3255986066996561094, guid: 2fc9773da4c3ecd44bddbdbb8ff1b5e8, type: 3}
-    weight: 34
-  - Rarity: 2
-    collectibleItem:
-    - {fileID: 3892177424060801760, guid: 12db3d8dbdbab8e4883ad90b70418099, type: 3}
-    - {fileID: 3364432162663144731, guid: c62dec39fc5c3b344bf55a92ccd9380f, type: 3}
-    weight: 6
-  - Rarity: 3
-    collectibleItem:
-    - {fileID: 8413388792260504269, guid: dc99549d084dbe34985f4d8914913ed5, type: 3}
-    weight: 1
 --- !u!114 &6389128907580676326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +447,7 @@ MonoBehaviour:
   baseRange: 4
   playerSize: 1
   haste: 1
+  xpMultiplier: 1
   attackSpeed: 1
   slowestAttackSPeedPerSecond: 5
   evasion: 1
@@ -696,6 +664,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5957257558158349519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483519715111807543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfde4009137713f499412fd27d59479c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnChestOnDeath
+  chestPrefab: {fileID: 0}
+  chestSpawnRadius: 0.3
+  useRandomOffset: 1
+  usePhysicsImpulse: 1
+  impulseForce: 2
+  baseChestDropChance: 0.3
+  useLuckModifier: 1
+  luckChanceFactor: 0.01
+  currentLuck: 0
 --- !u!1 &4967231842733490134
 GameObject:
   m_ObjectHideFlags: 0

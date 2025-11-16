@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DifficuıltyManager : MonoBehaviour
+public class DifficulityManager : MonoBehaviour
 {
     public float enemyHealthMultiplier = 1.0f;
     public float enemyDamageMultiplier = 1.0f;

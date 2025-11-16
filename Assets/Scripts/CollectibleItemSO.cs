@@ -23,6 +23,7 @@ public enum TargetStat {
     armor,
     playerSize,
     haste,
+    luck,
 
     // General Offensive
     evasion,

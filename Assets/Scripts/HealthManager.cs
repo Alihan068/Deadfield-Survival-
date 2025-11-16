@@ -26,7 +26,7 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] Slider healthSlider;
     [SerializeField] TextMeshProUGUI healthText;
 
-    DifficuıltyManager difficulityManager;
+    DifficulityManager difficulityManager;
     //[SerializeField] Image healthFill;
 
     AudioSource audioSource;
@@ -42,7 +42,7 @@ public class HealthManager : MonoBehaviour {
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
             enemySpawner = FindFirstObjectByType<EnemySpawner>();
-            difficulityManager = FindFirstObjectByType<DifficuıltyManager>();
+            difficulityManager = FindFirstObjectByType<DifficulityManager>();
             statsManager.maxHealth = statsManager.maxHealth * difficulityManager.enemyHealthMultiplier;
         }
         statsManager.currentHealth = statsManager.maxHealth;
@@ -210,7 +210,7 @@ public class HealthManager : MonoBehaviour {
             Debug.LogWarning(this.name + "StatsManager Couldn't Found");
         }
 
-        GetComponent<SpawnChestOnDeath>().IfDestroy();
+        GetComponent<LootDropOnDeath>().IfDestroy();
         Destroy(gameObject, 0.5f);
 
     }

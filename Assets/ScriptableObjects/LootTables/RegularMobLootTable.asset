@@ -16,4 +16,16 @@ MonoBehaviour:
   entries:
   - Rarity: 0
     collectibleItem: []
-    weight: 0
+    weight: 50
+  - Rarity: 1
+    collectibleItem: []
+    weight: 34
+  - Rarity: 2
+    collectibleItem: []
+    weight: 10
+  - Rarity: 3
+    collectibleItem: []
+    weight: 5
+  - Rarity: 4
+    collectibleItem: []
+    weight: 1

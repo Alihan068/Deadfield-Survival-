@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2409049884484485672}
   - component: {fileID: 3983726944471534155}
   - component: {fileID: 6082280766061193559}
+  - component: {fileID: 2600829194118308682}
   - component: {fileID: 6404845291246215501}
   - component: {fileID: 4545211926809570616}
   - component: {fileID: 5618176630043808493}
@@ -117,6 +118,22 @@ MonoBehaviour:
   healthText: {fileID: 0}
   takeDamageSounds: []
   deathSounds: []
+--- !u!114 &2600829194118308682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850094097060810468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7491ba08497e0a844b543c3527953b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+  interactRadius: 1
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &6404845291246215501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,10 +195,11 @@ MonoBehaviour:
   baseRange: 1
   playerSize: 1
   haste: 1
+  xpMultiplier: 1
   attackSpeed: 1
   slowestAttackSPeedPerSecond: 5
   evasion: 1
-  size: 1
+  effectSize: 1
   baseDamage: 30
   knockBack: 5
   baseAppliedKnockback: 4

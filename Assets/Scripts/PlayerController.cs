@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
         moveInput = value.Get<Vector2>();
     }
     void OnDash(InputValue value) {
-        Debug.Log("ShiftInput");
+        //Debug.Log("ShiftInput");
         if (isAlive && statsManager.canMove && customTime.timeScale > 0) {
             StartCoroutine(Dash());
         }

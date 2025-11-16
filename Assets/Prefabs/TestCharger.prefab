@@ -334,11 +334,11 @@ GameObject:
   - component: {fileID: 6389128907580676326}
   - component: {fileID: 7370764666283399509}
   - component: {fileID: 8431421342939060964}
+  - component: {fileID: 5957257558158349519}
   - component: {fileID: 486690860947549054}
   - component: {fileID: 916888310564293318}
   - component: {fileID: 6181032886201425623}
   - component: {fileID: 3343083325484547124}
-  - component: {fileID: 5957257558158349519}
   m_Layer: 7
   m_Name: TestCharger
   m_TagString: Untagged
@@ -451,7 +451,7 @@ MonoBehaviour:
   attackSpeed: 1
   slowestAttackSPeedPerSecond: 5
   evasion: 1
-  size: 1
+  effectSize: 1
   baseDamage: 1
   knockBack: 5
   baseAppliedKnockback: 2
@@ -467,6 +467,41 @@ MonoBehaviour:
   burnDamage: 1
   poisonDamage: 1
   diseaseDamage: 1
+--- !u!114 &5957257558158349519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483519715111807543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfde4009137713f499412fd27d59479c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnChestOnDeath
+  guaranteedPrefabs: []
+  lootTable: {fileID: 11400000, guid: 8951f3c4271b15248a8fd10ce3e6b4bf, type: 2}
+  frequency: 1
+  weightedObjectList:
+  - Rarity: 0
+    collectibleItem: []
+    weight: 60
+  - Rarity: 1
+    collectibleItem:
+    - {fileID: 1864176695898375068, guid: 25634a9b3f6fe8145ab604d5b5642cf4, type: 3}
+    weight: 40
+  minDrops: 1
+  maxDrops: 1
+  dropCountWeights: []
+  dropRadius: 0.5
+  useRandomSpread: 1
+  usePhysicsImpulse: 1
+  impulseForce: 2
+  useRarityWeightMultipliers: 0
+  rarityWeightMultipliers: []
+  externalDropRateModifier: 0
+  useLuckFrequencyModifier: 1
+  luckFrequencyFactor: 0.01
 --- !u!70 &486690860947549054
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -664,27 +699,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5957257558158349519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4483519715111807543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfde4009137713f499412fd27d59479c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnChestOnDeath
-  chestPrefab: {fileID: 0}
-  chestSpawnRadius: 0.3
-  useRandomOffset: 1
-  usePhysicsImpulse: 1
-  impulseForce: 2
-  baseChestDropChance: 0.3
-  useLuckModifier: 1
-  luckChanceFactor: 0.01
-  currentLuck: 0
 --- !u!1 &4967231842733490134
 GameObject:
   m_ObjectHideFlags: 0

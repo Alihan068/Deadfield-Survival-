@@ -79,7 +79,7 @@ public class CustomTime : MonoBehaviour {
     public void Unfreeze() {
         timeScale = 1f;
 
-        if (rb2d != null && wasFrozen) {
+        if (rb2d != null && wasFrozen && gameObject.activeInHierarchy) {
             // Restore physics constraints
             rb2d.constraints = savedConstraints;
 

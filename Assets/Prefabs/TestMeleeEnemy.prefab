@@ -615,12 +615,12 @@ GameObject:
   - component: {fileID: 2007725369526588859}
   - component: {fileID: 7365257722722793717}
   - component: {fileID: 4036508397430527571}
+  - component: {fileID: -4146747294161757175}
   - component: {fileID: 3812033877247482487}
   - component: {fileID: 6446798802793032937}
   - component: {fileID: 1752609840817653052}
   - component: {fileID: 5688624800021743818}
   - component: {fileID: -5590581842828359016}
-  - component: {fileID: -4146747294161757175}
   m_Layer: 7
   m_Name: TestMeleeEnemy
   m_TagString: Untagged
@@ -738,7 +738,7 @@ MonoBehaviour:
   attackSpeed: 1
   slowestAttackSPeedPerSecond: 5
   evasion: 1
-  size: 1
+  effectSize: 1
   baseDamage: 3
   knockBack: 5
   baseAppliedKnockback: 5
@@ -754,6 +754,34 @@ MonoBehaviour:
   burnDamage: 1
   poisonDamage: 1
   diseaseDamage: 1
+--- !u!114 &-4146747294161757175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228312248860382617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfde4009137713f499412fd27d59479c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnChestOnDeath
+  guaranteedPrefabs: []
+  lootTable: {fileID: 11400000, guid: 8951f3c4271b15248a8fd10ce3e6b4bf, type: 2}
+  frequency: 1
+  weightedObjectList: []
+  minDrops: 1
+  maxDrops: 1
+  dropCountWeights: []
+  dropRadius: 0.5
+  useRandomSpread: 1
+  usePhysicsImpulse: 1
+  impulseForce: 2
+  useRarityWeightMultipliers: 0
+  rarityWeightMultipliers: []
+  externalDropRateModifier: 0
+  useLuckFrequencyModifier: 1
+  luckFrequencyFactor: 0.01
 --- !u!70 &3812033877247482487
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -973,27 +1001,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-4146747294161757175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3228312248860382617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfde4009137713f499412fd27d59479c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnChestOnDeath
-  chestPrefab: {fileID: 0}
-  chestSpawnRadius: 0.3
-  useRandomOffset: 1
-  usePhysicsImpulse: 1
-  impulseForce: 2
-  baseChestDropChance: 0.3
-  useLuckModifier: 1
-  luckChanceFactor: 0.01
-  currentLuck: 0
 --- !u!1 &4461559951270259284
 GameObject:
   m_ObjectHideFlags: 0

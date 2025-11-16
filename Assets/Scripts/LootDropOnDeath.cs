@@ -114,17 +114,16 @@ public class LootDropOnDeath : MonoBehaviour {
 
         float modified = baseFreq * (1f + externalDropRateModifier);
 
-        float luck = 0f;
-        if (difficultyManager != null) {
-            luck = difficultyManager.playerLuck;
-        }
+        if (useLuckFrequencyModifier && difficultyManager != null) {
+            float luck = Mathf.Max(0f, difficultyManager.playerLuck);
+            float luckBonus = luck * luckFrequencyFactor;   // örn: luck=1, factor=0.2 → +20%
 
-        if (useLuckFrequencyModifier) {
-            modified *= luck * luckFrequencyFactor;
+            modified *= (1f + luckBonus);
         }
 
         return Mathf.Clamp01(modified);
     }
+
 
     private int GetDropCount() {
         if (dropCountWeights == null || dropCountWeights.Count == 0) {

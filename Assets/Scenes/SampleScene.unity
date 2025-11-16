@@ -32139,6 +32139,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936008995}
   m_CullTransparentMesh: 1
+--- !u!1 &1947736889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+  m_PrefabInstance: {fileID: 1341912074475978107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1947736900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947736889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7491ba08497e0a844b543c3527953b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+  interactRadius: 2
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1984320966
 GameObject:
   m_ObjectHideFlags: 0
@@ -32478,7 +32499,7 @@ GameObject:
   - component: {fileID: 2041523916}
   - component: {fileID: 2041523915}
   - component: {fileID: 2041523914}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LootChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32569,11 +32590,10 @@ MonoBehaviour:
   rarityWeightMultipliers: []
   externalDropRateModifier: 0
   useLuckFrequencyModifier: 1
-  currentLuck: 0
   luckFrequencyFactor: 0.01
   chestSpriteRenderer: {fileID: 2041523914}
-  closedSprite: {fileID: 0}
-  openedSprite: {fileID: 0}
+  closedSprite: {fileID: 21300000, guid: 2b82618d9fa640f4c9c375d3cf39f408, type: 3}
+  openedSprite: {fileID: 21300000, guid: a71db7d7e03d52f4a8e65654ac79c0eb, type: 3}
   interactionCollider: {fileID: 0}
   destroyAfterOpen: 1
   destroyDelay: 1
@@ -33009,7 +33029,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 850094097060810468, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 1947736900}
   m_SourcePrefab: {fileID: 100100000, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

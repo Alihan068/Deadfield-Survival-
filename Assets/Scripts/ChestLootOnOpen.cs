@@ -3,26 +3,24 @@ using UnityEngine;
 
 [System.Serializable]
 public struct DropCountWeight {
-    public int count;     // how many items to drop
-    public float weight;  // probability weight
+    public int count;
+    public float weight;
 }
 
-public class ChestLootOnOpen : MonoBehaviour {
+public class ChestLootOnOpen : MonoBehaviour, IInteractable {
     [Header("Loot Source")]
     public LootTableSO lootTable;
 
     [Header("Local Loot Table (used if LootTable is null)")]
     [Range(0f, 1f)]
-    public float frequency = 1f;                // Base chance that the chest drops anything at all.
+    public float frequency = 1f;
     public List<WeightedObject> weightedObjectList = new List<WeightedObject>();
 
     [Header("Drop Amount (Fallback Min/Max)")]
-    [Tooltip("Used when DropCountWeights is empty. Random.Range(minDrops, maxDrops+1).")]
     public int minDrops = 1;
     public int maxDrops = 1;
 
     [Header("Drop Count Weights (Overrides Min/Max if not empty)")]
-    [Tooltip("If this list has entries with weight > 0, it overrides min/max logic.")]
     public List<DropCountWeight> dropCountWeights = new List<DropCountWeight>();
 
     [Header("Drop Positioning")]
@@ -38,96 +36,74 @@ public class ChestLootOnOpen : MonoBehaviour {
     public List<RarityWeightMultiplier> rarityWeightMultipliers = new List<RarityWeightMultiplier>();
 
     [Header("External Modifiers")]
-    [Tooltip("Additive modifier to the loot frequency. 0.25 = +25%, -0.5 = -50%.")]
     public float externalDropRateModifier = 0f;
 
     [Header("Luck")]
-    [Tooltip("If true, luck will increase the chance that the chest drops loot.")]
     public bool useLuckFrequencyModifier = true;
-
-    [Tooltip("How much each point of luck scales loot drop chance. 0.01 = +1% per luck.")]
     public float luckFrequencyFactor = 0.01f;
 
     [Header("Chest Visuals / State")]
-    [Tooltip("SpriteRenderer used to display the chest. If null, will try GetComponent<SpriteRenderer>().")]
     public SpriteRenderer chestSpriteRenderer;
-
-    [Tooltip("Sprite while chest is closed.")]
     public Sprite closedSprite;
-
-    [Tooltip("Sprite after chest is opened.")]
     public Sprite openedSprite;
-
-    [Tooltip("Collider used for interaction (e.g. trigger). Will be disabled after opening.")]
     public Collider2D interactionCollider;
-
-    [Tooltip("Destroy the chest GameObject after opening?")]
     public bool destroyAfterOpen = false;
-
-    [Tooltip("Delay before destroying chest after opening.")]
     public float destroyDelay = 0.5f;
 
     private bool isOpened = false;
+    private DifficulityManager difficulityManager;
 
-    DifficulityManager difficulityManager;
     private void Awake() {
-
         difficulityManager = FindFirstObjectByType<DifficulityManager>();
-        
-        if (chestSpriteRenderer == null) {
+
+        if (chestSpriteRenderer == null)
             chestSpriteRenderer = GetComponent<SpriteRenderer>();
-        }
 
-        if (interactionCollider == null) {
+        if (interactionCollider == null)
             interactionCollider = GetComponent<Collider2D>();
-        }
 
-        if (chestSpriteRenderer != null && closedSprite != null) {
+        if (chestSpriteRenderer != null && closedSprite != null)
             chestSpriteRenderer.sprite = closedSprite;
-        }
     }
 
-    /// <summary>
-    /// Call this to open the chest (e.g., player presses E or animation event).
-    /// </summary>
     public void OpenChest() {
         if (isOpened)
             return;
 
         isOpened = true;
 
-        // 1) Loot logic
         TryDropLoot();
-
-        // 2) Visual / state / FX logic
         UpdateVisualOnOpen();
         ApplyOpeningEffects();
         HandlePostOpenLifecycle();
     }
 
-    /// <summary>
-    /// Placeholder for opening effects (VFX, SFX, camera shake, etc.).
-    /// Not implemented yet; use this in the future.
-    /// </summary>
+    // IInteractable
+    public void Interact(GameObject interactor) {
+        // Key, stats etc. checks can be applied here in future
+        OpenChest();
+    }
+
+    // IInteractable
+    public Vector3 GetPosition() {
+        return transform.position;
+    }
+
     public void ApplyOpeningEffects() {
-        // Intentionally left empty for future use.
-        // Example: play sound, spawn particle, camera shake, etc.
+        // FX or SFX can be added here in future
     }
 
     private void UpdateVisualOnOpen() {
-        if (chestSpriteRenderer != null && openedSprite != null) {
+        if (chestSpriteRenderer != null && openedSprite != null)
             chestSpriteRenderer.sprite = openedSprite;
-        }
 
-        if (interactionCollider != null) {
+        if (interactionCollider != null)
             interactionCollider.enabled = false;
-        }
     }
 
     private void HandlePostOpenLifecycle() {
-        if (destroyAfterOpen) {
+        if (destroyAfterOpen)
             Destroy(gameObject, destroyDelay);
-        }
     }
 
     private void TryDropLoot() {
@@ -139,7 +115,6 @@ public class ChestLootOnOpen : MonoBehaviour {
         if (effectiveFrequency <= 0f)
             return;
 
-        // Roll once: does this chest drop anything at all?
         if (Random.value > effectiveFrequency)
             return;
 
@@ -160,12 +135,10 @@ public class ChestLootOnOpen : MonoBehaviour {
                 continue;
 
             Vector3 spawnPos = GetSpawnPosition();
-            Quaternion spawnRot = Quaternion.identity;
+            GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-            GameObject instance = SpawnLootObject(prefab, spawnPos, spawnRot);
-            if (usePhysicsImpulse) {
+            if (usePhysicsImpulse)
                 ApplyImpulse(instance);
-            }
         }
     }
 
@@ -182,15 +155,16 @@ public class ChestLootOnOpen : MonoBehaviour {
 
         float modified = baseFreq * (1f + externalDropRateModifier);
 
-        if (useLuckFrequencyModifier) {
-            modified *= difficulityManager.playerLuck * luckFrequencyFactor;
+        if (useLuckFrequencyModifier && difficulityManager != null) {
+            float luck = Mathf.Max(0f, difficulityManager.playerLuck);
+            float luckBonus = luck * luckFrequencyFactor;
+            modified *= (1f + luckBonus);
         }
 
         return Mathf.Clamp01(modified);
     }
 
     private int GetDropCount() {
-        // If no custom weights defined → use default min-max uniform distribution
         if (dropCountWeights == null || dropCountWeights.Count == 0) {
             if (maxDrops < minDrops)
                 maxDrops = minDrops;
@@ -215,9 +189,8 @@ public class ChestLootOnOpen : MonoBehaviour {
                 continue;
 
             cumulative += entry.weight;
-            if (pick <= cumulative) {
+            if (pick <= cumulative)
                 return entry.count;
-            }
         }
 
         return dropCountWeights[dropCountWeights.Count - 1].count;
@@ -234,9 +207,8 @@ public class ChestLootOnOpen : MonoBehaviour {
 
             float w = Mathf.Max(0f, entry.weight);
 
-            if (useRarityWeightMultipliers) {
+            if (useRarityWeightMultipliers)
                 w *= GetRarityMultiplier(entry.Rarity);
-            }
 
             sum += w;
         }
@@ -255,9 +227,9 @@ public class ChestLootOnOpen : MonoBehaviour {
                 continue;
 
             float w = Mathf.Max(0f, entry.weight);
-            if (useRarityWeightMultipliers) {
+
+            if (useRarityWeightMultipliers)
                 w *= GetRarityMultiplier(entry.Rarity);
-            }
 
             if (w <= 0f)
                 continue;
@@ -293,13 +265,6 @@ public class ChestLootOnOpen : MonoBehaviour {
 
         Vector2 offset = Random.insideUnitCircle * dropRadius;
         return transform.position + (Vector3)offset;
-    }
-
-    private GameObject SpawnLootObject(GameObject prefab, Vector3 position, Quaternion rotation) {
-        if (prefab == null)
-            return null;
-
-        return Instantiate(prefab, position, rotation);
     }
 
     private void ApplyImpulse(GameObject instance) {
@@ -353,7 +318,7 @@ public class ChestLootOnOpen : MonoBehaviour {
             luckFrequencyFactor = 0f;
     }
 
-    // Optional quick test: player presses E while in trigger to open chest.
+    // Temporary direct input (test only). Remove when PlayerInteractor is active.
     private void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)) {
             OpenChest();

@@ -19,7 +19,7 @@ MonoBehaviour:
     weight: 50
   - Rarity: 1
     collectibleItem: []
-    weight: 34
+    weight: 34.5
   - Rarity: 2
     collectibleItem: []
     weight: 10
@@ -28,4 +28,4 @@ MonoBehaviour:
     weight: 5
   - Rarity: 4
     collectibleItem: []
-    weight: 1
+    weight: 0.5

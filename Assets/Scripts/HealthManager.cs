@@ -91,9 +91,7 @@ public class HealthManager : MonoBehaviour
             damage *= difficulityManager.enemyDamageMultiplier;
         }
 
-        // EffectiveDamageReduction is in percent: -100..95
-        float reductionPercent = statsManager.EffectiveDamageReduction;
-        damage *= (1f - (reductionPercent / 100f));
+        damage = CalculatedResistance(damage);
 
         // Prevent negative damage in case of extreme values
         if (damage < 0f)
@@ -105,8 +103,13 @@ public class HealthManager : MonoBehaviour
     }
 
     //For more complex resistance logic if needed later
-    void CalculateResistance(float damage)
+    float CalculatedResistance(float rawDamage)
     {
+        float damage = rawDamage;
+        // EffectiveDamageReduction is in percent: -100..95
+        float reductionPercent = statsManager.EffectiveDamageReduction;
+        damage *= (1f - (reductionPercent / 100f));
+        return damage;
     }
 
     void TakeFinalDamage(float damage)

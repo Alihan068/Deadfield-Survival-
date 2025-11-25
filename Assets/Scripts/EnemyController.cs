@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyType {
+public enum EnemyType
+{
     MeleeChaser,
     MeleeWeapon,
     Ranged,
     Charger,
 }
-public class EnemyController : MonoBehaviour {
+
+public class EnemyController : MonoBehaviour
+{
 
     //[SerializeField] CollectibleItemSO baseStats;
     [SerializeField] EnemyType enemyType;
@@ -47,11 +50,13 @@ public class EnemyController : MonoBehaviour {
     Vector3 rotationToPlayer;
     float distanceToPlayer;
 
-    void Awake() {
+    void Awake()
+    {
         statsManager = GetComponent<StatsManager>();
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         statsManager = GetComponent<StatsManager>();
         healthManager = GetComponent<HealthManager>();
         customTime = GetComponent<CustomTime>();
@@ -71,41 +76,49 @@ public class EnemyController : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (!statsManager.canMove || statsManager.isKnocked || customTime.timeScale <= 0) return;
 
         CalculateDistanceToPlayer();
         EnemyMoveBehavior(enemyType);
-
     }
-    void CalculateDistanceToPlayer() {
+
+    void CalculateDistanceToPlayer()
+    {
         rotationToPlayer = (transform.position - playerController.transform.position).normalized;
         distanceToPlayer = Vector3.Distance(transform.position, playerController.transform.position);
     }
 
-    void FlipEnemyFacing() {
+    void FlipEnemyFacing()
+    {
         if (playerController == null || rb2d == null || characterSprite == null) return;
 
-        if (rb2d.linearVelocity.sqrMagnitude <= Mathf.Epsilon) {
+        if (rb2d.linearVelocity.sqrMagnitude <= Mathf.Epsilon)
+        {
             float dx = playerController.transform.position.x - transform.position.x;
-            if (Mathf.Abs(dx) > Mathf.Epsilon) {
+            if (Mathf.Abs(dx) > Mathf.Epsilon)
+            {
                 characterSprite.flipX = dx < 0f;
             }
         }
 
         float vx = rb2d.linearVelocity.x;
-        if (vx > Mathf.Epsilon) {
+        if (vx > Mathf.Epsilon)
+        {
             characterSprite.flipX = false;
         }
-        else if (vx < -Mathf.Epsilon) {
+        else if (vx < -Mathf.Epsilon)
+        {
             characterSprite.flipX = true;
         }
     }
 
-    void EnemyMoveBehavior(EnemyType enemyType) {
-        switch (enemyType) {
+    void EnemyMoveBehavior(EnemyType enemyType)
+    {
+        switch (enemyType)
+        {
             case EnemyType.MeleeChaser:
-
             case EnemyType.MeleeWeapon:
                 MeleeEnemyMovement();
                 FlipEnemyFacing();
@@ -118,100 +131,120 @@ public class EnemyController : MonoBehaviour {
                 FlipEnemyFacing();
                 break;
         }
-
-    }
-    void ChaserMovement() {
-
-            Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
-            Vector2 directionNormalized = toTarget.normalized;
-            rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
-        
     }
 
-    void MeleeEnemyMovement() {
-        if (distanceToPlayer <= statsManager.baseRange) {
+    void ChaserMovement()
+    {
+        Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
+        Vector2 directionNormalized = toTarget.normalized;
+        rb2d.linearVelocity = directionNormalized * statsManager.EffectiveMoveSpeed;
+    }
+
+    void MeleeEnemyMovement()
+    {
+        // Use effective range instead of raw baseRange
+        float effectiveRange = statsManager.EffectiveRange;
+
+        if (distanceToPlayer <= effectiveRange)
+        {
             rb2d.linearVelocity = Vector2.zero;
 
-            float attackSpeed = Mathf.Max(0.01f, statsManager.attackSpeed);
+            // Use effective attack speed for animation speed
+            float attackSpeed = statsManager.EffectiveAttackSpeed;
             weaponAnimator.SetFloat("attackSpeed", attackSpeed);
 
-            weaponAnimator.SetBool("isAttacking", true);  
+            weaponAnimator.SetBool("isAttacking", true);
         }
-        else if (distanceToPlayer > statsManager.baseRange) {
+        else if (distanceToPlayer > effectiveRange)
+        {
             weaponAnimator.SetBool("isAttacking", false);
             Vector2 toTarget = (Vector2)playerController.gameObject.transform.position - rb2d.position;
             Vector2 directionNormalized = toTarget.normalized;
-            rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
+            rb2d.linearVelocity = directionNormalized * statsManager.EffectiveMoveSpeed;
         }
     }
 
-    void RangedEnemyMovement() {
-        if (distanceToPlayer <= minRange - rangeBuffer) {
+    void RangedEnemyMovement()
+    {
+        float effectiveRange = statsManager.EffectiveRange;
+
+        if (distanceToPlayer <= minRange - rangeBuffer)
+        {
             weaponScript.SetFiring(false);
             rangedParticleAttack.ParticleSystemToggle(false);
             RunFromTarget(playerController.transform);
             FlipEnemyFacing();
             return;
         }
-        else if (distanceToPlayer >= statsManager.baseRange + rangeBuffer) {
+        else if (distanceToPlayer >= effectiveRange + rangeBuffer)
+        {
             weaponScript.SetFiring(false);
             rangedParticleAttack.ParticleSystemToggle(false);
             ChaseTarget(playerController.transform);
             FlipEnemyFacing();
             return;
         }
-        else {
+        else
+        {
             weaponScript.SetFiring(true);
-            rangedParticleAttack.ParticleSystemToggle(true);           
+            rangedParticleAttack.ParticleSystemToggle(true);
             rb2d.linearVelocity = Vector2.zero;
-
         }
     }
 
-    void AnimationHandler() {
-
-        if (rb2d.linearVelocity != Vector2.zero) {
+    void AnimationHandler()
+    {
+        if (rb2d.linearVelocity != Vector2.zero)
+        {
             bodyAnimator.SetBool("isWalking", true);
         }
-        else {
+        else
+        {
             bodyAnimator.SetBool("isWalking", false);
         }
     }
 
-    void ChargerMovement() {
-        if (distanceToPlayer <= statsManager.baseRange) {
-            if (chargeCoroutine == null) {
+    void ChargerMovement()
+    {
+        float effectiveRange = statsManager.EffectiveRange;
+
+        if (distanceToPlayer <= effectiveRange)
+        {
+            if (chargeCoroutine == null)
+            {
                 chargeCoroutine = StartCoroutine(ChargeTarget(playerController.transform));
             }
             return;
         }
-        else if (distanceToPlayer > statsManager.baseRange) {
-
+        else if (distanceToPlayer > effectiveRange)
+        {
             chargeCoroutine = null;
             ChaseTarget(playerController.transform);
-            
             return;
-
         }
     }
-    IEnumerator ChargeTarget(Transform target) {
+
+    IEnumerator ChargeTarget(Transform target)
+    {
         chargeCoroutineRunning = true;
         rb2d.linearVelocity = Vector2.zero;
-        //Debug.Log("Wait");       
+
         yield return new WaitForSeconds(1);
         Vector2 direction = ((Vector2)target.position - rb2d.position).normalized;
         yield return null;
-        //Debug.Log("Charge!");
-        rb2d.linearVelocity = (direction.normalized * statsManager.baseSpeed * chargeSpeed);
+
+        rb2d.linearVelocity = (direction.normalized * statsManager.EffectiveMoveSpeed * chargeSpeed);
         yield return new WaitForSeconds(chargeTime);
         rb2d.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(chargeCooldown);
         chargeCoroutineRunning = true;
         chargeCoroutine = null;
     }
-    public void BreakCharge() {
-        if (enemyType == EnemyType.Charger && chargeCoroutineRunning && chargeCoroutine != null) {
 
+    public void BreakCharge()
+    {
+        if (enemyType == EnemyType.Charger && chargeCoroutineRunning && chargeCoroutine != null)
+        {
             rb2d.linearVelocity = Vector2.zero;
             StopCoroutine(chargeCoroutine);
             chargeCoroutineRunning = true;
@@ -220,27 +253,30 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    void ChaseTarget(Transform target) {
+    void ChaseTarget(Transform target)
+    {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        //rb2d.MovePosition(rb2d.position + directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = directionNormalized * statsManager.baseSpeed;
+        rb2d.linearVelocity = directionNormalized * statsManager.EffectiveMoveSpeed;
     }
 
-    void RunFromTarget(Transform target) {
+    void RunFromTarget(Transform target)
+    {
         Vector2 toTarget = (Vector2)target.position - rb2d.position;
         Vector2 directionNormalized = toTarget.normalized;
-        //rb2d.MovePosition(rb2d.position + -directionNormalized * statsManager.moveSpeed * Time.fixedDeltaTime);
-        rb2d.linearVelocity = -directionNormalized * statsManager.baseSpeed;
+        rb2d.linearVelocity = -directionNormalized * statsManager.EffectiveMoveSpeed;
     }
 
-    void EnemyBaseStatImplementation(EnemyType enemyType) {
-        switch (enemyType) {
+    void EnemyBaseStatImplementation(EnemyType enemyType)
+    {
+        switch (enemyType)
+        {
             case EnemyType.MeleeWeapon:
                 statsManager.knockBack += 5;
                 break;
             case EnemyType.Ranged:
-                minRange = statsManager.baseRange;
+                // Use effective range at initialization
+                minRange = statsManager.EffectiveRange;
                 break;
             case EnemyType.Charger:
                 statsManager.baseAppliedKnockback = 50;
@@ -250,15 +286,17 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision != null && collision.gameObject.CompareTag("Player") && canDamageOnTouch) {
-            collision.gameObject.GetComponent<HealthManager>().CalculateIncomingDamage(statsManager.baseDamage);
-            collision.gameObject.GetComponent<HealthManager>().ApplyKnockback(statsManager.knockBack, transform);
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision != null && collision.gameObject.CompareTag("Player") && canDamageOnTouch)
+        {
+            var targetHealth = collision.gameObject.GetComponent<HealthManager>();
+            if (targetHealth != null)
+            {
+                // Use effective damage instead of raw baseDamage
+                targetHealth.CalculateIncomingDamage(statsManager.EffectiveDamage);
+                targetHealth.ApplyKnockback(statsManager.knockBack, transform);
+            }
         }
     }
-
-    // void OnDrawGizmos() {
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(this.transform.position, statsManager.baseRange);
-    //}
 }

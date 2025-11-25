@@ -1453,7 +1453,7 @@ MonoBehaviour:
   minSpawnDistance: 5
   maxSpawnDistance: 10
   spawnDelay: 1
-  maxEnemyCount: 5
+  maxEnemyCount: 10
   mapBounds: {fileID: 0}
   wallMask:
     serializedVersion: 2
@@ -32874,6 +32874,10 @@ PrefabInstance:
     - target: {fileID: 2409049884484485672, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618176630043808493, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
+      propertyPath: slowestAttackSPeedPerSecond
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6082280766061193559, guid: 8a56ecc1619d83a469dc137868983059, type: 3}
       propertyPath: healthText

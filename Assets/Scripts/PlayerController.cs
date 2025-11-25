@@ -3,7 +3,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     StatsManager statsManager;
     CustomTime customTime;
@@ -28,7 +29,8 @@ public class PlayerController : MonoBehaviour {
     Vector3 moveInput;
     bool isAlive = true;
 
-    void Start() {
+    void Start()
+    {
         statsManager = GetComponent<StatsManager>();
         customTime = GetComponent<CustomTime>();
         playerAttack = GetComponent<PlayerAttack>();
@@ -37,22 +39,28 @@ public class PlayerController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
-    void OnMove(InputValue value) {
+
+    void OnMove(InputValue value)
+    {
         moveInput = value.Get<Vector2>();
     }
-    void OnDash(InputValue value) {
-        //Debug.Log("ShiftInput");
-        if (isAlive && statsManager.canMove && customTime.timeScale > 0) {
+
+    void OnDash(InputValue value)
+    {
+        if (isAlive && statsManager.canMove && customTime.timeScale > 0)
+        {
             StartCoroutine(Dash());
         }
     }
-    void OnAttack(InputValue value) {
+
+    void OnAttack(InputValue value)
+    {
         if (weapon == null) { Debug.Log("No weapon Found!"); return; }
 
         bool pressed = value.Get<float>() >= 1f;
-        //Debug.Log($"OnAttack called - pressed: {pressed}");
 
-        switch (weapon.weaponType) {
+        switch (weapon.weaponType)
+        {
             case WeaponType.Melee:
                 playerAttack.AttackCoroutine(pressed);
                 break;
@@ -63,48 +71,54 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (!isAlive
             || !statsManager.canMove
             || customTime.timeScale <= 0
             || statsManager.isKnocked) return;
+
         AimForMouse();
         Walk();
     }
 
-    void Walk() {
-        //if (!canMove) return;       
-        //FlipSprite();
-
+    void Walk()
+    {
         Vector2 vector = new Vector2(moveInput.x, moveInput.y);
-        if (vector.sqrMagnitude > 1f) {
+        if (vector.sqrMagnitude > 1f)
+        {
             vector.Normalize();
         }
-        vector *= statsManager.baseSpeed;
+
+        // Use effective move speed instead of raw baseSpeed
+        vector *= statsManager.EffectiveMoveSpeed;
 
         rb2d.linearVelocity = vector;
 
-
-        if (animator) {
+        if (animator)
+        {
             bool hasHorizontal = Mathf.Abs(vector.x) > Mathf.Epsilon;
             animator.SetBool("isWalking", hasHorizontal);
         }
     }
 
-    void AimForMouse() {
+    void AimForMouse()
+    {
         var camera = Camera.main;
         Vector3 mouseDir = Mouse.current.position.ReadValue();
         mouseDir.z = Mathf.Abs(camera.transform.position.z - weaponSwitcher.transform.position.z);
         Vector3 mouseWorldPos = camera.ScreenToWorldPoint(mouseDir);
         Vector2 direction = mouseWorldPos - weaponSwitcher.transform.position;
-        if (direction.sqrMagnitude > Mathf.Epsilon) {
+        if (direction.sqrMagnitude > Mathf.Epsilon)
+        {
             weaponSwitcher.transform.up = direction;
         }
 
-        if (playerSprite != null) {
+        if (playerSprite != null)
+        {
             float dx = mouseWorldPos.x - transform.position.x;
-            if (Mathf.Abs(dx) > Mathf.Epsilon) {
+            if (Mathf.Abs(dx) > Mathf.Epsilon)
+            {
                 bool faceLeft;
                 if (dx < 0f) faceLeft = true;
                 else faceLeft = false;
@@ -114,32 +128,32 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    IEnumerator Dash() {
-        //Debug.Log("DashCoroutine");
+    IEnumerator Dash()
+    {
         statsManager.canMove = false;
         isDashing = true;
-        //playerCollision = false;
-        currentDashTime = startDashTime; // Reset the dash timer.
+        currentDashTime = startDashTime;
 
-        while (currentDashTime > 0f) {
-            currentDashTime -= Time.deltaTime; // Lower the dash timer each frame.
-
+        while (currentDashTime > 0f)
+        {
+            currentDashTime -= Time.deltaTime;
             rb2d.linearVelocity = moveInput * dashSpeed;
-
-
-            yield return null; // Returns out of the coroutine this frame so we don't hit an infinite loop.
+            yield return null;
         }
 
-        rb2d.linearVelocity = new Vector2(0f, 0f); // Stop dashing.
+        rb2d.linearVelocity = new Vector2(0f, 0f);
         statsManager.canMove = true;
         yield return new WaitForSeconds(statsManager.dashCooldown);
-        isDashing = false;        
+        isDashing = false;
     }
 
-     void OnDrawGizmos() {
+    void OnDrawGizmos()
+    {
         Gizmos.color = Color.red;
-        if (statsManager != null) {
-            Gizmos.DrawWireSphere(transform.position, statsManager.baseRange);
+        if (statsManager != null)
+        {
+            // Show effective range instead of raw baseRange
+            Gizmos.DrawWireSphere(transform.position, statsManager.EffectiveRange);
         }
     }
 }

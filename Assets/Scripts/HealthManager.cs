@@ -7,7 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthManager : MonoBehaviour {
+public class HealthManager : MonoBehaviour
+{
     public Coroutine knockbackCoroutine;
     Coroutine coroutine;
     StatsManager statsManager;
@@ -33,105 +34,166 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] AudioClip[] takeDamageSounds;
     [SerializeField] AudioClip[] deathSounds;
 
-     void OnEnable() {
+    void OnEnable()
+    {
         statsManager = GetComponent<StatsManager>();
         weapon = GetComponentInChildren<Weapon>();
         audioSource = GetComponent<AudioSource>();
-        if (!statsManager.isPlayer) {
+
+        if (!statsManager.isPlayer)
+        {
             enemyController = GetComponent<EnemyController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
             enemySpawner = FindFirstObjectByType<EnemySpawner>();
             difficulityManager = FindFirstObjectByType<DifficulityManager>();
-            statsManager.maxHealth = statsManager.maxHealth * difficulityManager.enemyHealthMultiplier;
+
+            // Enemy max health scaled by difficulty
+            if (difficulityManager != null)
+            {
+                statsManager.maxHealth = statsManager.maxHealth * difficulityManager.enemyHealthMultiplier;
+            }
         }
+
         statsManager.currentHealth = statsManager.maxHealth;
     }
 
-    void Start() {
+    void Start()
+    {
         statsManager = GetComponent<StatsManager>();
         UpdateMaxHp();
-        // statsManager.currentHealth = statsManager.maxHealth;
 
-        if (statsManager.isPlayer) {
+        if (statsManager.isPlayer)
+        {
             PlayerHealthBarUpdate();
             playerController = GetComponent<PlayerController>();
             rb2d = GetComponent<Rigidbody2D>();
             customTime = GetComponent<CustomTime>();
         }
     }
-     void Update() {
 
-        if (statsManager.isPlayer) {
+    void Update()
+    {
+        if (statsManager.isPlayer)
+        {
             PlayerHealthBarUpdate();
         }
     }
 
-    public void CalculateIncomingDamage(float rawDamage) {
-        float calculatedDamage;
-        //TODO: Add resistance calculations
-        calculatedDamage = rawDamage;
-        TakeFinalDamage(calculatedDamage);
+    public void CalculateIncomingDamage(float rawDamage)
+    {
+        Debug.Log(this.name + " incoming damage: " + rawDamage);
+        float damage = rawDamage;
+
+        // Difficulty scaling:
+        if (statsManager.isPlayer && difficulityManager != null)
+        {
+            damage *= difficulityManager.enemyDamageMultiplier;
+        }
+
+        // EffectiveDamageReduction is in percent: -100..95
+        float reductionPercent = statsManager.EffectiveDamageReduction;
+        damage *= (1f - (reductionPercent / 100f));
+
+        // Prevent negative damage in case of extreme values
+        if (damage < 0f)
+        {
+            damage = 0f;
+        }
+
+        TakeFinalDamage(damage);
     }
 
-    void TakeFinalDamage(float damage) {
-        if (!statsManager.canBeDamaged) {
+    //For more complex resistance logic if needed later
+    void CalculateResistance(float damage)
+    {
+    }
+
+    void TakeFinalDamage(float damage)
+    {
+        Debug.Log(this.name + " takes " + damage + " damage.");
+        if (!statsManager.canBeDamaged)
+        {
             Debug.Log(this.name + " can't be Damaged");
             return;
         }
-        if (damage > statsManager.currentHealth) {
+
+        if (damage >= statsManager.currentHealth)
+        {
             DeathSequence();
         }
-        else {
-
-            if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
+        else
+        {
+            if (statsManager.triggersHitStop && HitStopManager.Instance != null)
+            {
                 float hitStopDuration = HitStopManager.Instance.CalculateFreezeDuration(damage);
                 HitStopManager.Instance.TriggerHitStop(damage);
-
             }
-            if (enemyController != null) enemyController.BreakCharge();
+
+            if (enemyController != null)
+            {
+                enemyController.BreakCharge();
+            }
 
             StartCoroutine(TakeDamageEffects());
             statsManager.currentHealth -= damage;
-            //Debug.Log(this.name + " took " + damage + " damage! \nRemaining hp: " + statsManager.currentHp);
 
-            if (statsManager.isPlayer) {
+            if (statsManager.isPlayer)
+            {
                 PlayerHealthBarUpdate();
             }
         }
     }
 
-    void PlayerHealthBarUpdate() {
-        healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
-        healthSlider.value = statsManager.currentHealth;
+    void PlayerHealthBarUpdate()
+    {
+        if (healthText != null)
+        {
+            healthText.text = statsManager.currentHealth + " : " + statsManager.maxHealth;
+        }
+
+        if (healthSlider != null)
+        {
+            healthSlider.value = statsManager.currentHealth;
+        }
     }
 
-    public void UpdateMaxHp() {
+    public void UpdateMaxHp()
+    {
         statsManager.maxHealth = statsManager.baseMaxHealth + statsManager.extraHealth;
+
+        statsManager.currentHealth = Mathf.Clamp(statsManager.currentHealth, 0f, statsManager.maxHealth);
     }
-    IEnumerator TakeDamageEffects() {
-        //Debug.Log(this.name + "damageEffects");
-        if (takeDamageSounds.Length > 0 && audioSource != null) {
+
+    IEnumerator TakeDamageEffects()
+    {
+        if (takeDamageSounds.Length > 0 && audioSource != null)
+        {
             audioSource.PlayOneShot(takeDamageSounds[UnityEngine.Random.Range(0, takeDamageSounds.Length)]);
         }
+
         Color previousColor = bodySprite.color;
         bodySprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        bodySprite.color = Color.white;
+        bodySprite.color = previousColor;
     }
 
-    public void ApplyKnockback(float amount, Transform source) {
-        //Debug.Log(this.name + ("Got knockbacked by the amount: ") + amount);
-        if (rb2d == null) {
-            Debug.LogError(this.name + "Rigidbody2D is null!" + " Health: " + statsManager.currentHealth);
-            return;
-        }
-        if (statsManager.isUnstoppable) {
-            Debug.Log(this.name + ("isUnstopabble!"));
+    public void ApplyKnockback(float amount, Transform source)
+    {
+        if (rb2d == null)
+        {
+            Debug.LogError(this.name + " Rigidbody2D is null! Health: " + statsManager.currentHealth);
             return;
         }
 
-        if (knockbackCoroutine != null) {
+        if (statsManager.isUnstoppable)
+        {
+            Debug.Log(this.name + " isUnstopabble!");
+            return;
+        }
+
+        if (knockbackCoroutine != null)
+        {
             StopCoroutine(knockbackCoroutine);
             knockbackCoroutine = null;
 
@@ -139,83 +201,120 @@ public class HealthManager : MonoBehaviour {
             statsManager.isKnocked = false;
         }
 
-        if (statsManager.isPlayer) {
-            playerController.StopAllCoroutines();
+        if (statsManager.isPlayer)
+        {
+            if (playerController != null)
+            {
+                playerController.StopAllCoroutines();
+            }
         }
-        else {
-            enemyController.StopAllCoroutines();
+        else
+        {
+            if (enemyController != null)
+            {
+                enemyController.StopAllCoroutines();
+            }
         }
 
         rb2d.linearVelocity = Vector2.zero;
 
         Vector2 knockbackDirection = (rb2d.position - (Vector2)source.position).normalized;
-
         float knockbackStrCompare = amount - statsManager.knockBack;
 
-        if (statsManager.triggersHitStop && HitStopManager.Instance != null) {
-            //Debug.Log(this.name + "hitstop knockback");
+        if (statsManager.triggersHitStop && HitStopManager.Instance != null)
+        {
             customTime.ApplyKnockbackOnUnfreeze(knockbackStrCompare, knockbackDirection);
         }
-        else {
-            //Debug.Log(this.name + "Non hitstop knockback");
-            StartCoroutine(KnockbackPause());
+        else
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(KnockbackPause());
 
-            // Use the difference (amount - resistance) as the baseValue for the logarithmic scale
-            float clampedKnockback = Mathf.Clamp(knockbackStrCompare, 0f, 10f);
-            float scaledExtraKnockback = GeneralCalculations.LogarithmicScale(clampedKnockback, 10f);
+                float clampedKnockback = Mathf.Clamp(knockbackStrCompare, 0f, 10f);
+                float scaledExtraKnockback = GeneralCalculations.LogarithmicScale(clampedKnockback, 10f);
 
-            // Base knockback + logarithmically scaled bonus
-            rb2d.AddForce(
-                knockbackDirection * (scaledExtraKnockback + statsManager.baseAppliedKnockback),
-                ForceMode2D.Impulse
-            );
+                rb2d.AddForce(
+                    knockbackDirection * (scaledExtraKnockback + statsManager.baseAppliedKnockback),
+                    ForceMode2D.Impulse
+                );
+            }
         }
-
-        //Debug.Log($"{gameObject.name}: {knockbackStrCompare} is sent to next Method");
-        //rb2d.AddForce(knockbackDirection * GeneralCalculations...Compare, 50) * statsManager.baseKnockback, ForceMode2D.Impulse);
-
-        //if (!statsManager.isKnocked) StartCoroutine(KnockbackPause());
     }
 
-    public IEnumerator KnockbackPause() {
+    public IEnumerator KnockbackPause()
+    {
         statsManager.isKnocked = true;
         statsManager.canMove = false;
-        //Debug.Log(this.name + " Knockback Pause");
-        float knockStun = statsManager.knockbackStagger; /*(statsManager.strength / 100)*/
+
+        float knockStun = statsManager.knockbackStagger;
         yield return new WaitForSeconds(GeneralCalculations.ClampedValue(knockStun));
 
         statsManager.canMove = true;
         statsManager.isKnocked = false;
-        knockbackCoroutine = null;  // Clear reference
+        knockbackCoroutine = null;
     }
 
+    void DeathSequence()
+    {
+        if (statsManager != null)
+        {
+            if (!statsManager.isPlayer)
+            {
+                if (enemySpawner == null)
+                {
+                    enemySpawner = FindFirstObjectByType<EnemySpawner>();
+                }
 
-    void DeathSequence() {
-        if (statsManager != null) {
-            if (!statsManager.isPlayer) { enemySpawner.enemyCount--; }
-            else { playerController.enabled = false; }
-            //Debug.Log(this.name + "isDead!");
-            if (weapon != null) weapon.gameObject.SetActive(false);
-            
-            Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
-            foreach (Collider2D col in colliders) {
-                col.gameObject.SetActive(false); col.enabled = false;
+                if (enemySpawner != null)
+                {
+                    enemySpawner.enemyCount--;
+                }
             }
+            else
+            {
+                if (playerController != null)
+                {
+                    playerController.enabled = false;
+                }
+            }
+
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(false);
+            }
+
+            Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D col in colliders)
+            {
+                col.gameObject.SetActive(false);
+                col.enabled = false;
+            }
+
             statsManager.canMove = false;
             statsManager.canAttack = false;
-            
-            bodySprite.color = Color.black;
+
+            if (bodySprite != null)
+            {
+                bodySprite.color = Color.black;
+            }
         }
-        else {
-            Debug.LogWarning(this.name + "StatsManager Couldn't Found");
+        else
+        {
+            Debug.LogWarning(this.name + " StatsManager couldn't be found");
         }
 
-        GetComponent<LootDropOnDeath>().IfDestroy();
+        var lootDrop = GetComponent<LootDropOnDeath>();
+        if (lootDrop != null)
+        {
+            lootDrop.IfDestroy();
+        }
+
         Destroy(gameObject, 0.5f);
-
     }
 
-    IEnumerator HitStop() {
+    IEnumerator HitStop()
+    {
         yield return new WaitForSecondsRealtime(0.1f);
     }
 }

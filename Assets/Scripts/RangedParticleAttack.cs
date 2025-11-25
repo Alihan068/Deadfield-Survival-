@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class RangedParticleAttack : MonoBehaviour {
+public class RangedParticleAttack : MonoBehaviour
+{
     ParticleSystem particleSys;
     ParticleSystem.EmissionModule emissionModule;
     ParticleSystem.MainModule mainModule;
@@ -8,63 +9,80 @@ public class RangedParticleAttack : MonoBehaviour {
 
     StatsManager statsManager;
     bool isPlaying = false;
-    void Start() {
+
+    void Start()
+    {
         statsManager = GetComponentInParent<StatsManager>();
         particleSys = GetComponent<ParticleSystem>();
-        emissionModule = particleSys.emission;
-        mainModule = particleSys.main;
-        shapeModule = particleSys.shape;
+
+        if (particleSys != null)
+        {
+            emissionModule = particleSys.emission;
+            mainModule = particleSys.main;
+            shapeModule = particleSys.shape;
+        }
     }
 
-    void Update() {
+    public void ParticleSystemUpdateStats()
+    {
+        if (particleSys == null || statsManager == null) return;
 
+        // Fire rate depends on effective attack speed
+        emissionModule.rateOverTime = statsManager.EffectiveAttackSpeed;
+
+        // Projectile flight speed
+        mainModule.startSpeedMultiplier = statsManager.EffectiveProjectileSpeed;
+
+        // Spread still directly uses spread percentage
+        shapeModule.randomDirectionAmount = statsManager.spread / 100f;
     }
-    public void ParticleSystemUpdateStats() {
-        if (particleSys == null) return;  
-        emissionModule.rateOverTime = statsManager.attackSpeed;
-        mainModule.startSpeedMultiplier = statsManager.projectileSpeed;
-        shapeModule.randomDirectionAmount = statsManager.spread / 100;
 
-    }
-
-    public void ParticleSystemToggle(bool state) {
+    public void ParticleSystemToggle(bool state)
+    {
+        if (particleSys == null) return;
 
         ParticleSystemUpdateStats();
-        if (state) {
-            if (!isPlaying) {
+
+        if (state)
+        {
+            if (!isPlaying)
+            {
                 isPlaying = true;
                 particleSys.Play();
             }
         }
-        else {
+        else
+        {
             isPlaying = false;
-            if (particleSys != null) {
-                particleSys.Stop();
-            }
+            particleSys.Stop();
         }
     }
 
-
-     void OnParticleCollision(GameObject other) {
+    void OnParticleCollision(GameObject other)
+    {
         Debug.Log("HIT! " + other.name);
-        if (other == null || other.layer == this.gameObject.layer) {
-    #if UNITY_EDITOR
+
+        if (other == null || other.layer == this.gameObject.layer)
+        {
+#if UNITY_EDITOR
             Debug.Log("Target: " + other.name + " is the same layer with attacker: " + this.name);
 #endif
             return;
         }
 
-        if (other.gameObject.CompareTag("Weapon")) {
-            //TODO: DeflectEffects
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            // Deflect or parry effects can be added here in future
             return;
         }
-        other.TryGetComponent<HealthManager>(out HealthManager targetHealthManager);
 
-        if (targetHealthManager == null) {
-            Debug.Log("Target: " + other.name + "Has no healthManager");
+        if (!other.TryGetComponent<HealthManager>(out HealthManager targetHealthManager) || targetHealthManager == null)
+        {
+            Debug.Log("Target: " + other.name + " has no HealthManager");
+            return;
         }
-        else {
-            targetHealthManager.CalculateIncomingDamage(statsManager.baseDamage + statsManager.baseDamage);
-        }
+
+        float damage = statsManager.EffectiveDamage;
+        targetHealthManager.CalculateIncomingDamage(damage);
     }
 }

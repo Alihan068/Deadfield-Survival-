@@ -1453,7 +1453,7 @@ MonoBehaviour:
   minSpawnDistance: 5
   maxSpawnDistance: 10
   spawnDelay: 1
-  maxEnemyCount: 5
+  maxEnemyCount: 10
   mapBounds: {fileID: 0}
   wallMask:
     serializedVersion: 2

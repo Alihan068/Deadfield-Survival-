@@ -20,7 +20,7 @@ MonoBehaviour:
   generateDefaultPrefab: 1
   pickupSfx: {fileID: 0}
   itemEffects:
-  - targetStat: 19
+  - targetStat: 20
     effectValue: 5
     ifIncrease: 1
     ifPercentage: 1

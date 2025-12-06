@@ -74,6 +74,10 @@ public class HealthManager : MonoBehaviour {
         TakeFinalDamage(calculatedDamage);
     }
 
+    void CalculateEvasion() {
+
+    }
+
     void TakeFinalDamage(float damage) {
         if (!statsManager.canBeDamaged) {
             Debug.Log(this.name + " can't be Damaged");

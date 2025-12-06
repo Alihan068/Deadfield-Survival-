@@ -18,6 +18,7 @@ public enum TargetStat {
     extraHealth,
     maxHealth,
     baseRange,
+    baseSpeed,
     strength,
     armor,
     playerSize,

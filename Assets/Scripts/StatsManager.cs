@@ -129,6 +129,10 @@ public class StatsManager : MonoBehaviour {
                 playerSize = AdjustStat(playerSize, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
                 playerSize = Mathf.Max(0.1f, playerSize);
                 break;
+            case TargetStat.baseSpeed:
+                baseSpeed = AdjustStat(baseSpeed, effect.effectValue, effect.ifPercentage, effect.ifIncrease);
+                baseSpeed = Mathf.Max(0.1f, baseSpeed);
+                break;
 
             case TargetStat.haste:
                 haste = AdjustStat(haste, effect.effectValue, effect.ifPercentage, effect.ifIncrease);

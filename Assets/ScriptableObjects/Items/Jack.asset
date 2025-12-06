@@ -25,22 +25,22 @@ MonoBehaviour:
     ifIncrease: 1
     ifPercentage: 1
     customLabel: 
+  - targetStat: 6
+    effectValue: 20
+    ifIncrease: 1
+    ifPercentage: 1
+    customLabel: 
+  - targetStat: 20
+    effectValue: 20
+    ifIncrease: 1
+    ifPercentage: 1
+    customLabel: 
   - targetStat: 5
-    effectValue: 20
-    ifIncrease: 1
-    ifPercentage: 1
-    customLabel: 
-  - targetStat: 19
-    effectValue: 20
-    ifIncrease: 1
-    ifPercentage: 1
-    customLabel: 
-  - targetStat: 4
     effectValue: 50
     ifIncrease: 1
     ifPercentage: 1
     customLabel: 
-  - targetStat: 3
+  - targetStat: 10
     effectValue: 10
     ifIncrease: 1
     ifPercentage: 1

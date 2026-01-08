@@ -23,7 +23,7 @@ MonoBehaviour:
   - targetStat: 4
     effectValue: 10
     ifIncrease: 1
-    ifPercentage: 0
+    ifPercentage: 1
     customLabel: 
   - targetStat: 10
     effectValue: 5

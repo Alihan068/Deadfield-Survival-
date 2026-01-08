@@ -44,7 +44,7 @@ MonoBehaviour:
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: cs Script Icon
-      colorIndex: 2
+      colorIndex: 4
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: ScriptableObject Icon
@@ -68,7 +68,7 @@ MonoBehaviour:
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: Settings Icon
-      colorIndex: 1
+      colorIndex: 10
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: 
